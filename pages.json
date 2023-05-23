@@ -32,7 +32,7 @@
             "path" : "pages/shop/shop",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "商城",
+                "navigationBarTitleText": "积分商城",
                 "enablePullDownRefresh": true
             }
             
@@ -43,6 +43,42 @@
             {
                 "navigationBarTitleText": "我的",
                 "enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/order-invoice/order-invoice",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单开票",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/order-invoice/invoicing",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "开具发票",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/year-bill/year-bill",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "年度账单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/setting/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
             }
             
         }

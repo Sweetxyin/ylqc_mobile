@@ -28,11 +28,16 @@
 		<view class="menuTab">
 			<view class="menu">
 				<view class="menu_item">
-					<text>配送VIP</text>
+					 <u-subsection 
+					 :list="list" 
+					 mode="button"
+					 inactiveColor="#fff"
+					 activeColor="#000000" 
+					 :current="subIndex"
+					  @change="sectionChange"
+					  style=" background-color:transparent;">
+					  </u-subsection>
 				</view>
-				<view class="menu_item">
-					<text>客户下单</text>
-				</view>	
 			</view>
 		</view>
 		
@@ -40,12 +45,12 @@
 		<view class="place_order">
 			
 			<!-- 配送VIP -->
-			<view class="">
+			<view class="" v-if="subIndex===0">
 				<Delivery></Delivery>
 			</view>
 			
 			<!-- 客户下单 -->
-			<view class="">
+			<view class="" v-else>
 				<Custom></Custom>
 			</view>
 		</view>			
@@ -101,6 +106,8 @@
 	export default {
 		data() {
 			return {
+				 list: ['配送VIP', '客户下单'],
+				subIndex:0,//导航条索引值
 				
 			}
 		},
@@ -110,16 +117,21 @@
 		},
 		onLoad() {
 		
-
+        // this.sectionChange(0)
 		},
+		
 		methods: {
-			
+			//获取当前的导航索引，并赋值给subIndex
+			sectionChange(index){
+				this.subIndex=index
+				// console.log(this.subIndex)
+			}
 
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.container{
 		// background-color: #add8e6;
 		background-color: #f0ffff;
@@ -132,37 +144,28 @@
 		height: 100%;
 	}
     .menuTab {
-		display: flex;
-		// height: 10rpx;
-	
+		padding-left: 10%;
+		padding-right: 10%;
+	    background-color: transparent;
 	}
 	.menu {
-		display: flex;
-		align-items: center;
-		align-content: center;
-		
-		.menu_item{
-			margin:-48rpx 0rpx 0 150rpx;
-			z-index: 1;
+		margin:-58rpx 0rpx 0rpx 0rpx;
+		z-index: 1;
+		.menu_item  .u-tabs{
+			// width: 100rpx;
 		}
+		// .menu_item .u-tabs:nth-child(1){
+		// 	// background-color: #fff;
+		// 	width: 10%;
+		// 	font-size: 50rpx;
+		// }
 	}
-	.menu_item text{
-		border: 1rpx solid #efefef;
-		border-radius: 3rpx;
-	}
-
-	.menu_item text :hover {
-		color: navajowhite;
-		background-color: white;
-	}
-
 	.other_services{
 		width: 93.5%;
 		// height: 160rpx;
 		display: flex;
 		flex-wrap: wrap;
 		border:1rpx solid #efefef;
-		// border-top: 1rpx solid #efefef;
 		background-color: white;
 		margin-left: 3%;
 		margin-top: 10rpx;
@@ -177,8 +180,6 @@
 	    	 flex-direction: column;
 	    	 align-items: center;
 	    	 justify-content: center;
-	    	 // border-right: 1rpx solid #efefef;
-	    	 // border-bottom: 1rpx solid #efefef;
 	    	 box-sizing: border-box;
 	    	 // background-color: goldenrod;
 	    }

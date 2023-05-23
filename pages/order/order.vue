@@ -18,15 +18,36 @@
 		<view class="order_content" >
 			<!-- 订单进行中 -->
 			<view class="order_have" v-if="tabIndex===0">
-				111
+				<!-- 订单为空时显示 -->
+				<view class="order_none">
+					<u-empty
+					        mode="order"
+					        icon="http://cdn.uviewui.com/uview/empty/car.png"
+					>
+					</u-empty>
+				</view>
 			</view>
 			<!-- 订单已完成 -->
 			<view class="order_complete" v-else-if="tabIndex===1">
-				222
+				<!-- 订单为空时显示 -->
+				<view class="order_none">
+					<u-empty
+					        mode="order"
+					        icon="http://cdn.uviewui.com/uview/empty/car.png"
+					>
+					</u-empty>
+				</view>
 			</view>
 			<!-- 订单已取消 -->
 			<view class="order_cancel" v-else>
-				333
+				<!-- 订单为空时显示 -->
+				<view class="order_none">
+					<u-empty
+					        mode="order"
+					        icon="http://cdn.uviewui.com/uview/empty/car.png"
+					>
+					</u-empty>
+				</view>
 			</view>
 	
 		</view>
@@ -45,8 +66,11 @@
 				    name: '已取消'
 				}],
 				tabIndex:0,
-				tabStatus:true
+				// tabStatus:true
 			};
+		},
+		onLoad() {
+			// this.tabChang(0)
 		},
 		methods:{
 			tabChang(index){
@@ -61,7 +85,6 @@
 
 <style lang="scss">
 	.container{
-		
 		background-color: #efefef;
 	}
 	.order_tab{
@@ -72,5 +95,9 @@
 			display: flex;
 			// justify-content: space-between;
 		}
+	}
+	.order_none{
+		width: 100%;
+		height: 1070rpx;
 	}
 </style>

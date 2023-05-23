@@ -6,7 +6,7 @@
 				<u--text text="立即登录/认证"></u--text>
 			</view>
 			<view class="user_setting">
-				<navigator url=""  class="setting_n">
+				<navigator url="/pages/setting/setting"  class="setting_n">
 					<u-icon name="setting" size="25"></u-icon>
 					<text>设置</text>
 				</navigator>
@@ -14,7 +14,7 @@
 		</view>
 		<view class="user_service">
 			<view class="services_list">
-				<navigator class="services_item" url="">
+				<navigator class="services_item" url="/pages/year-bill/year-bill">
 					<u-icon name="red-packet" size="30"></u-icon>
 					<text>年度账单</text>
 				</navigator>
@@ -26,7 +26,7 @@
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator class="services_item" url="">
+				<navigator class="services_item" url="/pages/order-invoice/order-invoice">
 					<u-icon name="rmb-circle" size="30"></u-icon>
 					<text>发票报销</text>
 				</navigator>

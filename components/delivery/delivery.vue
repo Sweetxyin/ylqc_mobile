@@ -19,15 +19,34 @@
 				<view class="info_t"><text>物品信息</text></view>
 				<view class="add_annex">
 					<view class="add_t">
-						<text>添加附件</text>
-						<radio-group name="addAnnex">
+						<text style="padding: 10rpx 0 0 10rpx;">添加附件</text>
+						<!-- <radio-group name="addAnnex">
 							<label>
 								<radio :value="r1"  checked="true" style="transform:scale(0.7)"/><text>是</text>
 							</label>
 							<label>
 								<radio :value="r2" style="transform:scale(0.7)"/><text>否</text>
 							</label>
-						</radio-group>
+						</radio-group> -->
+						<u-radio-group
+						    v-model="radiovalue1"
+							size="16"
+						    placement="row"
+						    @change="groupChange"
+							style="padding-left: 10rpx;"
+						  >
+						    <u-radio
+							size="16"
+							labelSize="13"
+						     :customStyle="{marginLeft: '0rpx'}"
+						      v-for="(item, index) in radiolist1"
+						      :key="index"
+						      :label="item.name"
+						      :name="item.name"
+						      @change="radioChange"
+						    >
+						    </u-radio>
+						  </u-radio-group>
 						<navigator url="" class="add_icon">
 							<image src="../../static/images/index_icon/add_annex.png" ></image>
 							<text>自动识别物件信息生成订单列表</text>
@@ -42,23 +61,36 @@
 				<view class="info_list">
 					<view class="info_item">
 						<text>物品名称：</text>
-						<input type="text" placeholder="请输入物品名称">
+						<!-- <input type="text" placeholder="请输入物品名称"> -->
+						 <u--input placeholder="请输入物品名称" border="none" inputAlign="right"
+						    v-model="wpname" fontSize="26rpx" :disabled="inputStatus"
+						  ></u--input>
 					</view>
 					<view class="info_item">
 						<text>预估总重量(kg)：</text>
-						<input type="text" placeholder="请输入总重量">
+						<!-- <input type="text" placeholder="请输入总重量"> -->
+						<u--input placeholder="请输入总重量" border="none" inputAlign="right"
+						   v-model="zzl" fontSize="26rpx" :disabled="inputStatus"
+						 ></u--input>
 					</view>
 					<view class="info_item">
 						<text>总体积(m²)：</text>
-						<input type="text" placeholder="请输入总体积">
+						<!-- <input type="text" placeholder="请输入总体积"> -->
+						<u--input placeholder="请输入总体积" border="none" inputAlign="right"
+						   v-model="ztj" fontSize="26rpx"
+						 ></u--input>
 					</view>
 					<view class="info_item">
 						<text>件数：</text>
-						<input type="text" placeholder="请输入件数">
+						<!-- <input type="text" placeholder="请输入件数"> -->
+						<u--input placeholder="请输入件数" border="none" inputAlign="right"
+						   v-model="js" fontSize="26rpx"
+						 ></u--input>
 					</view>
-					<view class="info_item">
+					<view class="info_item" @click="show = true">
 						<text>预约上门时间：</text>
-						<input type="text" placeholder="请输入件数">
+						<u-datetime-picker  :show="show" v-model="value1" mode="datetime" @confirm="confirm" @cancel="close"></u-datetime-picker>
+					    <view>{{ timeValue }}</view>
 					</view>
 				</view>
 				
@@ -77,22 +109,63 @@
 			return {
 				start_address:"柳州延龙汽车",
 				end_address:"输入您的目的地",
-				r1:"",
-				r2:""
+				radiolist1: [{
+				    name: '是',
+				    disabled: false
+				}, {
+				    name: '否',
+				    disabled: false
+				}],
 				
+				show: false,//时间选择状态
+				timeValue: '请选择',//时间
+				value1: Number(new Date()),//获取当前时间
+				inputStatus:false,
+				wpname:"",
+				zzl:"",
+				ztj:"",
+				js:""
 			};
-		}
+		},
+		methods: {
+			// 时间选择
+			async confirm(e) {
+				this.show = false;
+				const timeFormat = uni.$u.timeFormat;
+				let timeValue = await timeFormat(e.value, 'yyyy-mm-dd hh:MM');
+				this.timeValue = timeValue;
+				console.log(timeValue);
+			},
+			//关闭时间选择器
+			close() {
+				this.show = false;
+			},
+			groupChange(n) {
+			    console.log('groupChange', n);
+			},
+			radioChange(n) {
+				if(n=="是") {
+					this.inputStatus=true
+					this.wpname=""
+				}else{
+					this.inputStatus=false
+				}
+				
+			    console.log('radioChange', n);
+			}
+		
+		},
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.delivery_t{
 		display: flex;
 		flex-direction:column;
 		width: 94%;
 		// height: 250rpx;
 		background-color: white;
-		margin-top: 10rpx;
+		// margin-top: 10rpx;
 		margin-left: 3%;
 		// border: 1rpx solid #efefef;
 		border-top-left-radius: 20rpx;
@@ -168,13 +241,14 @@
 				height: 50rpx;
 				width: 100%;
 				display: flex;
+
 				.add_icon{
 					display: flex;
 				}
 				.add_icon image{
 					width: 55rpx;
 					height: 50rpx;
-					margin-left: 15rpx;
+					// margin-left: 15rpx;
 				}
 				.add_icon text{
 					font-size: 22rpx;

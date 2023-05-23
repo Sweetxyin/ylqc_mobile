@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "年度账单",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-datetime-picker": "../../uni_modules/uview-plus/components/u-datetime-picker/u-datetime-picker",
+    "u-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon",
+    "u-subsection": "../../uni_modules/uview-plus/components/u-subsection/u-subsection"
+  }
+}

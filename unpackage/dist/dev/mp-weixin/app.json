@@ -4,7 +4,11 @@
     "pages/order/order",
     "pages/message/message",
     "pages/shop/shop",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/order-invoice/order-invoice",
+    "pages/order-invoice/invoicing",
+    "pages/year-bill/year-bill",
+    "pages/setting/setting"
   ],
   "window": {
     "navigationBarTextStyle": "black",

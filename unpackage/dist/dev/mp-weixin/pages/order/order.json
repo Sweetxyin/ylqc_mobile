@@ -3,6 +3,7 @@
   "enablePullDownRefresh": true,
   "usingComponents": {
     "u-tabs": "../../uni_modules/uview-plus/components/u-tabs/u-tabs",
-    "u-sticky": "../../uni_modules/uview-plus/components/u-sticky/u-sticky"
+    "u-sticky": "../../uni_modules/uview-plus/components/u-sticky/u-sticky",
+    "u-empty": "../../uni_modules/uview-plus/components/u-empty/u-empty"
   }
 }

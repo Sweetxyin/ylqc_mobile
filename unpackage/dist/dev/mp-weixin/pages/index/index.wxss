@@ -24,37 +24,26 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.container {
+.container.data-v-1cf27b2a {
   background-color: #f0ffff;
 }
-.swiper-item {
+.swiper-item.data-v-1cf27b2a {
   height: 330rpx;
 }
-.swiper-item image {
+.swiper-item image.data-v-1cf27b2a {
   width: 100%;
   height: 100%;
 }
-.menuTab {
-  display: flex;
+.menuTab.data-v-1cf27b2a {
+  padding-left: 10%;
+  padding-right: 10%;
+  background-color: transparent;
 }
-.menu {
-  display: flex;
-  align-items: center;
-  align-content: center;
-}
-.menu .menu_item {
-  margin: -48rpx 0rpx 0 150rpx;
+.menu.data-v-1cf27b2a {
+  margin: -58rpx 0rpx 0rpx 0rpx;
   z-index: 1;
 }
-.menu_item text {
-  border: 1rpx solid #efefef;
-  border-radius: 3rpx;
-}
-.menu_item text :hover {
-  color: navajowhite;
-  background-color: white;
-}
-.other_services {
+.other_services.data-v-1cf27b2a {
   width: 93.5%;
   display: flex;
   flex-wrap: wrap;
@@ -64,10 +53,10 @@
   margin-top: 10rpx;
   border-radius: 20rpx;
 }
-.services_list {
+.services_list.data-v-1cf27b2a {
   width: 25%;
 }
-.services_item {
+.services_item.data-v-1cf27b2a {
   height: 130rpx;
   display: flex;
   flex-direction: column;
@@ -75,11 +64,11 @@
   justify-content: center;
   box-sizing: border-box;
 }
-.services_item image {
+.services_item image.data-v-1cf27b2a {
   width: 60rpx;
   height: 60rpx;
 }
-.services_item text {
+.services_item text.data-v-1cf27b2a {
   font-size: 26rpx;
   margin-top: 10rpx;
 }

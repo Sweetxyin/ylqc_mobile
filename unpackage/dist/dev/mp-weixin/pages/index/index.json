@@ -3,6 +3,7 @@
   "enablePullDownRefresh": true,
   "usingComponents": {
     "delivery": "../../components/delivery/delivery",
-    "custom": "../../components/custom-xd/custom-xd"
+    "custom": "../../components/custom-xd/custom-xd",
+    "u-subsection": "../../uni_modules/uview-plus/components/u-subsection/u-subsection"
   }
 }

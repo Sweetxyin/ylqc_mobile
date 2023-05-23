@@ -10,9 +10,11 @@ const _sfc_main = {
       }, {
         name: "已取消"
       }],
-      tabIndex: 0,
-      tabStatus: true
+      tabIndex: 0
+      // tabStatus:true
     };
+  },
+  onLoad() {
   },
   methods: {
     tabChang(index) {
@@ -25,12 +27,14 @@ const _sfc_main = {
 if (!Array) {
   const _easycom_u_tabs2 = common_vendor.resolveComponent("u-tabs");
   const _easycom_u_sticky2 = common_vendor.resolveComponent("u-sticky");
-  (_easycom_u_tabs2 + _easycom_u_sticky2)();
+  const _easycom_u_empty2 = common_vendor.resolveComponent("u-empty");
+  (_easycom_u_tabs2 + _easycom_u_sticky2 + _easycom_u_empty2)();
 }
 const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_u_sticky = () => "../../uni_modules/uview-plus/components/u-sticky/u-sticky.js";
+const _easycom_u_empty = () => "../../uni_modules/uview-plus/components/u-empty/u-empty.js";
 if (!Math) {
-  (_easycom_u_tabs + _easycom_u_sticky)();
+  (_easycom_u_tabs + _easycom_u_sticky + _easycom_u_empty)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -50,8 +54,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       bgColor: "#fff"
     }),
     d: $data.tabIndex === 0
-  }, $data.tabIndex === 0 ? {} : $data.tabIndex === 1 ? {} : {}, {
-    e: $data.tabIndex === 1
+  }, $data.tabIndex === 0 ? {
+    e: common_vendor.p({
+      mode: "order",
+      icon: "http://cdn.uviewui.com/uview/empty/car.png"
+    })
+  } : $data.tabIndex === 1 ? {
+    g: common_vendor.p({
+      mode: "order",
+      icon: "http://cdn.uviewui.com/uview/empty/car.png"
+    })
+  } : {
+    h: common_vendor.p({
+      mode: "order",
+      icon: "http://cdn.uviewui.com/uview/empty/car.png"
+    })
+  }, {
+    f: $data.tabIndex === 1
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/daima/dm/ylqc_mobile/pages/order/order.vue"]]);

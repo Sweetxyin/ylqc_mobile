@@ -47,7 +47,7 @@
             
         }
         ,{
-            "path" : "pages/order-invoice/order-invoice",
+            "path" : "pages/orderinvoice/orderinvoice",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "订单开票",
@@ -56,7 +56,7 @@
             
         }
         ,{
-            "path" : "pages/order-invoice/invoicing",
+            "path" : "pages/orderinvoice/invoicing",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "开具发票",
@@ -65,7 +65,7 @@
             
         }
         ,{
-            "path" : "pages/year-bill/year-bill",
+            "path" : "pages/yearbill/yearbill",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "年度账单",
@@ -78,6 +78,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/authentication",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "认证",
                 "enablePullDownRefresh": false
             }
             

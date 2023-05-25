@@ -14,7 +14,7 @@
 		</view>
 		<view class="user_service">
 			<view class="services_list">
-				<navigator class="services_item" url="/pages/year-bill/year-bill">
+				<navigator class="services_item" url="/pages/yearbill/yearbill">
 					<u-icon name="red-packet" size="30"></u-icon>
 					<text>年度账单</text>
 				</navigator>
@@ -26,7 +26,7 @@
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator class="services_item" url="/pages/order-invoice/order-invoice">
+				<navigator class="services_item" url="/pages/orderinvoice/orderinvoice">
 					<u-icon name="rmb-circle" size="30"></u-icon>
 					<text>发票报销</text>
 				</navigator>
@@ -78,9 +78,7 @@
 		}
 	}
 	.setting_n text{
-		// display: flex;
 		margin-right:23px;
-		// flex-wrap: nowrap;
 		font-size: 26rpx;
 	}
 	.user_service{

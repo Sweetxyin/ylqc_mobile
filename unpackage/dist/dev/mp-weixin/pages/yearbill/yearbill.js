@@ -145,5 +145,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     I: $data.year_current === 1
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-376009ca"], ["__file", "F:/daima/dm/ylqc_mobile/pages/year-bill/year-bill.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-7add57ba"], ["__file", "F:/daima/dm/ylqc_mobile/pages/yearbill/yearbill.vue"]]);
 wx.createPage(MiniProgramPage);

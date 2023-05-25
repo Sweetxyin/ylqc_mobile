@@ -123,10 +123,11 @@ if (!Math) {
   "./pages/message/message.js";
   "./pages/shop/shop.js";
   "./pages/user/user.js";
-  "./pages/order-invoice/order-invoice.js";
-  "./pages/order-invoice/invoicing.js";
-  "./pages/year-bill/year-bill.js";
+  "./pages/orderinvoice/orderinvoice.js";
+  "./pages/orderinvoice/invoicing.js";
+  "./pages/yearbill/yearbill.js";
   "./pages/setting/setting.js";
+  "./pages/user/authentication.js";
 }
 const _sfc_main = {
   data() {

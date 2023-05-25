@@ -24,18 +24,23 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.container.data-v-018cdf56 {
+.container.data-v-aab5e4ba {
   width: 100%;
   display: flex;
   background-color: #efefef;
   flex-direction: column;
 }
-.setting_info.data-v-018cdf56 {
+.authentication_info.data-v-aab5e4ba {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.setting_info .basic_info.data-v-018cdf56 {
+.info_title.data-v-aab5e4ba {
+  height: 50rpx;
+  padding-top: 15rpx;
+  padding-left: 35rpx;
+}
+.company_info.data-v-aab5e4ba {
   width: 94%;
   background-color: white;
   border-radius: 30rpx;
@@ -44,38 +49,14 @@
   flex-direction: column;
   margin-left: 3%;
 }
-.setting_info .info_item.data-v-018cdf56 {
-  height: 75rpx;
+.info_item.data-v-aab5e4ba {
+  height: 65rpx;
   display: flex;
   align-items: center;
   margin-top: 5rpx;
   border-bottom: 2rpx solid #efefef;
 }
-.info_title.data-v-018cdf56 {
-  height: 50rpx;
-  padding-top: 15rpx;
-  padding-left: 35rpx;
-}
-.authentication_info.data-v-018cdf56 {
-  width: 94%;
-  background-color: white;
-  border-radius: 30rpx;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-left: 3%;
-}
-.other_info.data-v-018cdf56 {
-  width: 94%;
-  background-color: white;
-  border-radius: 30rpx;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-left: 3%;
-  margin-top: 15rpx;
-}
-.logout_button.data-v-018cdf56 {
-  width: 94%;
-  padding: 25rpx 0 0 3%;
+.submit_button.data-v-aab5e4ba {
+  width: 60%;
+  padding: 25rpx 0 0 20%;
 }

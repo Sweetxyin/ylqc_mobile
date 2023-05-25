@@ -46,7 +46,7 @@ const _sfc_main = {
     },
     next_invoice() {
       common_vendor.index.navigateTo({
-        url: "/pages/order-invoice/invoicing"
+        url: "/pages/orderinvoice/invoicing"
       });
     }
   }
@@ -73,12 +73,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($data.indexList, (item, index, i0) => {
       return {
-        a: "3cf2adc7-1-" + i0 + "," + ("3cf2adc7-0-" + i0),
+        a: "3b7f7ffb-1-" + i0 + "," + ("3b7f7ffb-0-" + i0),
         b: common_vendor.o($options.checkboxChange, index),
-        c: "3cf2adc7-0-" + i0,
+        c: "3b7f7ffb-0-" + i0,
         d: common_vendor.o(($event) => $data.checkboxValue = $event, index),
         e: common_vendor.t(item.orderId),
-        f: "3cf2adc7-2-" + i0,
+        f: "3b7f7ffb-2-" + i0,
         g: common_vendor.t(item.orderTime),
         h: common_vendor.t(item.startAddress),
         i: common_vendor.t(item.endAddress),
@@ -108,7 +108,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       return {
         a: index,
         b: common_vendor.o($options.radioChange, index),
-        c: "3cf2adc7-4-" + i0 + ",3cf2adc7-3",
+        c: "3b7f7ffb-4-" + i0 + ",3b7f7ffb-3",
         d: common_vendor.p({
           size: "20",
           labelSize: "13",
@@ -136,5 +136,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-3cf2adc7"], ["__file", "F:/daima/dm/ylqc_mobile/pages/order-invoice/order-invoice.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-3b7f7ffb"], ["__file", "F:/daima/dm/ylqc_mobile/pages/orderinvoice/orderinvoice.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -121,7 +121,7 @@
 			},
 			next_invoice(){
 				uni.navigateTo({
-				    url: '/pages/order-invoice/invoicing'
+				    url: '/pages/orderinvoice/invoicing'
 				   
 				})
 

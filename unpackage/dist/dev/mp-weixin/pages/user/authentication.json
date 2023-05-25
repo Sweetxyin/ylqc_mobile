@@ -1,9 +1,7 @@
 {
-  "navigationBarTitleText": "设置",
+  "navigationBarTitleText": "认证",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "u-cell": "../../uni_modules/uview-plus/components/u-cell/u-cell",
-    "u-cell-group": "../../uni_modules/uview-plus/components/u-cell-group/u-cell-group",
     "u--input": "../../uni_modules/uview-plus/components/u--input/u--input",
     "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
   }

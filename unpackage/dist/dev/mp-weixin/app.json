@@ -5,10 +5,11 @@
     "pages/message/message",
     "pages/shop/shop",
     "pages/user/user",
-    "pages/order-invoice/order-invoice",
-    "pages/order-invoice/invoicing",
-    "pages/year-bill/year-bill",
-    "pages/setting/setting"
+    "pages/orderinvoice/orderinvoice",
+    "pages/orderinvoice/invoicing",
+    "pages/yearbill/yearbill",
+    "pages/setting/setting",
+    "pages/user/authentication"
   ],
   "window": {
     "navigationBarTextStyle": "black",

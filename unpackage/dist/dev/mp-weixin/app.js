@@ -128,6 +128,8 @@ if (!Math) {
   "./pages/yearbill/yearbill.js";
   "./pages/setting/setting.js";
   "./pages/user/authentication.js";
+  "./pages/complaint/complaint.js";
+  "./pages/complaint/tocomplaint.js";
 }
 const _sfc_main = {
   data() {

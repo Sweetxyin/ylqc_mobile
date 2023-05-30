@@ -1,5 +1,8 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const Processing = () => "../../components/order-status/order-processing.js";
+const Complete = () => "../../components/order-status/order-complete.js";
+const Cancel = () => "../../components/order-status/order-cancel.js";
 const _sfc_main = {
   data() {
     return {
@@ -10,9 +13,17 @@ const _sfc_main = {
       }, {
         name: "已取消"
       }],
-      tabIndex: 0
+      tabIndex: 0,
       // tabStatus:true
+      order_total: 1,
+      //订单数量
+      order_state: 1
     };
+  },
+  components: {
+    Processing,
+    Complete,
+    Cancel
   },
   onLoad() {
   },
@@ -28,7 +39,10 @@ if (!Array) {
   const _easycom_u_tabs2 = common_vendor.resolveComponent("u-tabs");
   const _easycom_u_sticky2 = common_vendor.resolveComponent("u-sticky");
   const _easycom_u_empty2 = common_vendor.resolveComponent("u-empty");
-  (_easycom_u_tabs2 + _easycom_u_sticky2 + _easycom_u_empty2)();
+  const _component_Processing = common_vendor.resolveComponent("Processing");
+  const _component_Complete = common_vendor.resolveComponent("Complete");
+  const _component_Cancel = common_vendor.resolveComponent("Cancel");
+  (_easycom_u_tabs2 + _easycom_u_sticky2 + _easycom_u_empty2 + _component_Processing + _component_Complete + _component_Cancel)();
 }
 const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_u_sticky = () => "../../uni_modules/uview-plus/components/u-sticky/u-sticky.js";
@@ -54,23 +68,29 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       bgColor: "#fff"
     }),
     d: $data.tabIndex === 0
+  }, $data.tabIndex === 0 ? common_vendor.e({
+    e: $data.order_total === 0
+  }, $data.order_total === 0 ? {
+    f: common_vendor.p({
+      mode: "order",
+      icon: "http://cdn.uviewui.com/uview/empty/car.png"
+    })
+  } : {}) : $data.tabIndex === 1 ? common_vendor.e({
+    h: $data.tabIndex === 0
   }, $data.tabIndex === 0 ? {
-    e: common_vendor.p({
+    i: common_vendor.p({
       mode: "order",
       icon: "http://cdn.uviewui.com/uview/empty/car.png"
     })
-  } : $data.tabIndex === 1 ? {
-    g: common_vendor.p({
+  } : {}) : common_vendor.e({
+    j: $data.tabIndex === 0
+  }, $data.tabIndex === 0 ? {
+    k: common_vendor.p({
       mode: "order",
       icon: "http://cdn.uviewui.com/uview/empty/car.png"
     })
-  } : {
-    h: common_vendor.p({
-      mode: "order",
-      icon: "http://cdn.uviewui.com/uview/empty/car.png"
-    })
-  }, {
-    f: $data.tabIndex === 1
+  } : {}), {
+    g: $data.tabIndex === 1
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/daima/dm/ylqc_mobile/pages/order/order.vue"]]);

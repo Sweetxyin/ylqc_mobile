@@ -91,6 +91,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/complaint/complaint",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "咨询投诉",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/complaint/tocomplaint",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我要投诉",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

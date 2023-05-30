@@ -58,7 +58,7 @@
 		<!-- 其他服务 -->
 		<view class="other_services">
 			<view class="services_list">
-				<navigator class="services_item" url="">
+				<navigator class="services_item" url="/pages/complaint/complaint">
 					<image src="../../static/images/index_icon/consultation.png"></image>
 					<text>咨询投诉</text>
 				</navigator>
@@ -106,7 +106,7 @@
 	export default {
 		data() {
 			return {
-				 list: ['配送VIP', '客户下单'],
+				list: ['配送VIP', '客户下单'],
 				subIndex:0,//导航条索引值
 				
 			}
@@ -117,7 +117,7 @@
 		},
 		onLoad() {
 		
-        // this.sectionChange(0)
+        // this.sectionChange(0)，  
 		},
 		
 		methods: {
@@ -125,8 +125,12 @@
 			sectionChange(index){
 				this.subIndex=index
 				// console.log(this.subIndex)
-			}
-
+			},
+			// zxts(){
+			// 	uni.navigateTo({
+			// 	    url: '/pages/complaint/complaint'
+			// 	})
+			// }
 		}
 	}
 </script>
@@ -154,11 +158,7 @@
 		.menu_item  .u-tabs{
 			// width: 100rpx;
 		}
-		// .menu_item .u-tabs:nth-child(1){
-		// 	// background-color: #fff;
-		// 	width: 10%;
-		// 	font-size: 50rpx;
-		// }
+
 	}
 	.other_services{
 		width: 93.5%;
@@ -181,7 +181,6 @@
 	    	 align-items: center;
 	    	 justify-content: center;
 	    	 box-sizing: border-box;
-	    	 // background-color: goldenrod;
 	    }
 		.services_item image{
 			width: 60rpx;

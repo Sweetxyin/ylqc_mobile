@@ -21,6 +21,11 @@ const _sfc_main = {
     sectionChange(index) {
       this.subIndex = index;
     }
+    // zxts(){
+    // 	uni.navigateTo({
+    // 	    url: '/pages/complaint/complaint'
+    // 	})
+    // }
   }
 };
 if (!Array) {

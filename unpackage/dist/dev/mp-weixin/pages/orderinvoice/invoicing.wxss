@@ -25,6 +25,9 @@
 /* 透明度 */
 /* 文章场景相关 */
 .container.data-v-8a65c9c1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   background-color: #efefef;
 }
 .invocing_info.data-v-8a65c9c1 {

@@ -130,6 +130,10 @@ if (!Math) {
   "./pages/user/authentication.js";
   "./pages/complaint/complaint.js";
   "./pages/complaint/tocomplaint.js";
+  "./pages/complaint/history.js";
+  "./pages/storemanage/storemanage.js";
+  "./pages/storemanage/addstore.js";
+  "./pages/storemanage/selectaddress.js";
 }
 const _sfc_main = {
   data() {

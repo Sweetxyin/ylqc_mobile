@@ -14,7 +14,7 @@
 				<u-cell title="我要投诉" url="/pages/complaint/tocomplaint" isLink></u-cell>
 			</u-cell-group>
 			<u-cell-group :border="false">
-				<u-cell  title="咨询信息" url="" isLink></u-cell>
+				<u-cell  title="历史信息" url="/pages/complaint/history" isLink></u-cell>
 			</u-cell-group>
 		</view>
 	</view>

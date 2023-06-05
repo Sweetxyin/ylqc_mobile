@@ -86,12 +86,12 @@
 					startAddress:'柳州市延龙汽车',
 					endAddress:'柳州市万象城',
 					price:50
-					},{
-						orderId:'234',
-						orderTime:'2023.5.18',
-						startAddress:'柳州市阳和科三考场',
-						endAddress:'柳州市地王新天地',
-						price:65
+				},{
+					orderId:'234',
+					orderTime:'2023.5.18',
+					startAddress:'柳州市阳和科三考场',
+					endAddress:'柳州市地王新天地',
+					price:65
 					}
 				],
 				order_total:2,//订单数量
@@ -133,7 +133,9 @@
 
 <style lang="scss" scoped>
 	.container{
+		position: absolute;
 		width: 100%;
+		height: 100%;
 		background-color: #efefef;
 		display: flex;
 		flex-direction: column;
@@ -168,7 +170,7 @@
 	}
 	.invoice_bottom{
 		width: 100%;
-		height: 140rpx;
+		height: 160rpx;
 		position:fixed;
 		bottom:0;
 		background-color: white;
@@ -176,6 +178,7 @@
 		flex-direction: column;
 		justify-content: space-around;
 		align-items: center;
+		margin-bottom: 2%;
 		.order_number{
 			width: 94%;
 			border-bottom: 1rpx solid #efefef;

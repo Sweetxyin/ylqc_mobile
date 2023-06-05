@@ -25,10 +25,30 @@
 /* 透明度 */
 /* 文章场景相关 */
 .container.data-v-4c1b26cf {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   background-color: #efefef;
 }
-.message_header.data-v-4c1b26cf {
+.message_info.data-v-4c1b26cf {
   background-color: white;
-  font-size: 32rpx;
-  font-weight: bold;
+  width: 100%;
+}
+.message_info .sever_info.data-v-4c1b26cf {
+  display: flex;
+  margin-left: 20rpx;
+  border-bottom: 1rpx solid #efefef;
+  padding-bottom: 15rpx;
+}
+.message_info .sever_info .info_item.data-v-4c1b26cf {
+  width: 100%;
+}
+.message_info .sever_info .list.data-v-4c1b26cf {
+  font-size: 28rpx;
+  color: darkgray;
+  padding-left: 20rpx;
+}
+.info_item text.data-v-4c1b26cf:nth-child(2) {
+  float: right;
+  padding-right: 20rpx;
 }

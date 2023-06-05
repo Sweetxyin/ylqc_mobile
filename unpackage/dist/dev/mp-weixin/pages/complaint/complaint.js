@@ -29,8 +29,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       border: false
     }),
     c: common_vendor.p({
-      title: "咨询信息",
-      url: "",
+      title: "历史信息",
+      url: "/pages/complaint/history",
       isLink: true
     }),
     d: common_vendor.p({

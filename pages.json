@@ -109,6 +109,43 @@
             }
             
         }
+        ,{
+            "path" : "pages/complaint/history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "历史信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/storemanage/storemanage",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "门店管理",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/storemanage/addstore",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加门店",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        
+        ,{
+            "path" : "pages/storemanage/selectaddress",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "地址选择",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

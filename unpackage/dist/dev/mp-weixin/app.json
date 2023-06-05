@@ -11,7 +11,11 @@
     "pages/setting/setting",
     "pages/user/authentication",
     "pages/complaint/complaint",
-    "pages/complaint/tocomplaint"
+    "pages/complaint/tocomplaint",
+    "pages/complaint/history",
+    "pages/storemanage/storemanage",
+    "pages/storemanage/addstore",
+    "pages/storemanage/selectaddress"
   ],
   "window": {
     "navigationBarTextStyle": "black",

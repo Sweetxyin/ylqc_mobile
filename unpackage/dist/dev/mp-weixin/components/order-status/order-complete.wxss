@@ -25,7 +25,9 @@
 /* 透明度 */
 /* 文章场景相关 */
 .container.data-v-c04d84f7 {
+  position: absolute;
   width: 100%;
+  height: 100%;
   background-color: #efefef;
   display: flex;
   flex-direction: column;

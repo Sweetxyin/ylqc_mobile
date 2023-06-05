@@ -3,11 +3,11 @@
 		<view class="delivery_t">
 			<view class="t_item">
 				<navigator url="" class="item_list">{{start_address}}</navigator>
-				<navigator url="" class="item_md">|&nbsp;门店选择</navigator>
+				<navigator url="../../pages/storemanage/storemanage" class="item_md">|&nbsp;门店选择</navigator>
 			</view>
 			<view class="t_item">
 				<navigator url="" class="item_list">{{end_address}}</navigator>
-				<navigator url="" class="item_md">|&nbsp;门店选择</navigator>
+				<navigator url="../../pages/storemanage/storemanage" class="item_md">|&nbsp;门店选择</navigator>
 			</view>
 			<view class="add_address">
 				<navigator>添加地址</navigator>

@@ -15,7 +15,9 @@
     "pages/complaint/history",
     "pages/storemanage/storemanage",
     "pages/storemanage/addstore",
-    "pages/storemanage/selectaddress"
+    "pages/storemanage/selectaddress",
+    "pages/login/login",
+    "pages/login/phonelogin"
   ],
   "window": {
     "navigationBarTextStyle": "black",

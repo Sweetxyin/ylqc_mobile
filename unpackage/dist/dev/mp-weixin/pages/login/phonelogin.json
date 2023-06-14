@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "登录",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u--input": "../../uni_modules/uview-plus/components/u--input/u--input",
+    "u-gap": "../../uni_modules/uview-plus/components/u-gap/u-gap",
+    "u-toast": "../../uni_modules/uview-plus/components/u-toast/u-toast",
+    "u-code": "../../uni_modules/uview-plus/components/u-code/u-code",
+    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
+  }
+}

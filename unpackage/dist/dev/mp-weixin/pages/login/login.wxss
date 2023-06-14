@@ -24,41 +24,45 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.container.data-v-aab5e4ba {
+.container.data-v-e4e4508d {
   position: absolute;
   width: 100%;
   height: 100%;
-  display: flex;
-  background-color: #efefef;
-  flex-direction: column;
 }
-.authentication_info.data-v-aab5e4ba {
+.content.data-v-e4e4508d {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.info_title.data-v-aab5e4ba {
-  height: 50rpx;
-  padding-top: 15rpx;
-  padding-left: 35rpx;
-}
-.company_info.data-v-aab5e4ba {
-  width: 94%;
-  background-color: white;
-  border-radius: 30rpx;
+  height: 600rpx;
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  margin-left: 3%;
-}
-.info_item.data-v-aab5e4ba {
-  height: 65rpx;
-  display: flex;
   align-items: center;
-  margin-top: 5rpx;
-  border-bottom: 2rpx solid #efefef;
+  font-size: 40rpx;
+  font-weight: bold;
 }
-.submit_button.data-v-aab5e4ba {
-  width: 60%;
-  padding: 25rpx 0 0 20%;
+.wechatbox.data-v-e4e4508d {
+  width: 100%;
+  display: flex;
+  margin-top: 10%;
+  justify-content: center;
+  align-items: center;
+}
+.wechatbox .wechatlogin.data-v-e4e4508d {
+  width: 80%;
+  display: flex;
+}
+.phonebox.data-v-e4e4508d {
+  width: 100%;
+  display: flex;
+  margin-top: 20rpx;
+  justify-content: center;
+  align-items: center;
+}
+.phonebox .phonelogin.data-v-e4e4508d {
+  width: 80%;
+  display: flex;
+}
+.txt.data-v-e4e4508d {
+  display: flex;
+  margin-top: 20rpx;
+  margin-left: 10%;
+  font-size: 26rpx;
 }

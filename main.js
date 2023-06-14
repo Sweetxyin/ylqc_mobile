@@ -5,6 +5,8 @@ import Vue from 'vue'
 
 import './uni.promisify.adaptor'
 import store from './store'
+import api from './api.js'
+Vue.prototype.api = api
 
 
 // 引入全局uviewPlus

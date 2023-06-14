@@ -12,7 +12,7 @@ const _sfc_main = {
       //公司地址
       phone: "19956562365",
       //电话号码
-      user_name: "白敬亭",
+      user_name: "小明",
       //真实姓名
       user_id: "56532365623"
       //身份证号

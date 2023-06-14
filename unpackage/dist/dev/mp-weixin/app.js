@@ -134,6 +134,8 @@ if (!Math) {
   "./pages/storemanage/storemanage.js";
   "./pages/storemanage/addstore.js";
   "./pages/storemanage/selectaddress.js";
+  "./pages/login/login.js";
+  "./pages/login/phonelogin.js";
 }
 const _sfc_main = {
   data() {

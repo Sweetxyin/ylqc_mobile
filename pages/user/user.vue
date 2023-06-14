@@ -1,7 +1,12 @@
 <template>
 	<view class="container">
+		<u-gap height="5" bgColor="#f0ffff"></u-gap>
 		<view class="user_header">
-			<view class="user_login">
+			<view class="user_login" v-if="isLogin">
+				<u-avatar size="50" :src="avatarSrc"></u-avatar>
+				<text>{{userName}}</text>
+			</view>
+			<view class="user_login" @click="onLogin" v-else>
 				<u-icon name="account" size="50"></u-icon>
 				<u--text text="立即登录/认证"></u--text>
 			</view>
@@ -32,7 +37,7 @@
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator class="services_item" url="">
+				<navigator class="services_item" url="/pages/storemanage/storemanage">
 					<u-icon name="order" size="30"></u-icon>
 					<text>门店管理</text>
 				</navigator>
@@ -47,19 +52,31 @@
 </template>
 
 <script>
+
 	export default {
+			
 		data() {
 			return {
-				
+				isLogin:false,
+				avatarSrc:'../../static/images/other/tx.jpg',
+				userName:'Sweey',
+				userList:[{
+					userName:'Sweet'
+				}]
 			}
 		},
 		methods: {
-			
+			onLogin(){
+				uni.navigateTo({
+				    url: '/pages/login/login'
+				   
+				})
+			}
 		}
 	}
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 	.container{
 		position: absolute;
 		width: 100%;
@@ -74,11 +91,20 @@
 		align-items: center;
 		.user_login{
 			display: flex;
+			margin-left: 2%;
 		}
 		.user_setting{
 			// display: flex;
 			// justify-content: space-between;
 		}
+	}
+	.user_login text{
+		padding-top: 30rpx;
+		padding-left: 30rpx;
+		text-align: center;
+		font-size: 36rpx;
+		font-weight: bold;
+		
 	}
 	.setting_n text{
 		margin-right:23px;

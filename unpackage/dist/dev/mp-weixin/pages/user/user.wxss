@@ -24,27 +24,35 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.container {
+.container.data-v-0f7520f0 {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: #f0ffff;
 }
-.user_header {
+.user_header.data-v-0f7520f0 {
   height: 60px;
   display: flex;
   padding-left: 10px;
   justify-content: space-between;
   align-items: center;
 }
-.user_header .user_login {
+.user_header .user_login.data-v-0f7520f0 {
   display: flex;
+  margin-left: 2%;
 }
-.setting_n text {
+.user_login text.data-v-0f7520f0 {
+  padding-top: 30rpx;
+  padding-left: 30rpx;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.setting_n text.data-v-0f7520f0 {
   margin-right: 23px;
   font-size: 26rpx;
 }
-.user_service {
+.user_service.data-v-0f7520f0 {
   width: 93.5%;
   display: flex;
   flex-wrap: wrap;
@@ -54,10 +62,10 @@
   margin-top: 10rpx;
   border-radius: 20rpx;
 }
-.user_service .services_list {
+.user_service .services_list.data-v-0f7520f0 {
   width: 25%;
 }
-.user_service .services_item {
+.user_service .services_item.data-v-0f7520f0 {
   height: 130rpx;
   display: flex;
   flex-direction: column;
@@ -65,11 +73,11 @@
   justify-content: center;
   box-sizing: border-box;
 }
-.user_service .services_item text {
+.user_service .services_item text.data-v-0f7520f0 {
   font-size: 26rpx;
   margin-top: 5rpx;
 }
-.user_zw {
+.user_zw.data-v-0f7520f0 {
   width: 93.5%;
   height: 800rpx;
   display: flex;

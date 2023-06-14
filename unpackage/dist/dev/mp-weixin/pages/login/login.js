@@ -25,15 +25,6 @@ const _sfc_main = {
     this.updateSessionKey();
   },
   methods: {
-    // 获取SessionKey
-    updateSessionKey() {
-      this.getLoginCode();
-    },
-    toPhoneLogin() {
-      common_vendor.index.navigateTo({
-        url: "/pages/login/phonelogin"
-      });
-    },
     // 获取code
     getLoginCode() {
       common_vendor.index.login({
@@ -47,7 +38,7 @@ const _sfc_main = {
     },
     // 微信登陆
     weichatlogin() {
-      let that = this;
+      let _this = this;
       let token = common_vendor.index.getStorageSync("token");
       if (token) {
         common_vendor.index.redirectTo({
@@ -58,31 +49,11 @@ const _sfc_main = {
           lang: "zh_CN",
           desc: "获取你的昵称、头像、地区及性别",
           success: (res) => {
-            that.info = res.userInfo;
+            _this.info = res.userInfo;
             console.log(res);
             common_vendor.index.showToast({
               icon: "none",
               title: "获取成功"
-            });
-            common_vendor.index.request({
-              url: "https://www.kunzhou.club:8080/api/yl_user/OnLogin",
-              method: "POST",
-              data: {
-                data: {
-                  code: that.code
-                }
-              },
-              success: (res2) => {
-                if (res2.data.errorinfo == null) {
-                  console.log(res2.data);
-                  this.openId = res2.data.data.openId;
-                  this.sessionKey = res2.data.data.sessionKey;
-                  console.log(this.openId, this.sessionKey);
-                }
-              },
-              fail: (err) => {
-                console.log(err);
-              }
             });
           },
           fail: (err) => {
@@ -118,7 +89,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       plain: true,
       text: "手机号登录/注册"
     }),
-    d: common_vendor.o((...args) => $options.toPhoneLogin && $options.toPhoneLogin(...args)),
+    d: common_vendor.o((...args) => _ctx.toPhoneLogin && _ctx.toPhoneLogin(...args)),
     e: common_vendor.o(($event) => _ctx.dealClick("用户服务协议")),
     f: common_vendor.o(($event) => _ctx.dealClick("隐私协议"))
   };

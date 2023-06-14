@@ -49,7 +49,8 @@
 					startAddress:'柳州市延龙汽车',
 					endAddress:'柳州市万象城',
 					price:50
-					},{
+					},
+					{
 						orderId:'234',
 						orderStatus:'订单已取消',
 						orderTime:'2023.5.18',

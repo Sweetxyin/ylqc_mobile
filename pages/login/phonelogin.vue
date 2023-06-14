@@ -2,13 +2,13 @@
 	<view class="container">
 		<view class="content">
 			<view class="phonebox">
-				<u--input placeholder="请输入手机号" border="bottom" clearable
+				<u--input placeholder="请输入手机号" v-model="phoneNumber" border="bottom" clearable
 				></u--input>
 			</view>
 			<u-gap height="2" bgColor="#ffffff"></u-gap>
 			
 			<view class="phonebox">
-				<u--input placeholder="请输入验证码" border="bottom" clearable
+				<u--input placeholder="请输入验证码" v-model="code" border="bottom" clearable
 				></u--input>
 				<view class="wrap">
 						<u-toast ref="uToast"></u-toast>
@@ -33,6 +33,8 @@
 	export default {
 		data() {
 			return {
+				phoneNumber:'',//手机号码
+				code:'',//验证码
 				tips: '',
 				// refCode: null,
 				seconds: 10,				

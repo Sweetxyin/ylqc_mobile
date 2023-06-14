@@ -5,12 +5,8 @@ import Vue from 'vue'
 
 import './uni.promisify.adaptor'
 import store from './store'
-import api from './api.js'
-Vue.prototype.api = api
-
-
-// 引入全局uviewPlus
-
+import api from './api/api.js'
+Vue.prototype.$api = api
 
 
 Vue.config.productionTip = false
@@ -29,7 +25,9 @@ app.$mount()
 
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
+// 引入全局uviewPlus
 import uviewPlus from '@/uni_modules/uview-plus'
+
 export function createApp() {
   const app = createSSRApp(App)
   app.use(uviewPlus)

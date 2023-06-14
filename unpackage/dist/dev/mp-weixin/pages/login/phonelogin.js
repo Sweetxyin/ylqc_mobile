@@ -3,6 +3,10 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
+      phoneNumber: "",
+      //手机号码
+      code: "",
+      //验证码
       tips: "",
       // refCode: null,
       seconds: 10
@@ -52,39 +56,43 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.p({
+    a: common_vendor.o(($event) => $data.phoneNumber = $event),
+    b: common_vendor.p({
       placeholder: "请输入手机号",
       border: "bottom",
-      clearable: true
+      clearable: true,
+      modelValue: $data.phoneNumber
     }),
-    b: common_vendor.p({
+    c: common_vendor.p({
       height: "2",
       bgColor: "#ffffff"
     }),
-    c: common_vendor.p({
+    d: common_vendor.o(($event) => $data.code = $event),
+    e: common_vendor.p({
       placeholder: "请输入验证码",
       border: "bottom",
-      clearable: true
+      clearable: true,
+      modelValue: $data.code
     }),
-    d: common_vendor.sr("uToast", "452c255c-3"),
-    e: common_vendor.sr("uCode", "452c255c-4"),
-    f: common_vendor.o($options.end),
-    g: common_vendor.o($options.start),
-    h: common_vendor.o($options.codeChange),
-    i: common_vendor.p({
+    f: common_vendor.sr("uToast", "452c255c-3"),
+    g: common_vendor.sr("uCode", "452c255c-4"),
+    h: common_vendor.o($options.end),
+    i: common_vendor.o($options.start),
+    j: common_vendor.o($options.codeChange),
+    k: common_vendor.p({
       seconds: $data.seconds
     }),
-    j: common_vendor.t($data.tips),
-    k: common_vendor.o($options.getCode),
-    l: common_vendor.p({
+    l: common_vendor.t($data.tips),
+    m: common_vendor.o($options.getCode),
+    n: common_vendor.p({
       height: "50",
       bgColor: "#ffffff"
     }),
-    m: common_vendor.p({
+    o: common_vendor.p({
       type: "success",
       text: "立即登录"
     }),
-    n: common_vendor.o((...args) => _ctx.phonelogin && _ctx.phonelogin(...args))
+    p: common_vendor.o((...args) => _ctx.phonelogin && _ctx.phonelogin(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-452c255c"], ["__file", "F:/daima/dm/ylqc_mobile/pages/login/phonelogin.vue"]]);

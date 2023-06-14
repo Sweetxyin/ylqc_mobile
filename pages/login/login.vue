@@ -49,18 +49,8 @@
 		},
 				
 		methods: {
-			// 获取SessionKey
-			updateSessionKey() {
-				this.getLoginCode() //获取微信登录js_code
-				// console.log('code=',jsCode)
-						
-			},
-			toPhoneLogin() {
-				uni.navigateTo({
-				    url: '/pages/login/phonelogin'
-				   
-				})
-			},
+				
+		
 			// 获取code
 			getLoginCode() {
 				uni.login({
@@ -75,7 +65,7 @@
 			
 			// 微信登陆
 			weichatlogin() {
-				let that = this;
+				let _this = this;
 				let token = uni.getStorageSync('token');
 				if (token) {
 					uni.redirectTo({
@@ -86,34 +76,12 @@
 						lang: 'zh_CN',
 						desc:"获取你的昵称、头像、地区及性别",
 						    success: (res) => {
-						        that.info = res.userInfo;
+						        _this.info = res.userInfo;
 						        console.log(res)
 						        uni.showToast({
 						            icon:"none",
 						            title:'获取成功'
 						        })
-								uni.request({
-										url:"https://www.kunzhou.club:8080/api/yl_user/OnLogin",
-										method:"POST",
-										data:{
-											data:{
-												code:that.code,
-											}
-										},
-										success:(res)=>{
-											if(res.data.errorinfo == null){
-												console.log(res.data)
-												this.openId=res.data.data.openId               //openid 用户唯一标识  
-												this.sessionKey=res.data.data.sessionKey     //sessionKey  会话密钥  
-												console.log(this.openId,this.sessionKey);
-											}
-										},
-										fail: (err) => {
-											        console.log(err)
-											        
-											    }  
-									})
-
 						    },
 						    fail: (err) => {
 						        console.log(err)

@@ -136,6 +136,7 @@ if (!Math) {
   "./pages/storemanage/selectaddress.js";
   "./pages/login/login.js";
   "./pages/login/phonelogin.js";
+  "./pages/order/orderdetails.js";
 }
 const _sfc_main = {
   data() {

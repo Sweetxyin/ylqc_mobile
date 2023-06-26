@@ -3,7 +3,7 @@
 		
 		<view class="processing_list" v-for="(item, index) in indexList"
 					:key="index">
-			<view class="processing_1">
+			<view class="processing_1" @click="toOrderDetail">
 				<view class="order_status">
 					<text style="font-size: 28rpx; padding-left: 15rpx; font-weight: bold;">订单</text>
 					<text style="font-size: 22rpx; padding-right: 10rpx; ">{{item.orderStatus}}></text>
@@ -49,16 +49,23 @@
 					startAddress:'柳州市延龙汽车',
 					endAddress:'柳州市万象城',
 					price:50
-					},{
-						orderId:'234',
-						orderStatus:'订单已生成',
-						orderTime:'2023.5.18',
-						startAddress:'柳州市阳和科三考场',
-						endAddress:'柳州市地王新天地',
-						price:65
-					}
+				},{
+					orderId:'234',
+					orderStatus:'订单已生成',
+					orderTime:'2023.5.18',
+					startAddress:'柳州市阳和科三考场',
+					endAddress:'柳州市地王新天地',
+					price:65
+				}
 				],
 			};
+		},
+		methods: {
+			toOrderDetail (){
+				uni.navigateTo({
+					url:'/pages/order/orderdetails',
+				})
+			}
 		}
 	}
 </script>

@@ -23,6 +23,13 @@ const _sfc_main = {
         }
       ]
     };
+  },
+  methods: {
+    toOrderDetail() {
+      common_vendor.index.navigateTo({
+        url: "/pages/order/orderdetails"
+      });
+    }
   }
 };
 if (!Array) {
@@ -47,9 +54,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         f: "c9df37dd-2-" + i0,
         g: common_vendor.t(item.endAddress),
         h: common_vendor.t(item.price),
-        i: "c9df37dd-3-" + i0,
-        j: "c9df37dd-4-" + i0,
-        k: index
+        i: common_vendor.o((...args) => $options.toOrderDetail && $options.toOrderDetail(...args), index),
+        j: "c9df37dd-3-" + i0,
+        k: "c9df37dd-4-" + i0,
+        l: index
       };
     }),
     b: common_vendor.p({

@@ -17,7 +17,8 @@
     "pages/storemanage/addstore",
     "pages/storemanage/selectaddress",
     "pages/login/login",
-    "pages/login/phonelogin"
+    "pages/login/phonelogin",
+    "pages/order/orderdetails"
   ],
   "window": {
     "navigationBarTextStyle": "black",

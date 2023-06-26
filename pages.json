@@ -164,6 +164,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/order/orderdetails",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

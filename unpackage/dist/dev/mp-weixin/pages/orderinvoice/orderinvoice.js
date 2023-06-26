@@ -26,10 +26,10 @@ const _sfc_main = {
       order_price: 115,
       //订单价格
       radiolist1: [{
-        name: "全选",
+        name: "全页全选",
         disabled: false
       }, {
-        name: "全不选",
+        name: "全部全选",
         disabled: false
       }]
     };

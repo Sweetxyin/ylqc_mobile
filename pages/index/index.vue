@@ -106,7 +106,7 @@
 	export default {
 		data() {
 			return {
-				list: ['配送VIP', '客户下单'],
+				list: ['客户下单', '配送VIP'],
 				subIndex:0,//导航条索引值
 				
 			}

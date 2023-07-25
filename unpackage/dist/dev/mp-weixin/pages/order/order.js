@@ -6,6 +6,9 @@ const Cancel = () => "../../components/order-status/order-cancel.js";
 const _sfc_main = {
   data() {
     return {
+      hasLogin: this.$store.state.hasLogin,
+      //登录状态
+      userid: this.$store.state.userid,
       list1: [{
         name: "进行中"
       }, {
@@ -15,7 +18,7 @@ const _sfc_main = {
       }],
       tabIndex: 0,
       // tabStatus:true
-      order_total: 1,
+      orderTotal: 1,
       //订单数量
       order_state: 1
     };
@@ -25,13 +28,29 @@ const _sfc_main = {
     Complete,
     Cancel
   },
-  onLoad() {
+  mounted() {
+    this.getOrderList();
   },
   methods: {
     tabChang(index) {
       this.tabIndex = index.index;
-      console.log(this.tabIndex);
-      console.log("index的值为：" + this.tabIndex + "和index" + index.index);
+    },
+    toLogin() {
+      common_vendor.index.navigateTo({
+        url: "/pages/login/login"
+      });
+    },
+    getOrderList() {
+      var _this = this;
+      _this.$api.reqPost("api/yl_orders/QueryForUser", {
+        params: { userid: _this.userid }
+      }).then((res) => {
+        if (res.status) {
+          console.log("获取订单信息成功", res);
+        } else {
+          console.log("获取订单信息失败", res);
+        }
+      });
     }
   }
 };
@@ -42,13 +61,15 @@ if (!Array) {
   const _component_Processing = common_vendor.resolveComponent("Processing");
   const _component_Complete = common_vendor.resolveComponent("Complete");
   const _component_Cancel = common_vendor.resolveComponent("Cancel");
-  (_easycom_u_tabs2 + _easycom_u_sticky2 + _easycom_u_empty2 + _component_Processing + _component_Complete + _component_Cancel)();
+  const _easycom_u_button2 = common_vendor.resolveComponent("u-button");
+  (_easycom_u_tabs2 + _easycom_u_sticky2 + _easycom_u_empty2 + _component_Processing + _component_Complete + _component_Cancel + _easycom_u_button2)();
 }
 const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_u_sticky = () => "../../uni_modules/uview-plus/components/u-sticky/u-sticky.js";
 const _easycom_u_empty = () => "../../uni_modules/uview-plus/components/u-empty/u-empty.js";
+const _easycom_u_button = () => "../../uni_modules/uview-plus/components/u-button/u-button.js";
 if (!Math) {
-  (_easycom_u_tabs + _easycom_u_sticky + _easycom_u_empty)();
+  (_easycom_u_tabs + _easycom_u_sticky + _easycom_u_empty + _easycom_u_button)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -60,38 +81,47 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       itemStyle: "padding-left: 41px; padding-right:39px; height: 34px;",
       activeStyle: {
         color: "#3c9cff",
-        fontWeight: "bold",
         transform: "scale(1.05)"
       }
     }),
     c: common_vendor.p({
       bgColor: "#fff"
     }),
-    d: $data.tabIndex === 0
+    d: $data.hasLogin == true
+  }, $data.hasLogin == true ? common_vendor.e({
+    e: $data.tabIndex === 0
   }, $data.tabIndex === 0 ? common_vendor.e({
-    e: $data.order_total === 0
-  }, $data.order_total === 0 ? {
-    f: common_vendor.p({
+    f: $data.orderTotal === 0
+  }, $data.orderTotal === 0 ? {
+    g: common_vendor.p({
       mode: "order",
       icon: "http://cdn.uviewui.com/uview/empty/car.png"
     })
   } : {}) : $data.tabIndex === 1 ? common_vendor.e({
-    h: $data.tabIndex === 0
+    i: $data.tabIndex === 0
   }, $data.tabIndex === 0 ? {
-    i: common_vendor.p({
+    j: common_vendor.p({
       mode: "order",
       icon: "http://cdn.uviewui.com/uview/empty/car.png"
     })
   } : {}) : common_vendor.e({
-    j: $data.tabIndex === 0
+    k: $data.tabIndex === 0
   }, $data.tabIndex === 0 ? {
-    k: common_vendor.p({
+    l: common_vendor.p({
       mode: "order",
       icon: "http://cdn.uviewui.com/uview/empty/car.png"
     })
   } : {}), {
-    g: $data.tabIndex === 1
-  });
+    h: $data.tabIndex === 1
+  }) : {}, {
+    m: $data.hasLogin == false
+  }, $data.hasLogin == false ? {
+    n: common_vendor.o($options.toLogin),
+    o: common_vendor.p({
+      type: "primary",
+      text: "去登录"
+    })
+  } : {});
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/daima/dm/ylqc_mobile/pages/order/order.vue"]]);
 wx.createPage(MiniProgramPage);

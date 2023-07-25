@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
+const store_index = require("./store/index.js");
 const uni_modules_uviewPlus_index = require("./uni_modules/uview-plus/index.js");
+const api_index = require("./api/index.js");
 require("./uni_modules/uview-plus/libs/mixin/mixin.js");
 require("./uni_modules/uview-plus/libs/mixin/mpMixin.js");
 require("./uni_modules/uview-plus/libs/luch-request/core/Request.js");
@@ -117,6 +119,8 @@ require("./uni_modules/uview-plus/libs/config/props/transition.js");
 require("./uni_modules/uview-plus/libs/config/props/upload.js");
 require("./uni_modules/uview-plus/libs/config/zIndex.js");
 require("./uni_modules/uview-plus/libs/function/platform.js");
+require("./api/request.js");
+require("./api/api.js");
 if (!Math) {
   "./pages/index/index.js";
   "./pages/order/order.js";
@@ -145,7 +149,6 @@ const _sfc_main = {
   onLaunch: function() {
   },
   onShow: function() {
-    console.log("App Show");
   },
   onHide: function() {
     console.log("App Hide");
@@ -154,7 +157,10 @@ const _sfc_main = {
 const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "F:/daima/dm/ylqc_mobile/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
+  app.config.globalProperties.$api = api_index.api;
+  app.config.globalProperties.productionTip = false;
   app.use(uni_modules_uviewPlus_index.uviewPlus);
+  app.use(store_index.store);
   return {
     app
   };

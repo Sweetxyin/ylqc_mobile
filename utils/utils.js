@@ -1,3 +1,17 @@
+function showToast(title, options) {
+	let _options = Object.assign({
+		mask: false,
+		icon: 'none',
+		duration: 2000,
+		position: 'center'
+	}, options)
+	uni.showToast({
+		title,
+		..._options
+	})
+}
+
+
 function formatLocation(longitude, latitude) {
     if (typeof longitude === 'string' && typeof latitude === 'string') {
         longitude = parseFloat(longitude)
@@ -11,5 +25,6 @@ function formatLocation(longitude, latitude) {
     }
 }
 module.exports = {
-	    formatLocation: formatLocation,
+	showToast:showToast,
+	formatLocation: formatLocation,
 	}

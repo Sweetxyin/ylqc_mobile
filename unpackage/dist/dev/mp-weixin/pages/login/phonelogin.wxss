@@ -37,7 +37,19 @@
   margin-top: 30%;
   flex-direction: column;
 }
+.logintitle.data-v-452c255c {
+  font-size: 45rpx;
+  font-weight: bold;
+  margin-left: 25%;
+  margin-bottom: 160rpx;
+}
 .phonebox.data-v-452c255c {
   width: 100%;
+  height: 85rpx;
   display: flex;
+  font-size: 30rpx;
+}
+.wrap.data-v-452c255c {
+  padding-top: 5rpx;
+  height: 85rpx;
 }

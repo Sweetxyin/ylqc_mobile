@@ -2,6 +2,8 @@
   "navigationBarTitleText": "登录",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
+    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button",
+    "u-checkbox": "../../uni_modules/uview-plus/components/u-checkbox/u-checkbox",
+    "u-checkbox-group": "../../uni_modules/uview-plus/components/u-checkbox-group/u-checkbox-group"
   }
 }

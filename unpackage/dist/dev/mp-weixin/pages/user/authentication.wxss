@@ -52,7 +52,7 @@
   margin-left: 3%;
 }
 .info_item.data-v-aab5e4ba {
-  height: 65rpx;
+  height: 80rpx;
   display: flex;
   align-items: center;
   margin-top: 5rpx;

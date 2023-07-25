@@ -3,24 +3,75 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      basic_name: "",
-      info_name: "",
-      //昵称
-      corporate_name: "柳州延龙汽车",
-      //公司名称
-      company_address: "广西柳州市鱼峰区和悦路1号",
-      //公司地址
-      phone: "19956562365",
-      //电话号码
-      user_name: "小明",
-      //真实姓名
-      user_id: "56532365623"
-      //身份证号
+      userInfo: {
+        avatar: "",
+        //头像
+        name: "",
+        //昵称
+        company: "",
+        //公司名称
+        realName: "",
+        //真实姓名
+        address: "",
+        //公司地址
+        idCrad: "",
+        //身份证号
+        phone: ""
+        //电话号码
+      },
+      inputStatus: false,
+      userToken: this.$store.state.token
     };
   },
+  onShow() {
+    this.getUserInfo();
+  },
   methods: {
+    ...common_vendor.mapMutations(["userLogout"]),
     //选择头像
     chooseAvatar() {
+    },
+    //退出登录
+    logout() {
+      var _this = this;
+      common_vendor.index.showModal({
+        title: "确定要退出登录吗？",
+        success: function(res) {
+          if (res.confirm) {
+            _this.$api.reqPost("api/yl_user/LogOut").then((res2) => {
+              if (res2.status) {
+                console.log("注销登录成功!");
+                common_vendor.index.removeStorageSync("token");
+                console.log("检查token是否移除", common_vendor.index.getStorageSync("token"));
+                _this.userLogout();
+                console.log("检查是否成功将数据移除vuex", _this.$store.state);
+                common_vendor.index.reLaunch({ url: "/pages/index/index" });
+              } else {
+                console.log("注销登录失败!");
+              }
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        }
+      });
+    },
+    //获取用户信息
+    getUserInfo() {
+      var _this = this;
+      _this.$api.reqPost("api/yl_user/GetUserInfo").then((res) => {
+        if (res.status) {
+          _this.userInfo = res.data;
+          if (res.data.idCrad != "") {
+            let val = res.data.idCrad;
+            let reg = /^(.{3}).*(.{2})$/;
+            _this.userInfo.idCrad = val.replace(reg, "$1*************$2");
+          }
+          console.log("获取用户信息成功", res);
+        } else {
+          console.log("获取用户信息失败", res);
+        }
+      });
     }
   }
 };
@@ -47,57 +98,57 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.p({
       border: false
     }),
-    c: common_vendor.o(($event) => $data.info_name = $event),
+    c: common_vendor.o(($event) => $data.userInfo.name = $event),
     d: common_vendor.p({
       placeholder: "请输入昵称",
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",
-      disabled: _ctx.inputStatus,
-      modelValue: $data.info_name
+      disabled: "false",
+      modelValue: $data.userInfo.name
     }),
-    e: common_vendor.o(($event) => $data.corporate_name = $event),
+    e: common_vendor.o(($event) => $data.userInfo.company = $event),
     f: common_vendor.p({
       placeholder: "请输入公司名称",
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",
-      disabled: _ctx.inputStatus,
-      modelValue: $data.corporate_name
+      disabled: $data.inputStatus,
+      modelValue: $data.userInfo.company
     }),
-    g: common_vendor.o(($event) => $data.company_address = $event),
+    g: common_vendor.o(($event) => $data.userInfo.address = $event),
     h: common_vendor.p({
       placeholder: "请输入公司地址",
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",
-      disabled: _ctx.inputStatus,
-      modelValue: $data.company_address
+      disabled: $data.inputStatus,
+      modelValue: $data.userInfo.address
     }),
-    i: common_vendor.o(($event) => $data.phone = $event),
+    i: common_vendor.o(($event) => $data.userInfo.phone = $event),
     j: common_vendor.p({
       placeholder: "请输入电话号码",
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",
-      disabled: _ctx.inputStatus,
-      modelValue: $data.phone
+      disabled: $data.inputStatus,
+      modelValue: $data.userInfo.phone
     }),
-    k: common_vendor.o(($event) => $data.user_name = $event),
+    k: common_vendor.o(($event) => $data.userInfo.realName = $event),
     l: common_vendor.p({
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",
-      disabled: _ctx.inputStatus,
-      modelValue: $data.user_name
+      disabled: $data.inputStatus,
+      modelValue: $data.userInfo.realName
     }),
-    m: common_vendor.o(($event) => $data.user_id = $event),
+    m: common_vendor.o(($event) => $data.userInfo.idCrad = $event),
     n: common_vendor.p({
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",
-      disabled: _ctx.inputStatus,
-      modelValue: $data.user_id
+      disabled: $data.inputStatus,
+      modelValue: $data.userInfo.idCrad
     }),
     o: common_vendor.p({
       title: "关于延龙",
@@ -120,7 +171,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     t: common_vendor.p({
       border: false
     }),
-    v: common_vendor.p({
+    v: common_vendor.o($options.logout),
+    w: common_vendor.p({
       type: "error",
       plain: true,
       text: "退出登录"

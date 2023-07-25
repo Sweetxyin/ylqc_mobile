@@ -38,3 +38,19 @@
   width: 100%;
   height: 1070rpx;
 }
+.noLogin {
+  height: 100vh;
+  width: 100%;
+  background-color: #efefef;
+}
+.noLogin .notext {
+  margin-top: 70%;
+}
+.noLogin .notext .text1 {
+  padding-left: 32.5%;
+}
+.submit_button {
+  width: 50%;
+  padding-left: 25%;
+  padding-top: 5%;
+}

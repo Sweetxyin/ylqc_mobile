@@ -1,36 +1,53 @@
 // 页面路径：store/index.js 
+// #ifndef VUE3
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-Vue.use(Vuex);//vue的插件机制
-
-//Vuex.Store 构造器选项
+Vue.use(Vuex)
 const store = new Vuex.Store({
+// #endif
+
+// #ifdef VUE3
+import { createStore } from 'vuex'
+const store = createStore({
+// #endif
 	state: {//存放状态
 	    //登录状态，默认未登录
-		loginState: false,
+		hasLogin: false,
+		token: '',
 		//用户信息
 		userInfo: {
-			name: '',//用户昵称
-			avatar: ''//头像
-		}
+			// name: '',//用户昵称
+			// avatar: ''//头像
+		},
+		openid:'',
+		userid:''
 	},
 	getters: {
 		
 	},
 	mutations: {
+		setToken(state,auth){
+			state.token = auth.token
+		},
 		//用户登录设置
-		userLogin(state,userInfo) {
-			state.loginState = true
-			state.userInfo =userInfo
+		login(state,userInfo) {
+			state.hasLogin = true
+			state.userInfo = userInfo
+			state.openid = userInfo.openid
+			state.userid = userInfo.id
+		},
+		userOpenId(state) {
+			state.openid = state
 		},
 		//用户退出设置
 		userLogout(state) {
-			state.loginState = false
+			state.hasLogin = false
 			state.userInfo = {
-				name: '未知用户',
-				avatar: ''
+				// name: '',
+				// avatar: ''
 			}
+			state.token = ''
+			state.openid = null
 		}
 	},
 	actions: {

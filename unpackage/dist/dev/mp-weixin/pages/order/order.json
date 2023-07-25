@@ -7,6 +7,7 @@
     "cancel": "../../components/order-status/order-cancel",
     "u-tabs": "../../uni_modules/uview-plus/components/u-tabs/u-tabs",
     "u-sticky": "../../uni_modules/uview-plus/components/u-sticky/u-sticky",
-    "u-empty": "../../uni_modules/uview-plus/components/u-empty/u-empty"
+    "u-empty": "../../uni_modules/uview-plus/components/u-empty/u-empty",
+    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
   }
 }

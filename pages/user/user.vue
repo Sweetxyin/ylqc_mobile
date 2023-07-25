@@ -2,11 +2,12 @@
 	<view class="container">
 		<u-gap height="5" bgColor="#f0ffff"></u-gap>
 		<view class="user_header">
-			<view class="user_login" v-if="isLogin">
-				<u-avatar size="50" :src="avatarSrc"></u-avatar>
-				<text>{{userName}}</text>
+			<view class="user_login" v-if="hasLogin==true">
+				<u-avatar size="50" :src="userInfo.avatar"></u-avatar>
+				<text >{{userInfo.name}}</text>
+				<text @click="toAuth">前往认证</text>
 			</view>
-			<view class="user_login" @click="onLogin" v-else>
+			<view class="user_login" @click="onLogin" v-else="hasLogin==false">
 				<u-icon name="account" size="50"></u-icon>
 				<u--text text="立即登录/认证"></u--text>
 			</view>
@@ -52,26 +53,60 @@
 </template>
 
 <script>
-
+	import { mapState, mapMutations } from "vuex"
 	export default {
 			
 		data() {
 			return {
-				isLogin:false,
+				hasLogin:this.$store.state.hasLogin,//登录状态
 				avatarSrc:'../../static/images/other/tx.jpg',
-				userName:'Sweey',
-				userList:[{
-					userName:'Sweet'
-				}]
+				userInfo:{
+					name:'',//昵称
+					avatar:'',//头像
+				}
 			}
 		},
+	    
+		onShow() {
+			
+		},
+		mounted() {
+		  this.getUserInfo()
+		},
 		methods: {
+			//跳转到登录页
 			onLogin(){
 				uni.navigateTo({
 				    url: '/pages/login/login'
-				   
 				})
+			},
+			//跳转到认证页面
+			toAuth(){
+				uni.navigateTo({
+					url:'/pages/user/authentication'
+				})
+			},
+			//获取用户信息
+			getUserInfo(){
+				var _this = this
+				if(_this.hasLogin){
+					_this.$api.reqPost('api/yl_user/GetUserInfo').then(res => {
+						if(res.status){
+							_this.userInfo = res.data
+							if(res.data.name==null){
+								let val = res.data.phone
+								let reg = /^(.{3}).*(.{4})$/
+								_this.userInfo.name=val.replace(reg, '$1****$2')
+							}
+							console.log('获取用户信息成功！',res)
+						}else{
+							console.log('获取用户信息失败！',res)
+						}
+					})
+				}
+				
 			}
+			
 		}
 	}
 </script>

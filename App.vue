@@ -1,5 +1,5 @@
 <script>
-	
+	const commoneUrl  = "https://www.kunzhou.club:8080/"; //公共路径 
 	export default {
 
 		data(){
@@ -12,7 +12,7 @@
 			
 		},
 		onShow: function() {
-			console.log('App Show');
+			// console.log('App Show');
 			// console.log(this.$u.config.v);
 			
 		},

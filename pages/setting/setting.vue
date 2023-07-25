@@ -13,25 +13,25 @@
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">昵称</text>
 					 <u--input placeholder="请输入昵称" border="none" inputAlign="right"
-					    v-model="info_name" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					    v-model="userInfo.name" fontSize="26rpx" disabled="false" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">公司名称</text>
 					 <u--input placeholder="请输入公司名称" border="none" inputAlign="right"
-					    v-model="corporate_name" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					    v-model="userInfo.company" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">公司地址</text>
 					 <u--input placeholder="请输入公司地址" border="none" inputAlign="right"
-					    v-model="company_address" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					    v-model="userInfo.address" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">电话号码</text>
 					 <u--input placeholder="请输入电话号码" border="none" inputAlign="right"
-					    v-model="phone" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					    v-model="userInfo.phone" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
 			</view>
@@ -44,13 +44,13 @@
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">真实姓名</text>
 					 <u--input border="none" inputAlign="right"
-					    v-model="user_name" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					    v-model="userInfo.realName" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">身份证号</text>
 					 <u--input border="none" inputAlign="right"
-					    v-model="user_id" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					    v-model="userInfo.idCrad" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
 			</view>
@@ -66,9 +66,10 @@
 					<u-cell class="setting-item" title="收费标准" isLink></u-cell>
 				</u-cell-group>
 			</view>
+
 			
 			<view class="logout_button">
-				<u-button type="error" :plain="true" text="退出登录"></u-button>
+				<u-button type="error" :plain="true" text="退出登录" @click="logout"></u-button>
 			</view>
 		</view>
 		
@@ -77,23 +78,75 @@
 </template>
 
 <script>
+		import { mapState, mapMutations } from "vuex"
 	export default {
 		data() {
 			return {
-				basic_name:'',
-				info_name:'',//昵称
-				corporate_name:'柳州延龙汽车',//公司名称
-				company_address:'广西柳州市鱼峰区和悦路1号',//公司地址
-				phone:'19956562365',//电话号码
-				user_name:'小明',//真实姓名
-				user_id:'56532365623',//身份证号
+				userInfo:{
+					avatar:'',//头像
+					name:'',//昵称
+					company:'',//公司名称
+					realName:'',//真实姓名
+					address:'',//公司地址
+					idCrad:'',//身份证号
+					phone:'',//电话号码
+				},
+				inputStatus:false,
+				userToken:this.$store.state.token
 			}
 		},
+		onShow() {
+			this.getUserInfo()
+		},
 		methods: {
+			...mapMutations(["userLogout"]),
 			//选择头像
-      chooseAvatar() {
+			chooseAvatar() {
         
-      },
+			},
+			//退出登录
+			logout(){
+				var _this = this
+				uni.showModal({
+					title:'确定要退出登录吗？',
+					success:function(res){
+						if(res.confirm){
+							_this.$api.reqPost('api/yl_user/LogOut').then(res => {
+								if(res.status){
+									console.log('注销登录成功!')
+									uni.removeStorageSync('token')
+									console.log('检查token是否移除',uni.getStorageSync('token'))
+									_this.userLogout()
+									console.log("检查是否成功将数据移除vuex",_this.$store.state);
+									uni.reLaunch({ url: '/pages/index/index' })
+								}else{
+									console.log('注销登录失败!')
+								}
+							})
+
+						}else if(res.cancel){
+							console.log('用户点击取消')
+						}
+					}
+				})
+			},
+			//获取用户信息
+			getUserInfo(){
+				var _this = this
+				_this.$api.reqPost('api/yl_user/GetUserInfo').then(res=>{
+					if(res.status){
+						_this.userInfo = res.data
+						if(res.data.idCrad != ""){
+							let val = res.data.idCrad
+							let reg = /^(.{3}).*(.{2})$/
+							_this.userInfo.idCrad=val.replace(reg, '$1*************$2')
+						}
+						console.log('获取用户信息成功',res)
+					}else{
+						console.log('获取用户信息失败',res)
+					}
+				})
+			}
 
 		}
 	}

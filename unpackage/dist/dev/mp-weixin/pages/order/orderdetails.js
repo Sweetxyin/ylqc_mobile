@@ -4,6 +4,7 @@ const orderMap = () => "../../components/order-map/order-map.js";
 const _sfc_main = {
   data() {
     return {
+      number: "",
       licensePlate: "桂B12343",
       //车牌
       driverName: "韦师傅",
@@ -31,56 +32,43 @@ const _sfc_main = {
         }
       ],
       orderList: [{
-        orderId: "1234566",
+        number: "",
         //订单编号
-        orderStatus: "订单进行中",
+        state: "",
         //订单状态
-        orderTime: "2023.5.17",
+        deliveryTime: "",
         //订单时间
-        startName: "柳州市延龙汽车",
+        sendName: "柳州市延龙汽车",
         //发件地名称
-        startAddress: "广西壮族自治区柳州市鱼峰区和悦路1号",
+        sendAddress: "",
         //发件地址
         endName: "柳州市万象城",
         //收件地址
-        endAddress: "广西壮族自治区柳州市鱼峰区文昌路17号",
+        receAddress: "",
         //收件地址
-        totalPrice: 50,
+        amount: "",
         //订单总价
-        contacts: "小明",
+        recipient: "",
         //联系人
-        conPhone: "155664455",
+        recePhone: "",
         //联系电话
-        goodsNumber: "3",
+        itemNum: "",
         //货物数量
-        notes: "无"
+        remark: ""
         //订单备注
       }],
       roadList: [{
-        orderStatus: "订单已完成",
+        state: "3",
         //订单状态
-        orderTime: "2023.5.17",
+        deliveryTime: "2023.5.17",
         //订单时间
         roadName: "柳州市汽贸园",
         //发件地址
         roadAddress: "广西壮族自治区柳州市鱼峰区和悦路1号",
         //收件地址
-        contacts: "小明",
+        recipient: "小明",
         //联系人
-        conPhone: "155664455"
-        //联系电话
-      }, {
-        orderStatus: "订单进行中",
-        //订单状态
-        orderTime: "2023.5.17",
-        //订单时间
-        roadName: "柳州市汽贸园",
-        //发件地址
-        roadAddress: "广西壮族自治区柳州市鱼峰区和悦路1号",
-        //收件地址
-        contacts: "小明",
-        //联系人
-        conPhone: "155664455"
+        recePhone: "155664455"
         //联系电话
       }]
     };
@@ -88,7 +76,30 @@ const _sfc_main = {
   components: {
     orderMap
   },
-  methods: {}
+  onLoad(option) {
+    this.number = option.number;
+    console.log(option.number);
+  },
+  onShow() {
+    this.getDetail();
+  },
+  methods: {
+    getDetail() {
+      this.$api.reqPost(
+        "api/yl_orders/QueryForDetail",
+        {
+          params: { number: this.number }
+        }
+      ).then((res) => {
+        if (res.status) {
+          this.orderList = res.data;
+          console.log("获取订单详细信息成功！", res);
+        } else {
+          console.log("获取订单详细信息失败！", res);
+        }
+      });
+    }
+  }
 };
 if (!Array) {
   const _component_orderMap = common_vendor.resolveComponent("orderMap");
@@ -146,44 +157,52 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     i: common_vendor.t($data.totalPrice),
     j: common_vendor.f($data.orderList, (item, index, i0) => {
-      return {
+      return common_vendor.e({
         a: "9dc5548e-7-" + i0,
         b: common_vendor.t(item.startName),
-        c: common_vendor.t(item.startAddress),
-        d: common_vendor.t(item.contacts),
-        e: common_vendor.t(item.conPhone),
+        c: common_vendor.t(item.sendAddress),
+        d: common_vendor.t(item.recipient),
+        e: common_vendor.t(item.recePhone),
         f: common_vendor.f($data.roadList, (oradItem, oradIndex, i1) => {
-          return {
+          return common_vendor.e({
             a: "9dc5548e-8-" + i0 + "-" + i1,
             b: common_vendor.t(oradItem.roadName),
             c: "9dc5548e-9-" + i0 + "-" + i1,
             d: common_vendor.t(oradItem.roadAddress),
-            e: common_vendor.t(oradItem.orderStatus),
-            f: oradItem.orderStatus === "订单已完成",
-            g: common_vendor.t(oradItem.orderStatus),
-            h: oradItem.orderStatus === "订单进行中",
-            i: common_vendor.t(oradItem.contacts),
-            j: common_vendor.t(oradItem.conPhone),
+            e: oradItem.state == "4"
+          }, oradItem.state == "4" ? {
+            f: common_vendor.t(oradItem.state)
+          } : {}, {
+            g: oradItem.state == "3"
+          }, oradItem.state == "3" ? {
+            h: common_vendor.t(oradItem.state)
+          } : {}, {
+            i: common_vendor.t(oradItem.recipient),
+            j: common_vendor.t(oradItem.recePhone),
             k: oradIndex
-          };
+          });
         }),
         g: "9dc5548e-10-" + i0,
         h: common_vendor.t(item.endName),
         i: "9dc5548e-11-" + i0,
-        j: common_vendor.t(item.endAddress),
-        k: common_vendor.t(item.orderStatus),
-        l: item.orderStatus === "订单已完成",
-        m: common_vendor.t(item.orderStatus),
-        n: item.orderStatus === "订单进行中",
-        o: common_vendor.t(item.contacts),
-        p: common_vendor.t(item.conPhone),
-        q: common_vendor.t(item.orderId),
-        r: common_vendor.t(item.orderTime),
-        s: common_vendor.t(item.conPhone),
-        t: common_vendor.t(item.goodsNumber),
-        v: common_vendor.t(item.notes),
+        j: common_vendor.t(item.receAddress),
+        k: item.state == 4
+      }, item.state == 4 ? {
+        l: common_vendor.t(item.state)
+      } : {}, {
+        m: item.state == 3
+      }, item.state == 3 ? {
+        n: common_vendor.t(item.state)
+      } : {}, {
+        o: common_vendor.t(item.recipient),
+        p: common_vendor.t(item.recePhone),
+        q: common_vendor.t(item.number),
+        r: common_vendor.t(item.deliveryTime),
+        s: common_vendor.t(item.recePhone),
+        t: common_vendor.t(item.itemNum),
+        v: common_vendor.t(item.remark),
         w: index
-      };
+      });
     }),
     k: common_vendor.p({
       name: "car-fill",

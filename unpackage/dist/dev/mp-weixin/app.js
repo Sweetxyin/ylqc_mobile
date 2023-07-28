@@ -141,6 +141,7 @@ if (!Math) {
   "./pages/login/login.js";
   "./pages/login/phonelogin.js";
   "./pages/order/orderdetails.js";
+  "./pages/order/orderlist/orderlist.js";
 }
 const _sfc_main = {
   data() {

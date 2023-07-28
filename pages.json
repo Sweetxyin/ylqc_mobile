@@ -173,6 +173,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/order/orderlist/orderlist",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单列表",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",
@@ -186,7 +195,7 @@
 			},
 			{
 				"text": "订单",
-				"pagePath": "pages/order/order",
+				"pagePath": "pages/order/orderlist/orderlist",
 				"iconPath": "./static/images/tab_icon/order.png",
 				"selectedIconPath": "./static/images/tab_icon/order_active.png"
 			},

@@ -18,7 +18,8 @@
     "pages/storemanage/selectaddress",
     "pages/login/login",
     "pages/login/phonelogin",
-    "pages/order/orderdetails"
+    "pages/order/orderdetails",
+    "pages/order/orderlist/orderlist"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -38,7 +39,7 @@
       },
       {
         "text": "订单",
-        "pagePath": "pages/order/order",
+        "pagePath": "pages/order/orderlist/orderlist",
         "iconPath": "./static/images/tab_icon/order.png",
         "selectedIconPath": "./static/images/tab_icon/order_active.png"
       },

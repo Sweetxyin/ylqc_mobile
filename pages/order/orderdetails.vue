@@ -51,11 +51,11 @@
 					<text style="font-weight: bold; font-size: 30rpx;">{{item.startName}}</text>
 				</view>
 				<view class="address_txt">
-					<text>{{item.startAddress}}</text>
+					<text>{{item.sendAddress}}</text>
 				</view>
 				<view class="address_txt">
-					<text>{{item.contacts}}</text>
-					<text style="padding-left: 30rpx;">{{item.conPhone}}</text>
+					<text>{{item.recipient}}</text>
+					<text style="padding-left: 30rpx;">{{item.recePhone}}</text>
 				</view>
 				
 				<!-- 途径地址信息 -->
@@ -74,16 +74,16 @@
 						<view class="address_txt">
 							<text>{{oradItem.roadAddress}}</text>
 						</view>
-						<view class="order_state" v-show="oradItem.orderStatus==='订单已完成'">
-							<text style="color: darkgray;">{{oradItem.orderStatus}}</text>
+						<view class="order_state" v-if="oradItem.state=='4'">
+							<text style="color: darkgray;">{{oradItem.state}}</text>
 						</view>
-						<view class="order_state" v-show="oradItem.orderStatus==='订单进行中'">
-							<text style="color: goldenrod;">{{oradItem.orderStatus}}</text>
+						<view class="order_state" v-if="oradItem.state=='3'">
+							<text style="color: goldenrod;">{{oradItem.state}}</text>
 						</view>
 					</view>
 					<view class="address_txt">
-						<text>{{oradItem.contacts}}</text>
-						<text style="padding-left: 30rpx;">{{oradItem.conPhone}}</text>
+						<text>{{oradItem.recipient}}</text>
+						<text style="padding-left: 30rpx;">{{oradItem.recePhone}}</text>
 					</view>
 					
 				</view>
@@ -101,18 +101,18 @@
 				</view>
 				<view class="orad_item">
 					<view class="address_txt">
-						<text>{{item.endAddress}}</text>
+						<text>{{item.receAddress}}</text>
 					</view>
-					<view class="order_state" v-show="item.orderStatus==='订单已完成'">
-						<text style="color: darkgray;">{{item.orderStatus}}</text>
+					<view class="order_state" v-if="item.state==4">
+						<text style="color: darkgray;">{{item.state}}订单已完成</text>
 					</view>
-					<view class="order_state" v-show="item.orderStatus==='订单进行中'">
-						<text style=" color: goldenrod; ">{{item.orderStatus}}</text>
+					<view class="order_state" v-if="item.state==3">
+						<text style=" color: goldenrod; ">{{item.state}}订单进行中</text>
 					</view>
 				</view>
 				<view class="address_txt">
-					<text>{{item.contacts}}</text>
-					<text style="padding-left: 30rpx;">{{item.conPhone}}</text>
+					<text>{{item.recipient}}</text>
+					<text style="padding-left: 30rpx;">{{item.recePhone}}</text>
 				</view>
 				
 				<!-- 分割线 -->
@@ -122,23 +122,23 @@
 				<view class="other_info">
 					<view class="other_item">
 						<text>订单编号</text>
-						<text style="padding-right: 15rpx;">{{item.orderId}}</text>
+						<text style="padding-right: 15rpx;">{{item.number}}</text>
 					</view>
 					<view class="other_item">
 						<text>订单时间</text>
-						<text style="padding-right: 15rpx;">{{item.orderTime}}</text>
+						<text style="padding-right: 15rpx;">{{item.deliveryTime}}</text>
 					</view>
 					<view class="other_item">
 						<text>联系人</text>
-						<text style="padding-right: 15rpx;">{{item.conPhone}}</text>
+						<text style="padding-right: 15rpx;">{{item.recePhone}}</text>
 					</view>
 					<view class="other_item">
 						<text>货物数量</text>
-						<text style="padding-right: 15rpx;">{{item.goodsNumber}}件</text>
+						<text style="padding-right: 15rpx;">{{item.itemNum}}件</text>
 					</view>
 					<view class="other_item">
 						<text>订单备注</text>
-						<text style="padding-right: 15rpx;">{{item.notes}}</text>
+						<text style="padding-right: 15rpx;">{{item.remark}}</text>
 					</view>
 				</view>
 			</view>
@@ -155,6 +155,7 @@
 	export default {
 		data() {
 			return {
+				number:'',
 				licensePlate:"桂B12343",//车牌
 				driverName:"韦师傅",//司机姓名
 				score:"4.9",//评分
@@ -173,46 +174,59 @@
 				{
 					name: 'edit-pen-fill',
 					title: '评价司机'
-				},
-				],
+				}],
 				orderList: [{
-					orderId:'1234566',//订单编号
-					orderStatus:'订单进行中',//订单状态
-					orderTime:'2023.5.17',//订单时间
-					startName:'柳州市延龙汽车',//发件地名称
-					startAddress:'广西壮族自治区柳州市鱼峰区和悦路1号',//发件地址
+					number:'',//订单编号
+					state:'',//订单状态
+					deliveryTime:'',//订单时间
+					sendName:'柳州市延龙汽车',//发件地名称
+					sendAddress:'',//发件地址
 					endName:'柳州市万象城',//收件地址
-					endAddress:'广西壮族自治区柳州市鱼峰区文昌路17号',//收件地址
-					totalPrice:50,//订单总价
-					contacts:'小明',//联系人
-					conPhone:'155664455',//联系电话
-					goodsNumber:'3',//货物数量
-					notes:'无',//订单备注
+					receAddress:'',//收件地址
+					amount:'',//订单总价
+					recipient:'',//联系人
+					recePhone:'',//联系电话
+					itemNum:'',//货物数量
+					remark:'',//订单备注
 				}],
 				roadList: [{
-					orderStatus:'订单已完成',//订单状态
-					orderTime:'2023.5.17',//订单时间
+					state:'3',//订单状态
+					deliveryTime:'2023.5.17',//订单时间
 					roadName:'柳州市汽贸园',//发件地址
 					roadAddress:'广西壮族自治区柳州市鱼峰区和悦路1号',//收件地址
-					contacts:'小明',//联系人
-					conPhone:'155664455',//联系电话
-				},{
-					orderStatus:'订单进行中',//订单状态
-					orderTime:'2023.5.17',//订单时间
-					roadName:'柳州市汽贸园',//发件地址
-					roadAddress:'广西壮族自治区柳州市鱼峰区和悦路1号',//收件地址
-					contacts:'小明',//联系人
-					conPhone:'155664455',//联系电话
+					recipient:'小明',//联系人
+					recePhone:'155664455',//联系电话
 				}],
-				
-
 			}
 		},
 		components: {
 			orderMap
 		},
-		methods: {
+		onLoad(option) {
+			this.number = option.number
+			console.log(option.number)
 			
+		},
+		onShow() {
+			this.getDetail()
+		},
+		methods: {
+			getDetail(){
+				// let params = {
+				// 	number = this.number
+				// }
+				this.$api.reqPost('api/yl_orders/QueryForDetail',
+				{
+					params:{number:this.number}
+				}).then(res =>{
+					if(res.status){
+						this.orderList = res.data
+						console.log('获取订单详细信息成功！',res)
+					}else{
+						console.log('获取订单详细信息失败！',res)
+					}
+				})
+			}
 		}
 	}
 </script>

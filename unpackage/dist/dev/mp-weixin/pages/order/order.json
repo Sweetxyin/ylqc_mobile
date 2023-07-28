@@ -2,12 +2,11 @@
   "navigationBarTitleText": "订单",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "processing": "../../components/order-status/order-processing",
-    "complete": "../../components/order-status/order-complete",
     "cancel": "../../components/order-status/order-cancel",
     "u-tabs": "../../uni_modules/uview-plus/components/u-tabs/u-tabs",
     "u-sticky": "../../uni_modules/uview-plus/components/u-sticky/u-sticky",
     "u-empty": "../../uni_modules/uview-plus/components/u-empty/u-empty",
+    "u-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon",
     "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
   }
 }

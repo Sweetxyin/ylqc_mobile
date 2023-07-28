@@ -99,6 +99,7 @@
 			let month = uni.$u.padZero(d.getMonth() + 1)
 			const dt = d.getDate()
 			return {
+				userid:this.$store.state.userid,
 				monthzc_sum:'12',//月账单支出总数
 				moothzc_money:'888',//月账单支出金额
 				monthsr_sum:'0',//月账单收入总数
@@ -118,7 +119,8 @@
 			}
 		},
 		onLoad() {
-
+			this.getYearBill()
+			this.getMonthBill()
 		},
 		methods: {
 			month_change(index) {
@@ -133,6 +135,7 @@
 				const timeFormat = uni.$u.timeFormat;
 				let timeValue = await timeFormat(e.value, 'yyyy-mm');
 				this.timeValue = timeValue;
+				this.getMonthBill()
 				console.log(timeValue);
 			},
 			
@@ -142,6 +145,7 @@
 				const timeFormat = uni.$u.timeFormat;
 				let yaerValue = await timeFormat(e.value, 'yyyy');
 				this.yaerValue = yaerValue;
+				this.getYearBill()
 				console.log(yaerValue);
 			},
 			//关闭时间选择器
@@ -149,6 +153,42 @@
 				this.show = false;
 				this.year_show = false;
 			},
+			//查询月度账单
+			getMonthBill(){
+				var _this = this
+				_this.$api.reqPost('api/yl_orders/QueryAmountForMonth',{
+					params:{
+						id:_this.userid,
+						datetime:_this.timeValue
+					}
+				}).then(res => {
+					if(res.status){
+						_this.moothzc_money = res.data
+						console.log('查询年账单成功',res)
+						console.log(_this.timeValue)
+					}else{
+						console.log('查询年账单失败',res)
+					}
+				})
+			},
+			//查询年度账单
+			getYearBill(){
+				var _this = this
+				_this.$api.reqPost('api/yl_orders/QueryAmountForYear',{
+					params:{
+						id:_this.userid,
+						datetime:_this.yaerValue
+					}
+				}).then(res => {
+					if(res.status){
+						_this.yearzc_sum = res.data
+						console.log('查询年账单成功',res)
+						console.log(_this.yaerValue)
+					}else{
+						console.log('查询年账单失败',res)
+					}
+				})
+			}
 		}
 	}
 </script>

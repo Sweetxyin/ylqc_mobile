@@ -3,41 +3,159 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
+      userid: this.$store.state.userid,
+      //用户ID
       searchKey: "",
       //搜索值
-      storeList: [
-        {
-          companyName: "柳州市延龙汽车有限公司",
-          //公司名称
-          distance: "256",
-          //距离
-          address: "柳州市鱼峰区工业新区和悦路1号",
-          //地址
-          name: "张三",
-          //姓名
-          phone: "123456789"
-          //电话
-        },
-        {
-          companyName: "柳州市延龙汽车有限公司",
-          //公司名称
-          distance: "256",
-          //距离
-          address: "柳州市鱼峰区工业新区和悦路1号",
-          //地址
-          name: "张三",
-          //姓名
-          phone: "123456789"
-          //电话
-        }
-      ]
+      storeList: [{
+        id: "",
+        address: "",
+        //公司名称
+        fullAddress: "",
+        //地址
+        name: "",
+        //姓名
+        phone: "",
+        //电话
+        lat: "",
+        //纬度
+        lng: ""
+        //经度
+      }],
+      // storeList: [{
+      // 	id:'',
+      // 	addressName:'',//公司名称
+      // 	address:'',//地址
+      // 	contactName:'',//姓名
+      // 	cantactPhone:'',//电话
+      // 	latitude:'',//纬度
+      // 	longitude:'',//经度
+      // }],
+      storeState: "",
+      allList: [],
+      searchList: [],
+      isData: false,
+      tips: ""
     };
   },
+  onShow() {
+    this.getStoreList();
+  },
+  onLoad(option) {
+    this.getStoreList();
+    if (option.sendState == 1) {
+      this.storeState = option.sendState;
+    } else if (option.receState == 2) {
+      this.storeState = option.receState;
+    }
+    console.log("门店状态", this.storeState);
+  },
+  onPullDownRefresh() {
+    this.getStoreList();
+  },
   methods: {
+    //跳转至添加门店页
     addStore() {
       common_vendor.index.navigateTo({
-        url: "/pages/storemanage/addstore"
+        url: "/pages/storemanage/addstore/addstore"
       });
+    },
+    //返回上一页
+    conStoreData(index) {
+      if (this.storeState == 1) {
+        common_vendor.index.$emit("upSendData", this.storeList[index]);
+        common_vendor.index.navigateBack({
+          delta: 1
+        });
+        console.log("zhes", this.storeList[index]);
+      } else if (this.storeState == 2) {
+        common_vendor.index.$emit("upReceData", this.storeList[index]);
+        common_vendor.index.navigateBack({
+          delta: 1
+        });
+      } else {
+        console.log("什么都不做");
+      }
+    },
+    //获取用户门店管理数据
+    getStoreList() {
+      var _this = this;
+      _this.$api.reqPost("api/yl_address/QueryForUser", {
+        params: { userid: _this.userid }
+      }).then((res) => {
+        if (res.status) {
+          _this.storeList = res.data;
+          _this.allList = res.data;
+          _this.isData = true;
+          console.log("获取门店信息成功", res);
+        } else if (res.code == 500) {
+          _this.isData = false;
+          console.log("门店信息为空", res);
+        } else {
+          console.log("获取门店信息失败", res);
+        }
+      });
+    },
+    //调转到编辑页面
+    editStore(item) {
+      common_vendor.index.navigateTo({
+        url: "/pages/storemanage/eidtstore/eidtstore?id=" + item.id
+      });
+    },
+    //删除门店
+    delStore(item) {
+      var _this = this;
+      common_vendor.index.showModal({
+        title: "确定要删除" + item.id + "门店吗？",
+        success: function(res) {
+          if (res.confirm) {
+            _this.$api.reqPost("api/yl_address/Delete", {
+              params: {
+                id: item.id
+              }
+            }).then((res2) => {
+              if (res2.status) {
+                console.log("删除门店成功!", res2);
+                common_vendor.index.showToast({
+                  title: "删除门店成功"
+                });
+                _this.getStoreList();
+              } else {
+                console.log("删除门店失败!");
+              }
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        }
+      });
+    },
+    //搜索地址
+    changeSearch() {
+      var _this = this;
+      if (_this.searchKey === "") {
+        _this.storeList = _this.allList;
+        _this.tips = "";
+      } else {
+        _this.storeList = [];
+        _this.tips = "";
+        _this.$api.reqPost("api/yl_address/QueryForName", {
+          params: {
+            userid: _this.userid,
+            name: _this.searchKey
+          }
+        }).then((res) => {
+          if (res.status) {
+            _this.storeList = res.data;
+            console.log("搜索信息成功", res);
+          } else if (res.code == 500) {
+            _this.tips = "没有搜索结果";
+            console.log("暂无收藏地址", res);
+          } else {
+            console.log("搜索信息失败", res);
+          }
+        });
+      }
     }
   }
 };
@@ -56,69 +174,75 @@ if (!Math) {
   (_easycom_u_gap + _easycom_u_search + _easycom_u_icon + _easycom_u_button)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
+  return common_vendor.e({
     a: common_vendor.p({
       height: "10",
       bgColor: "#f0ffff"
     }),
-    b: common_vendor.o(($event) => $data.searchKey = $event),
-    c: common_vendor.p({
+    b: common_vendor.o($options.changeSearch),
+    c: common_vendor.o(($event) => $data.searchKey = $event),
+    d: common_vendor.p({
       placeholder: "搜索地址/姓名/公司名称等",
       clearabled: true,
       showAction: false,
       modelValue: $data.searchKey
     }),
-    d: common_vendor.p({
+    e: common_vendor.p({
       height: "5",
       bgColor: "#f0ffff"
     }),
-    e: common_vendor.f($data.storeList, (item, index, i0) => {
+    f: $data.isData
+  }, $data.isData ? {
+    g: common_vendor.f($data.storeList, (item, index, i0) => {
       return {
         a: "69cfbcd8-3-" + i0,
-        b: common_vendor.t(item.companyName),
-        c: common_vendor.t(item.distance),
-        d: "69cfbcd8-4-" + i0,
-        e: common_vendor.t(item.address),
-        f: "69cfbcd8-5-" + i0,
-        g: common_vendor.t(item.name),
-        h: common_vendor.t(item.phone),
-        i: "69cfbcd8-6-" + i0,
-        j: "69cfbcd8-7-" + i0,
-        k: index
+        b: common_vendor.t(item.address),
+        c: "69cfbcd8-4-" + i0,
+        d: common_vendor.t(item.fullAddress),
+        e: "69cfbcd8-5-" + i0,
+        f: common_vendor.t(item.name),
+        g: common_vendor.t(item.phone),
+        h: common_vendor.o(($event) => $options.conStoreData(index), index),
+        i: common_vendor.o(($event) => $options.editStore(item), index),
+        j: "69cfbcd8-6-" + i0,
+        k: common_vendor.o(($event) => $options.delStore(item), index),
+        l: "69cfbcd8-7-" + i0,
+        m: index
       };
     }),
-    f: common_vendor.p({
+    h: common_vendor.p({
       name: "map-fill",
       size: "18"
     }),
-    g: common_vendor.p({
-      height: "6",
-      bgColor: "#ffffff"
-    }),
-    h: common_vendor.p({
-      height: "6",
-      bgColor: "#ffffff"
-    }),
     i: common_vendor.p({
+      height: "6",
+      bgColor: "#ffffff"
+    }),
+    j: common_vendor.p({
+      height: "6",
+      bgColor: "#ffffff"
+    }),
+    k: common_vendor.p({
       type: "info",
       shape: "circle",
       size: "small",
       plain: true,
       text: "编辑"
     }),
-    j: common_vendor.p({
+    l: common_vendor.p({
       type: "info",
       shape: "circle",
       size: "small",
       plain: true,
       text: "删除"
     }),
-    k: common_vendor.o($options.addStore),
-    l: common_vendor.p({
-      type: "primary",
-      size: "small"
+    m: common_vendor.t($data.tips)
+  } : {}, {
+    n: common_vendor.o($options.addStore),
+    o: common_vendor.p({
+      type: "primary"
     })
-  };
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-69cfbcd8"], ["__file", "F:/daima/dm/ylqc_mobile/pages/storemanage/storemanage.vue"]]);
 wx.createPage(MiniProgramPage);

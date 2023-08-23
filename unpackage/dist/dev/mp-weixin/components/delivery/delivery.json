@@ -4,6 +4,7 @@
     "u-radio": "../../uni_modules/uview-plus/components/u-radio/u-radio",
     "u-radio-group": "../../uni_modules/uview-plus/components/u-radio-group/u-radio-group",
     "u--input": "../../uni_modules/uview-plus/components/u--input/u--input",
-    "u-datetime-picker": "../../uni_modules/uview-plus/components/u-datetime-picker/u-datetime-picker"
+    "u-datetime-picker": "../../uni_modules/uview-plus/components/u-datetime-picker/u-datetime-picker",
+    "u-button": "../../uni_modules/uview-plus/components/u-button/u-button"
   }
 }

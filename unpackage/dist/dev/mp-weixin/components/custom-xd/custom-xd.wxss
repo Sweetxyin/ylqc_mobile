@@ -1,0 +1,168 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 引入uViewUI的全局scss主题文件*/
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.delivery_t.data-v-8a31d45c {
+  display: flex;
+  flex-direction: column;
+  width: 94%;
+  background-color: white;
+  margin-left: 3%;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+.delivery_t .t_item.data-v-8a31d45c {
+  width: 90%;
+  height: 100rpx;
+  display: flex;
+  background-color: #efefef;
+  border: 1rpx solid #efefef;
+  border-radius: 30rpx;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15rpx;
+  margin-left: 4.5%;
+}
+.delivery_t .t_item .item_list.data-v-8a31d45c {
+  display: flex;
+  padding-left: 10rpx;
+}
+.delivery_t .t_item .item_md.data-v-8a31d45c {
+  font-size: 26rpx;
+  padding-right: 10rpx;
+}
+.delivery_t .add_address.data-v-8a31d45c {
+  color: #808069;
+  font-size: 22rpx;
+  padding-left: 20rpx;
+  line-height: 60rpx;
+}
+.article_info.data-v-8a31d45c {
+  display: flex;
+  width: 94%;
+  background-color: white;
+  margin-left: 3%;
+  flex-direction: column;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}
+.article_info .info_t.data-v-8a31d45c {
+  height: 60rpx;
+  width: 100%;
+  background-color: #b0e0e6;
+  border: 1px solid #b0e0e6;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.article_info .info_t text.data-v-8a31d45c {
+  padding-left: 3%;
+}
+.article_info .add_annex.data-v-8a31d45c {
+  display: flex;
+  height: 120rpx;
+  width: 95%;
+  background-color: #efefef;
+  padding-top: 10rpx;
+  margin-left: 2.5%;
+  margin-top: 10rpx;
+  flex-direction: column;
+  font-size: 26rpx;
+  border: 1px solid #efefef;
+  border-radius: 30rpx;
+}
+.article_info .add_annex .add_t.data-v-8a31d45c {
+  height: 50rpx;
+  width: 100%;
+  display: flex;
+}
+.article_info .add_annex .add_t .add_icon.data-v-8a31d45c {
+  display: flex;
+}
+.article_info .add_annex .add_t .add_icon image.data-v-8a31d45c {
+  width: 55rpx;
+  height: 50rpx;
+}
+.article_info .add_annex .add_t .add_icon text.data-v-8a31d45c {
+  font-size: 22rpx;
+  color: #808069;
+  padding-top: 10rpx;
+}
+.article_info .add_annex .download_annex.data-v-8a31d45c {
+  height: 50rpx;
+  width: 25%;
+  display: flex;
+  align-self: flex-end;
+  margin-top: 20rpx;
+}
+.article_info .add_annex .download_annex text.data-v-8a31d45c {
+  font-size: 20rpx;
+  padding-top: 10rpx;
+  font-size: 26rpx;
+}
+.article_info .add_annex .download_annex image.data-v-8a31d45c {
+  width: 50rpx;
+  height: 50rpx;
+}
+.article_info .info_list.data-v-8a31d45c {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 94%;
+  margin-left: 3%;
+  font-size: 26rpx;
+}
+.article_info .info_list .info_item.data-v-8a31d45c {
+  height: 65rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+  border-bottom: 2rpx solid #efefef;
+}
+.article_info .info_list .info_item input.data-v-8a31d45c {
+  font-size: 26rpx;
+}
+.delivery_order.data-v-8a31d45c {
+  display: flex;
+  height: 220rpx;
+  width: 95%;
+  background-color: #ffffff;
+  padding-top: 10rpx;
+  margin-left: 2.5%;
+  margin-top: 10rpx;
+  flex-direction: column;
+  border-radius: 30rpx;
+}
+.price.data-v-8a31d45c {
+  padding-left: 45%;
+  padding-top: 10rpx;
+}
+.add_button.data-v-8a31d45c {
+  width: 94%;
+  padding: 10rpx 0 0 3%;
+}

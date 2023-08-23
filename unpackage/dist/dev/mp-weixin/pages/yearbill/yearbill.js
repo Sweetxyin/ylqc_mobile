@@ -8,19 +8,19 @@ const _sfc_main = {
     d.getDate();
     return {
       userid: this.$store.state.userid,
-      monthzc_sum: "12",
+      monthzc_sum: "",
       //月账单支出总数
-      moothzc_money: "888",
+      moothzc_money: "",
       //月账单支出金额
-      monthsr_sum: "0",
+      monthsr_sum: 0,
       //月账单收入总数
-      moothsr_money: "0",
+      moothsr_money: 0,
       //月账单收入金额
-      yearzc_sum: 34,
+      yearzc_sum: "",
       //年账单支出总数
       yearsr_sum: 0,
       //年账单收入总数
-      yearzc_money: 1888,
+      yearzc_money: "",
       //年账单支出金额
       yearsr_money: 0,
       //年账单收入金额
@@ -79,34 +79,36 @@ const _sfc_main = {
     //查询月度账单
     getMonthBill() {
       var _this = this;
-      _this.$api.reqPost("api/yl_orders/QueryAmountForMonth", {
+      var year = _this.timeValue.split("-");
+      _this.$api.reqPost("api/yl_orders/QueryForMonth", {
         params: {
           id: _this.userid,
-          datetime: _this.timeValue
+          year: year[0],
+          month: year[1]
         }
       }).then((res) => {
         if (res.status) {
-          _this.moothzc_money = res.data;
-          console.log("查询年账单成功", res);
-          console.log(_this.timeValue);
+          _this.moothzc_money = res.data.sum;
+          _this.monthzc_sum = res.data.count;
+          console.log("查询月账单成功", res);
         } else {
-          console.log("查询年账单失败", res);
+          console.log("查询月账单失败", res);
         }
       });
     },
     //查询年度账单
     getYearBill() {
       var _this = this;
-      _this.$api.reqPost("api/yl_orders/QueryAmountForYear", {
+      _this.$api.reqPost("api/yl_orders/QueryForYear", {
         params: {
           id: _this.userid,
-          datetime: _this.yaerValue
+          year: _this.yaerValue
         }
       }).then((res) => {
         if (res.status) {
-          _this.yearzc_sum = res.data;
+          _this.yearzc_sum = res.data.count;
+          _this.yearzc_money = res.data.sum;
           console.log("查询年账单成功", res);
-          console.log(_this.yaerValue);
         } else {
           console.log("查询年账单失败", res);
         }

@@ -27,11 +27,12 @@
 		        <view class="processing_1" @click="toOrderDetail(item)">
 		       	<view class="order_status">
 		       		<text style="font-size: 28rpx; padding-left: 15rpx; font-weight: bold;">订单：{{item.number}}</text>
-		       		<text v-if="item.state==0" style="font-size: 22rpx; padding-right: 10rpx; ">{{item.state}}待确认></text>
-		       		<text v-if="item.state==1" style="font-size: 22rpx; padding-right: 10rpx; ">{{item.state}}已生成></text>
-		       		<text v-if="item.state==2" style="font-size: 22rpx; padding-right: 10rpx; ">{{item.state}}已接单></text>
-		       		<text v-if="item.state==3" style="font-size: 22rpx; padding-right: 10rpx; ">{{item.state}}已取消></text>
-		       		<text v-if="item.state==4" style="font-size: 22rpx; padding-right: 10rpx; ">{{item.state}}已完成></text>
+		       		<text v-if="item.state==0" style="font-size: 22rpx; padding-right: 10rpx; ">待确认></text>
+		       		<text v-if="item.state==1" style="font-size: 22rpx; padding-right: 10rpx; ">已生成></text>
+		       		<text v-if="item.state==2" style="font-size: 22rpx; padding-right: 10rpx; ">已接单></text>
+		       		<text v-if="item.state==3" style="font-size: 22rpx; padding-right: 10rpx; ">运输中></text>
+		       		<text v-if="item.state==4" style="font-size: 22rpx; padding-right: 10rpx; ">已完成></text>
+					<text v-if="item.state==-1" style="font-size: 22rpx; padding-right: 10rpx; ">已取消></text>
 		       	</view>
 		       	
 		       	<view class="order_item">
@@ -55,8 +56,8 @@
 		       
 		       <view class="processing_2">
 		       	<u-button v-if="item.state==0 " type="info" shape="circle" size="small" :plain="true" text="修改订单" @click="doEditOrder(item)"></u-button>
-		       	<u-button v-if="item.state==0" type="info" shape="circle" style="margin-left:15rpx;" size="small" :plain="true" text="取消订单"></u-button>
-		       	<u-button v-if="item.state==3 || item.state==4" type="info" shape="circle" style="margin-left:15rpx;" size="small" :plain="true" text="删除订单" @click="doDelete(item)"></u-button>
+		       	<u-button v-if="item.state==0 || item.state==1" type="info" shape="circle" style="margin-left:15rpx;" size="small" :plain="true" text="取消订单" @click="cancelOrder(item)"></u-button>
+		       	<u-button v-if="item.state==-1 || item.state==4" type="info" shape="circle" style="margin-left:15rpx;" size="small" :plain="true" text="删除订单" @click="doDelete(item)"></u-button>
 		       </view>
 		        
 		     </view>
@@ -95,16 +96,19 @@
             typeList: '',   //显示的状态列表
 			tabIndex:0,
             allList:  [{
-					id:'',
-					number:'',//订单编号
-					state:'',//订单状态
-					deliveryTime:'',//订单时间
-					sendAddress:'',//始发地址
-					receAddress:'',//收件地址
-					amount:'',//价格
-				}]
+				id:'',
+				number:'',//订单编号
+				state:'',//订单状态
+				deliveryTime:'',//订单时间
+				sendAddress:'',//始发地址
+				receAddress:'',//收件地址
+				amount:'',//价格	
+			}]
          }
       },
+	  onShow(){
+		   this.getOrderList()
+	  },
       onLoad() {
          
 		 this.getOrderList()
@@ -125,14 +129,13 @@
             // } else {
                this.typeList = [];
                for (var i = 0; i < this.allList.length; i++) {
-                  if ((this.allList[i].state == 0 || this.allList[i].state == 1 || this.allList[i].state == 2 ) && e.index == 0 ) {
+                  if ((this.allList[i].state == 0 || this.allList[i].state == 1 || this.allList[i].state == 2 || this.allList[i].state == 3) && e.index == 0 ) {
                      console.log(this.allList[i]);
                      this.typeList.push(this.allList[i]);
-                  }
-				  else if(this.allList[i].state == 4 && e.index == 1 ){
+                  }else if(this.allList[i].state == 4 && e.index == 1 ){
 					  console.log(this.allList[i]);
 					  this.typeList.push(this.allList[i]);
-				  }else if(this.allList[i].state == 3 && e.index == 2 ){
+				  }else if(this.allList[i].state == -1 && e.index == 2 ){
 					  console.log(this.allList[i]);
 					  this.typeList.push(this.allList[i]);
 				  }
@@ -155,13 +158,13 @@
 		 				_this.orderTotal=res.data.length
 						_this.typeList = [];
 						for (var i = 0; i < _this.allList.length; i++) {
-						   if ((_this.allList[i].state == 0 || _this.allList[i].state == 1 || _this.allList[i].state == 2 ) && _this.tabIndex == 0 ) {
+						   if ((_this.allList[i].state == 0 || _this.allList[i].state == 1 || _this.allList[i].state == 2 || _this.allList[i].state == 3 ) && _this.tabIndex == 0 ) {
 						      console.log(_this.allList[i]);
 						      _this.typeList.push(_this.allList[i]);
 						   }else if(_this.allList[i].state == 4 && _this.tabIndex == 1 ){
 								console.log(_this.allList[i]);
 								_this.typeList.push(_this.allList[i]);
-							}else if(_this.allList[i].state == 3 && _this.tabIndex == 2 ){
+							}else if(_this.allList[i].state == -1 && _this.tabIndex == 2 ){
 								console.log(_this.allList[i]);
 								_this.typeList.push(_this.allList[i]);
 							}
@@ -176,13 +179,13 @@
 		 // 修改订单
 		 onEditOrder(item){
 		 	uni.navigateTo({
-		 		url: '/pages/order/orderdetails?number=' + item.number
+		 		url: '/pages/order/orderdetails/orderdetails?number=' + item.number
 		 	})
 		 },
 		 //跳转到订单详情页
 		 toOrderDetail(item){
 		 	uni.navigateTo({
-		 		url: '/pages/order/orderdetails?number=' + item.number
+		 		url: '/pages/order/orderdetails/orderdetails?number=' + item.number
 		 	})
 		 },
 		 // 删除订单
@@ -214,6 +217,35 @@
 		 			}
 		 		}
 		 	})
+		 },
+		 //取消订单
+		 cancelOrder(item){
+			 var _this = this
+			 uni.showModal({
+			 	title:'确定要取消'+item.number+'订单吗？',
+			 	success:function(res){
+			 		if(res.confirm){
+			 			_this.$api.reqPost('api/yl_orders/OrderCancel',{
+			 				params:{
+			 					id:item.id
+			 				}
+			 			}).then(res => {
+			 				if(res.status){
+			 					console.log('取消订单成功!',res)
+			 					uni.showToast({
+			 						title:'取消订单成功'
+			 					})
+			 					_this.getOrderList()
+			 				}else{
+			 					console.log('取消订单失败!')
+			 				}
+			 			})
+			 
+			 		}else if(res.cancel){
+			 			console.log('用户点击取消')
+			 		}
+			 	}
+			 })
 		 }
       }
    }

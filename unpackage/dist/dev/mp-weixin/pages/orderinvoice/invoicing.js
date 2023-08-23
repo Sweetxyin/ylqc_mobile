@@ -102,12 +102,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: common_vendor.o(($event) => $data.form.companyName = $event),
     g: common_vendor.p({
       border: "none",
-      placeholder: "请输入公司名称",
+      placeholder: "请输入发票抬头",
       inputAlign: "right",
       modelValue: $data.form.companyName
     }),
     h: common_vendor.p({
-      label: "公司名称",
+      label: "发票抬头",
       prop: "companyName"
     }),
     i: common_vendor.o(($event) => $data.form.dutyParagraph = $event),
@@ -118,7 +118,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       modelValue: $data.form.dutyParagraph
     }),
     k: common_vendor.p({
-      label: "公司税号",
+      label: "税号",
       prop: "dutyParagraph"
     }),
     l: common_vendor.o(($event) => $data.form.contents = $event),

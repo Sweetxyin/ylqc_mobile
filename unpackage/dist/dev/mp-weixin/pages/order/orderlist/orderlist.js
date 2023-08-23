@@ -30,9 +30,12 @@ const _sfc_main = {
         receAddress: "",
         //收件地址
         amount: ""
-        //价格
+        //价格	
       }]
     };
+  },
+  onShow() {
+    this.getOrderList();
   },
   onLoad() {
     this.getOrderList();
@@ -49,13 +52,13 @@ const _sfc_main = {
       this.tabIndex = e.index;
       this.typeList = [];
       for (var i = 0; i < this.allList.length; i++) {
-        if ((this.allList[i].state == 0 || this.allList[i].state == 1 || this.allList[i].state == 2) && e.index == 0) {
+        if ((this.allList[i].state == 0 || this.allList[i].state == 1 || this.allList[i].state == 2 || this.allList[i].state == 3) && e.index == 0) {
           console.log(this.allList[i]);
           this.typeList.push(this.allList[i]);
         } else if (this.allList[i].state == 4 && e.index == 1) {
           console.log(this.allList[i]);
           this.typeList.push(this.allList[i]);
-        } else if (this.allList[i].state == 3 && e.index == 2) {
+        } else if (this.allList[i].state == -1 && e.index == 2) {
           console.log(this.allList[i]);
           this.typeList.push(this.allList[i]);
         }
@@ -76,13 +79,13 @@ const _sfc_main = {
             _this.orderTotal = res.data.length;
             _this.typeList = [];
             for (var i = 0; i < _this.allList.length; i++) {
-              if ((_this.allList[i].state == 0 || _this.allList[i].state == 1 || _this.allList[i].state == 2) && _this.tabIndex == 0) {
+              if ((_this.allList[i].state == 0 || _this.allList[i].state == 1 || _this.allList[i].state == 2 || _this.allList[i].state == 3) && _this.tabIndex == 0) {
                 console.log(_this.allList[i]);
                 _this.typeList.push(_this.allList[i]);
               } else if (_this.allList[i].state == 4 && _this.tabIndex == 1) {
                 console.log(_this.allList[i]);
                 _this.typeList.push(_this.allList[i]);
-              } else if (_this.allList[i].state == 3 && _this.tabIndex == 2) {
+              } else if (_this.allList[i].state == -1 && _this.tabIndex == 2) {
                 console.log(_this.allList[i]);
                 _this.typeList.push(_this.allList[i]);
               }
@@ -97,13 +100,13 @@ const _sfc_main = {
     // 修改订单
     onEditOrder(item) {
       common_vendor.index.navigateTo({
-        url: "/pages/order/orderdetails?number=" + item.number
+        url: "/pages/order/orderdetails/orderdetails?number=" + item.number
       });
     },
     //跳转到订单详情页
     toOrderDetail(item) {
       common_vendor.index.navigateTo({
-        url: "/pages/order/orderdetails?number=" + item.number
+        url: "/pages/order/orderdetails/orderdetails?number=" + item.number
       });
     },
     // 删除订单
@@ -127,6 +130,34 @@ const _sfc_main = {
                 _this.getOrderList();
               } else {
                 console.log("删除订单失败!");
+              }
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        }
+      });
+    },
+    //取消订单
+    cancelOrder(item) {
+      var _this = this;
+      common_vendor.index.showModal({
+        title: "确定要取消" + item.number + "订单吗？",
+        success: function(res) {
+          if (res.confirm) {
+            _this.$api.reqPost("api/yl_orders/OrderCancel", {
+              params: {
+                id: item.id
+              }
+            }).then((res2) => {
+              if (res2.status) {
+                console.log("取消订单成功!", res2);
+                common_vendor.index.showToast({
+                  title: "取消订单成功"
+                });
+                _this.getOrderList();
+              } else {
+                console.log("取消订单失败!");
               }
             });
           } else if (res.cancel) {
@@ -178,38 +209,30 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       return common_vendor.e({
         a: common_vendor.t(item.number),
         b: item.state == 0
+      }, item.state == 0 ? {} : {}, {
+        c: item.state == 1
+      }, item.state == 1 ? {} : {}, {
+        d: item.state == 2
+      }, item.state == 2 ? {} : {}, {
+        e: item.state == 3
+      }, item.state == 3 ? {} : {}, {
+        f: item.state == 4
+      }, item.state == 4 ? {} : {}, {
+        g: item.state == -1
+      }, item.state == -1 ? {} : {}, {
+        h: "70d1dd14-2-" + i0,
+        i: common_vendor.t(item.deliveryTime),
+        j: "70d1dd14-3-" + i0,
+        k: common_vendor.t(item.sendAddress),
+        l: "70d1dd14-4-" + i0,
+        m: common_vendor.t(item.receAddress),
+        n: common_vendor.t(item.amount),
+        o: common_vendor.o(($event) => $options.toOrderDetail(item), index),
+        p: item.state == 0
       }, item.state == 0 ? {
-        c: common_vendor.t(item.state)
-      } : {}, {
-        d: item.state == 1
-      }, item.state == 1 ? {
-        e: common_vendor.t(item.state)
-      } : {}, {
-        f: item.state == 2
-      }, item.state == 2 ? {
-        g: common_vendor.t(item.state)
-      } : {}, {
-        h: item.state == 3
-      }, item.state == 3 ? {
-        i: common_vendor.t(item.state)
-      } : {}, {
-        j: item.state == 4
-      }, item.state == 4 ? {
-        k: common_vendor.t(item.state)
-      } : {}, {
-        l: "70d1dd14-2-" + i0,
-        m: common_vendor.t(item.deliveryTime),
-        n: "70d1dd14-3-" + i0,
-        o: common_vendor.t(item.sendAddress),
-        p: "70d1dd14-4-" + i0,
-        q: common_vendor.t(item.receAddress),
-        r: common_vendor.t(item.amount),
-        s: common_vendor.o(($event) => $options.toOrderDetail(item), index),
-        t: item.state == 0
-      }, item.state == 0 ? {
-        v: common_vendor.o(($event) => _ctx.doEditOrder(item), index),
-        w: "70d1dd14-5-" + i0,
-        x: common_vendor.p({
+        q: common_vendor.o(($event) => _ctx.doEditOrder(item), index),
+        r: "70d1dd14-5-" + i0,
+        s: common_vendor.p({
           type: "info",
           shape: "circle",
           size: "small",
@@ -217,10 +240,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
           text: "修改订单"
         })
       } : {}, {
-        y: item.state == 0
-      }, item.state == 0 ? {
-        z: "70d1dd14-6-" + i0,
-        A: common_vendor.p({
+        t: item.state == 0 || item.state == 1
+      }, item.state == 0 || item.state == 1 ? {
+        v: common_vendor.o(($event) => $options.cancelOrder(item), index),
+        w: "70d1dd14-6-" + i0,
+        x: common_vendor.p({
           type: "info",
           shape: "circle",
           size: "small",
@@ -228,11 +252,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
           text: "取消订单"
         })
       } : {}, {
-        B: item.state == 3 || item.state == 4
-      }, item.state == 3 || item.state == 4 ? {
-        C: common_vendor.o(($event) => $options.doDelete(item), index),
-        D: "70d1dd14-7-" + i0,
-        E: common_vendor.p({
+        y: item.state == -1 || item.state == 4
+      }, item.state == -1 || item.state == 4 ? {
+        z: common_vendor.o(($event) => $options.doDelete(item), index),
+        A: "70d1dd14-7-" + i0,
+        B: common_vendor.p({
           type: "info",
           shape: "circle",
           size: "small",
@@ -240,7 +264,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
           text: "删除订单"
         })
       } : {}, {
-        F: index
+        C: index
       });
     }),
     g: common_vendor.p({

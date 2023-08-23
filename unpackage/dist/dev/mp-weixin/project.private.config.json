@@ -3,6 +3,6 @@
   "projectname": "ylqc_mobile",
   "setting": {
     "compileHotReLoad": true,
-    "urlCheck": false
+    "urlCheck": true
   }
 }

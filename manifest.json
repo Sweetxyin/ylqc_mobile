@@ -62,7 +62,8 @@
             "scope.userLocation" : {
                 "desc" : "获取您的个人即位置信息"
             }
-        }
+        },
+		 "requiredPrivateInfos" : [ "getLocation", "chooseLocation" ]
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -76,5 +77,14 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    "h5" : {
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46"
+                }
+            }
+        }
+    }
 }

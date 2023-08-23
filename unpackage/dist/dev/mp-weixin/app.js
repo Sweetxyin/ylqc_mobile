@@ -133,15 +133,19 @@ if (!Math) {
   "./pages/setting/setting.js";
   "./pages/user/authentication.js";
   "./pages/complaint/complaint.js";
-  "./pages/complaint/tocomplaint.js";
-  "./pages/complaint/history.js";
+  "./pages/complaint/tocomplaint/tocomplaint.js";
+  "./pages/complaint/history/history.js";
   "./pages/storemanage/storemanage.js";
-  "./pages/storemanage/addstore.js";
-  "./pages/storemanage/selectaddress.js";
+  "./pages/storemanage/addstore/addstore.js";
+  "./pages/storemanage/selectaddress/selectaddress.js";
   "./pages/login/login.js";
   "./pages/login/phonelogin.js";
-  "./pages/order/orderdetails.js";
+  "./pages/order/orderdetails/orderdetails.js";
   "./pages/order/orderlist/orderlist.js";
+  "./pages/storemanage/eidtstore/eidtstore.js";
+  "./pages/mapdemo/mapdemo.js";
+  "./pages/storemanage/sendaddress/sendaddress.js";
+  "./pages/storemanage/receaddress/receaddress.js";
 }
 const _sfc_main = {
   data() {

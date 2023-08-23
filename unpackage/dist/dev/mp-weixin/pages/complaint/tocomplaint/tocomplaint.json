@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "我要投诉",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u--input": "../../../uni_modules/uview-plus/components/u--input/u--input",
+    "u--textarea": "../../../uni_modules/uview-plus/components/u--textarea/u--textarea",
+    "u-upload": "../../../uni_modules/uview-plus/components/u-upload/u-upload",
+    "u-button": "../../../uni_modules/uview-plus/components/u-button/u-button"
+  }
+}

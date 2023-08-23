@@ -1,0 +1,1 @@
+<view class=" data-v-9aa50452"><view class="ditu data-v-9aa50452"><map class="data-v-9aa50452" style="width:100%;height:100%" latitude="{{a}}" longitude="{{b}}" scale="{{c}}" markers="{{d}}" bindmarkertap="{{e}}"></map></view><view class=" data-v-9aa50452" bindtap="{{f}}"> 获取定位 </view></view>

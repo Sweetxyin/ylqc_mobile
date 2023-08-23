@@ -11,15 +11,19 @@
     "pages/setting/setting",
     "pages/user/authentication",
     "pages/complaint/complaint",
-    "pages/complaint/tocomplaint",
-    "pages/complaint/history",
+    "pages/complaint/tocomplaint/tocomplaint",
+    "pages/complaint/history/history",
     "pages/storemanage/storemanage",
-    "pages/storemanage/addstore",
-    "pages/storemanage/selectaddress",
+    "pages/storemanage/addstore/addstore",
+    "pages/storemanage/selectaddress/selectaddress",
     "pages/login/login",
     "pages/login/phonelogin",
-    "pages/order/orderdetails",
-    "pages/order/orderlist/orderlist"
+    "pages/order/orderdetails/orderdetails",
+    "pages/order/orderlist/orderlist",
+    "pages/storemanage/eidtstore/eidtstore",
+    "pages/mapdemo/mapdemo",
+    "pages/storemanage/sendaddress/sendaddress",
+    "pages/storemanage/receaddress/receaddress"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -68,5 +72,9 @@
       "desc": "获取您的个人即位置信息"
     }
   },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
   "usingComponents": {}
 }

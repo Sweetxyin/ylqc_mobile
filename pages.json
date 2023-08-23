@@ -101,7 +101,7 @@
             
         }
         ,{
-            "path" : "pages/complaint/tocomplaint",
+            "path" : "pages/complaint/tocomplaint/tocomplaint",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我要投诉",
@@ -110,7 +110,7 @@
             
         }
         ,{
-            "path" : "pages/complaint/history",
+            "path" : "pages/complaint/history/history",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "历史信息",
@@ -123,12 +123,12 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "门店管理",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true
             }
             
         }
         ,{
-            "path" : "pages/storemanage/addstore",
+            "path" : "pages/storemanage/addstore/addstore",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "添加门店",
@@ -138,7 +138,7 @@
         }
         
         ,{
-            "path" : "pages/storemanage/selectaddress",
+            "path" : "pages/storemanage/selectaddress/selectaddress",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "地址选择",
@@ -165,7 +165,7 @@
             
         }
         ,{
-            "path" : "pages/order/orderdetails",
+            "path" : "pages/order/orderdetails/orderdetails",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "订单详情",
@@ -178,6 +178,42 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "订单列表",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/storemanage/eidtstore/eidtstore",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑门店",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mapdemo/mapdemo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/storemanage/sendaddress/sendaddress",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加地址",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/storemanage/receaddress/receaddress",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加地址",
                 "enablePullDownRefresh": false
             }
             

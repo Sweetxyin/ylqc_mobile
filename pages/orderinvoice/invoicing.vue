@@ -29,10 +29,10 @@
 							    </u-radio>
 							  </u-radio-group>
 						</u-form-item>
-						<u-form-item class="invoicing_form" label="公司名称" prop="companyName">
-							<u-input v-model="form.companyName" border="none" placeholder="请输入公司名称" inputAlign="right"/>
+						<u-form-item class="invoicing_form" label="发票抬头" prop="companyName">
+							<u-input v-model="form.companyName" border="none" placeholder="请输入发票抬头" inputAlign="right"/>
 					    </u-form-item>
-					    <u-form-item class="invoicing_form" label="公司税号" prop="dutyParagraph">
+					    <u-form-item class="invoicing_form" label="税号" prop="dutyParagraph">
 					        <u-input v-model="form.dutyParagraph" border="none" placeholder="请输入纳税人识别号" inputAlign="right"/>
 					    </u-form-item>
 					    <u-form-item class="invoicing_form" label="更多内容" prop="contents">

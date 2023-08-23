@@ -22,7 +22,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.p({
       title: "我要投诉",
-      url: "/pages/complaint/tocomplaint",
+      url: "/pages/complaint/tocomplaint/tocomplaint",
       isLink: true
     }),
     b: common_vendor.p({
@@ -30,7 +30,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     c: common_vendor.p({
       title: "历史信息",
-      url: "/pages/complaint/history",
+      url: "/pages/complaint/history/history",
       isLink: true
     }),
     d: common_vendor.p({

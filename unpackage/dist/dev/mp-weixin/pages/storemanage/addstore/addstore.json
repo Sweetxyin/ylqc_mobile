@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "添加门店",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "map": "../../../components/map/map",
+    "u-button": "../../../uni_modules/uview-plus/components/u-button/u-button",
+    "u-gap": "../../../uni_modules/uview-plus/components/u-gap/u-gap",
+    "u--input": "../../../uni_modules/uview-plus/components/u--input/u--input"
+  }
+}

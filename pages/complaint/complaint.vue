@@ -10,11 +10,11 @@
 				  <text style="padding-right: 25rpx;">123456</text>
 			</view>
 		
-			<u-cell-group :border="false">
-				<u-cell title="我要投诉" url="/pages/complaint/tocomplaint" isLink></u-cell>
+			<u-cell-group :border="false" style="font_zt">
+				<u-cell  title="我要投诉" url="/pages/complaint/tocomplaint/tocomplaint" isLink></u-cell>
 			</u-cell-group>
 			<u-cell-group :border="false">
-				<u-cell  title="历史信息" url="/pages/complaint/history" isLink></u-cell>
+				<u-cell  title="历史信息" url="/pages/complaint/history/history" isLink></u-cell>
 			</u-cell-group>
 		</view>
 	</view>
@@ -36,6 +36,7 @@
 <style lang="scss" scoped>
 	.container{
 		width: 100%;
+		height:100%;
 		display: flex;
 		background-color: #efefef;
 		flex-direction: column;	
@@ -49,13 +50,15 @@
 		flex-direction: column;
 		margin-left: 3%;
 		margin-top: 15rpx;
+		font-size: 32rpx;
 	}
 	.info_item{
-		height: 75rpx;
+		height: 95rpx;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		margin-top: 5rpx;
 		border-bottom: 2rpx solid #efefef;
 	}
+	
 </style>

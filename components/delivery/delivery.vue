@@ -1,16 +1,16 @@
 <template>
 	<view class="container">
 		<view class="delivery_t">
-			<view class="t_item">
-				<navigator url="" class="item_list">{{start_address}}</navigator>
+			<view class="t_item" @click="toAddress">
+				<view class="item_list">{{start_address}}</view>
 				<navigator url="../../pages/storemanage/storemanage" class="item_md">|&nbsp;门店选择</navigator>
 			</view>
-			<view class="t_item">
-				<navigator url="" class="item_list">{{end_address}}</navigator>
+			<view class="t_item"  @click="toAddress">
+				<view class="item_list">{{end_address}}</view>
 				<navigator url="../../pages/storemanage/storemanage" class="item_md">|&nbsp;门店选择</navigator>
 			</view>
 			<view class="add_address">
-				<navigator>添加地址</navigator>
+				<view>添加地址</view>
 			</view>
 		</view>
 		 
@@ -28,7 +28,7 @@
 								<radio :value="r2" style="transform:scale(0.7)"/><text>否</text>
 							</label>
 						</radio-group> -->
-						<u-radio-group
+						<u-radio-group   
 						    v-model="radiovalue1"
 							size="16"
 						    placement="row"
@@ -63,28 +63,28 @@
 						<text>物品名称：</text>
 						<!-- <input type="text" placeholder="请输入物品名称"> -->
 						 <u--input placeholder="请输入物品名称" border="none" inputAlign="right"
-						    v-model="wpname" fontSize="26rpx" :disabled="inputStatus"
+						    v-model="itemName" fontSize="26rpx" :disabled="inputStatus"
 						  ></u--input>
 					</view>
 					<view class="info_item">
 						<text>预估总重量(kg)：</text>
 						<!-- <input type="text" placeholder="请输入总重量"> -->
 						<u--input placeholder="请输入总重量" border="none" inputAlign="right"
-						   v-model="zzl" fontSize="26rpx" :disabled="inputStatus"
+						   v-model="itemWeight" fontSize="26rpx" :disabled="inputStatus"
 						 ></u--input>
 					</view>
 					<view class="info_item">
 						<text>总体积(m²)：</text>
 						<!-- <input type="text" placeholder="请输入总体积"> -->
 						<u--input placeholder="请输入总体积" border="none" inputAlign="right"
-						   v-model="ztj" fontSize="26rpx"
+						   v-model="itemVolume" fontSize="26rpx"
 						 ></u--input>
 					</view>
 					<view class="info_item">
 						<text>件数：</text>
 						<!-- <input type="text" placeholder="请输入件数"> -->
 						<u--input placeholder="请输入件数" border="none" inputAlign="right"
-						   v-model="js" fontSize="26rpx"
+						   v-model="itemNum" fontSize="26rpx"
 						 ></u--input>
 					</view>
 					<view class="info_item" @click="show = true">
@@ -97,7 +97,19 @@
 			
 				
 			</form>
+			
 		
+		
+		</view>
+		<view class="delivery_order">
+			<view class="price">
+				<text style="font-size: 50rpx; font-weight: bold; color:darkorange;">{{ price }}</text>
+				<text>元</text>
+			</view>
+			<!-- <view style="font-size: 24rpx;padding-left:20%;">需要搬运请与司机协商，费用面议</view> -->
+			<view class="add_button">
+				<u-button type="primary"  text="支付并叫车" @click="logout"></u-button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -107,6 +119,7 @@
 		name:"delivery",
 		data() {
 			return {
+				userid:this.$store.state.userid,//用户ID
 				start_address:"柳州延龙汽车",
 				end_address:"输入您的目的地",
 				radiolist1: [{
@@ -121,10 +134,11 @@
 				timeValue: '请选择',//时间
 				value1: Number(new Date()),//获取当前时间
 				inputStatus:false,
-				wpname:"",
-				zzl:"",
-				ztj:"",
-				js:""
+				price:'35',//价格
+				itemName:"",//物品名称
+				itemWeight:"",//物品重量
+				itemVolume:"",//物品体积
+				itemNum:"",//数量
 			};
 		},
 		methods: {
@@ -152,6 +166,12 @@
 				}
 				
 			    console.log('radioChange', n);
+			},
+			
+			toAddress(){
+				uni.navigateTo({
+					url:'/pages/storemanage/addstore/addstore'
+				})
 			}
 		
 		},
@@ -293,6 +313,26 @@
 			}
 		}
 		
+	}
+	.delivery_order{
+		display: flex;
+		height: 220rpx;
+		width: 95%;
+		background-color: #ffffff;
+		padding-top: 10rpx;
+		margin-left: 2.5%;
+		margin-top: 10rpx;
+		flex-direction:column;
+	
+		border-radius: 30rpx;
+	}
+	.price{
+		padding-left: 45%;
+		padding-top: 10rpx;
+	}
+	.add_button{
+		width: 94%;
+		padding: 10rpx 0 0 3%;
 	}
 </style>
 		

@@ -197,14 +197,14 @@
 				const timeFormat = uni.$u.timeFormat;
 				let timeValue = await timeFormat(e.value, 'yyyy-mm-dd hh:MM');
 				this.timeValue = timeValue;
-				console.log(timeValue);
+				// console.log(timeValue);
 			},
 			//关闭时间选择器
 			close() {
 				this.show = false;
 			},
 			groupChange(n) {
-			    console.log('groupChange', n);
+			    // console.log('groupChange', n);
 			},
 			radioChange(n) {
 				if(n=="是") {
@@ -214,7 +214,7 @@
 					this.inputStatus=false
 				}
 				
-			    console.log('radioChange', n);
+			    // console.log('radioChange', n);
 			},
 			
 			//跳转至发货地址选择
@@ -368,6 +368,8 @@
 			            
 					uni.getLocation({
 						type: "gcj02",
+						altitude: false,
+						isHighAccuracy: true,
 						success(res) {
 			                //先拿到经度和纬度，后面再用地图转换成具体的地址信息。
 							location.longitude = res.longitude;
@@ -461,6 +463,7 @@
 			line-height: 60rpx;
 		}
 	}
+
 	.article_info{
 		display: flex;
 		width: 94%;

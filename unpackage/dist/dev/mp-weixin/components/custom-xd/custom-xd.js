@@ -98,14 +98,12 @@ const _sfc_main = {
       const timeFormat = common_vendor.index.$u.timeFormat;
       let timeValue = await timeFormat(e.value, "yyyy-mm-dd hh:MM");
       this.timeValue = timeValue;
-      console.log(timeValue);
     },
     //关闭时间选择器
     close() {
       this.show = false;
     },
     groupChange(n) {
-      console.log("groupChange", n);
     },
     radioChange(n) {
       if (n == "是") {
@@ -114,7 +112,6 @@ const _sfc_main = {
       } else {
         this.inputStatus = false;
       }
-      console.log("radioChange", n);
     },
     //跳转至发货地址选择
     toSendAddress() {
@@ -240,6 +237,8 @@ const _sfc_main = {
         var that = this;
         common_vendor.index.getLocation({
           type: "gcj02",
+          altitude: false,
+          isHighAccuracy: true,
           success(res) {
             location.longitude = res.longitude;
             location.latitude = res.latitude;

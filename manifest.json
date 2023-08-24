@@ -63,7 +63,13 @@
                 "desc" : "获取您的个人即位置信息"
             }
         },
-		 "requiredPrivateInfos" : [ "getLocation", "chooseLocation" ]
+		"plugins": {
+		    "chooseLocation": {
+		        "version": "1.0.10",
+		        "provider": "wx76a9a06e5b4e693e"
+		    }
+		},
+		 "requiredPrivateInfos" : [ "getLocation", "choosePoi","chooseLocation" ]
     },
     "mp-alipay" : {
         "usingComponents" : true

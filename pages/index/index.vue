@@ -91,7 +91,7 @@
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator url="" class="services_item">
+				<navigator url="/pages/mapdemo/mapdemo" class="services_item">
 					<image src="../../static/images/index_icon/community.png"></image>
 					<text>互动社区</text>
 				</navigator>

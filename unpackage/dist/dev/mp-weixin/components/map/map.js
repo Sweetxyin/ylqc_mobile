@@ -13,7 +13,8 @@ const _sfc_main = {
       scale: 14,
       //地图缩放程度
       address: "",
-      location: ""
+      location: "",
+      regionChange: []
     };
   },
   // components:{
@@ -135,6 +136,45 @@ const _sfc_main = {
           }
         });
       });
+    },
+    regionChange() {
+      common_vendor.index.createMapContext("map1", this).getCenterLocation({
+        success: (res) => {
+          console.log(res.latitude);
+          console.log(res.longitude);
+          this.shopTimeout = setTimeout((_) => {
+            this.shops = [{
+              address: "广东省汕头市xxx区xx大道1",
+              distance: 122,
+              end_time: "1",
+              id: 2,
+              latitude: "22.72078500009999",
+              longitude: "114.36090200009999",
+              shop: {
+                iconPath: "/static/logo.png",
+                id: 3,
+                latitude: "22.72078500009999",
+                longitude: "114.36090200009999",
+                height: 34,
+                width: 34,
+                shop: { return: 0 }
+              },
+              return: 0,
+              height: 34,
+              width: 34,
+              start_time: "1",
+              store_name: "三星大酒店",
+              iconPath: "/static/shop.png"
+            }];
+          }, 500);
+        },
+        fail: (res) => {
+          common_vendor.index.showModal({
+            content: "获取位置失败",
+            showCancel: false
+          });
+        }
+      });
     }
     // getMapAddress() {
     //       const tMap = new QQMapWX({
@@ -196,7 +236,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: $data.longitude,
     c: $data.scale,
     d: $data.marker,
-    e: common_vendor.o(($event) => _ctx.toMap())
+    e: common_vendor.o((...args) => $options.regionChange && $options.regionChange(...args)),
+    f: common_vendor.o(($event) => _ctx.toMap())
   };
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-86c82c5c"], ["__file", "F:/daima/dm/ylqc_mobile/components/map/map.vue"]]);

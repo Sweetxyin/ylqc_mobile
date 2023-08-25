@@ -218,6 +218,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/mapdemo/demo/demo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "地址",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",

@@ -1,1 +1,1 @@
-<view class=" data-v-86c82c5c"><view class="ditu data-v-86c82c5c"><map class="data-v-86c82c5c" style="width:100%;height:100%" latitude="{{a}}" longitude="{{b}}" scale="{{c}}" markers="{{d}}" bindmarkertap="{{e}}"></map></view></view>
+<view class=" data-v-86c82c5c"><view class="ditu data-v-86c82c5c"><map class="data-v-86c82c5c" style="width:100%;height:100%" latitude="{{a}}" longitude="{{b}}" scale="{{c}}" markers="{{d}}" show-location bindregionchange="{{e}}" bindmarkertap="{{f}}"></map></view></view>

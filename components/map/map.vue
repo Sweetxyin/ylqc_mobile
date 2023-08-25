@@ -6,6 +6,8 @@
 				:longitude="longitude"
 				:scale="scale"
 				:markers="marker"
+				show-location
+				@regionchange="regionChange"
 				 @markertap="toMap()">
 			</map>
 		</view>
@@ -27,7 +29,7 @@
 				scale: 14, //地图缩放程度
 				address:'',
 				location:'',
-				
+				regionChange:[]
 			}
 		},
 		
@@ -165,7 +167,47 @@
 						},
 					});
 				});
-			},			
+			},	
+					
+			regionChange() { // 移动地图后重新获取门店
+					uni.createMapContext('map1', this).getCenterLocation({
+			  success: res => {
+			   console.log(res.latitude)
+			   console.log(res.longitude)
+			   this.shopTimeout = setTimeout(_ => {
+			    this.shops = [{
+			     address: "广东省汕头市xxx区xx大道1",
+			     distance: 122,
+			     end_time: "1",
+			     id: 2,
+			     latitude: "22.72078500009999",
+			     longitude: "114.36090200009999",
+			     shop: {
+			      iconPath: '/static/logo.png',
+			      id: 3,
+			      latitude: "22.72078500009999",
+			      longitude: "114.36090200009999",
+			      height: 34,
+			      width: 34,
+			      shop: {return: 0}
+			     },
+			     return: 0,
+			     height: 34,
+			     width: 34,
+			     start_time: "1",
+			     store_name: "三星大酒店",
+			     iconPath: '/static/shop.png',
+			    }]
+			   }, 500)
+			  },
+			  fail: res => {
+			   uni.showModal({
+			    content: '获取位置失败',
+			    showCancel: false
+			   })
+			  }
+			 })
+			},
 			  // getMapAddress() {
 			  //       const tMap = new QQMapWX({
 			  //         key: '3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46' //开发者密钥

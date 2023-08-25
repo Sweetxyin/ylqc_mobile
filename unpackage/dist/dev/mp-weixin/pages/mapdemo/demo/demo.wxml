@@ -1,0 +1,1 @@
+<view class="content"><button bindtap="{{a}}">请选择位置</button><block wx:if="{{b}}"><view>name：{{c}}</view><view>address：{{d}}</view><view>latitude：{{e}}</view><view>longitude：{{f}}</view></block></view>

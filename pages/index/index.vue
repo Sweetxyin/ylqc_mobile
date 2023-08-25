@@ -85,7 +85,7 @@
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator url="" class="services_item">
+				<navigator url="/pages/mapdemo/demo/demo" class="services_item">
 					<image src="../../static/images/index_icon/recruit.png"></image>
 					<text>人才招聘</text>
 				</navigator>

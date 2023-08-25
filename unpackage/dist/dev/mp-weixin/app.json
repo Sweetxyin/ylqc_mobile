@@ -23,7 +23,8 @@
     "pages/storemanage/eidtstore/eidtstore",
     "pages/mapdemo/mapdemo",
     "pages/storemanage/sendaddress/sendaddress",
-    "pages/storemanage/receaddress/receaddress"
+    "pages/storemanage/receaddress/receaddress",
+    "pages/mapdemo/demo/demo"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -76,6 +77,10 @@
     "chooseLocation": {
       "version": "1.0.10",
       "provider": "wx76a9a06e5b4e693e"
+    },
+    "citySelector": {
+      "version": "1.0.2",
+      "provider": "wx63ffb7b7894e99ae"
     }
   },
   "requiredPrivateInfos": [

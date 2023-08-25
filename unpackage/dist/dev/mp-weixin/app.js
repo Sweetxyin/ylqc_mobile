@@ -146,6 +146,7 @@ if (!Math) {
   "./pages/mapdemo/mapdemo.js";
   "./pages/storemanage/sendaddress/sendaddress.js";
   "./pages/storemanage/receaddress/receaddress.js";
+  "./pages/mapdemo/demo/demo.js";
 }
 const _sfc_main = {
   data() {

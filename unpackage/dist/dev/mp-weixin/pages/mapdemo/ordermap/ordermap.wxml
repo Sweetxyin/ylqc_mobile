@@ -1,0 +1,1 @@
+<view><view class="map"><map bindtap="{{a}}" style="width:100vw;height:300rpx" latitude="{{b}}" longitude="{{c}}" show-location markers="{{d}}" enable-3D="true"></map></view></view>

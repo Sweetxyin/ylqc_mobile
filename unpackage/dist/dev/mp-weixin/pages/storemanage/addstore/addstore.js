@@ -10,12 +10,6 @@ const _sfc_main = {
     return {
       userid: this.$store.state.userid,
       //用户ID
-      // addressName:'',//地址名称
-      // address:'',//地址
-      // addressNotes:'',//地址备注
-      // contactName:'',//姓名
-      // cantactPhone:'',//电话
-      // address:this.$refs.list.address	
       currentLocation: {},
       storeList: [{
         id: "",
@@ -64,9 +58,9 @@ const _sfc_main = {
       }
     };
   },
-  components: {
-    Map
-  },
+  // components:{
+  // 	Map,
+  // },
   onShow() {
     var self = this;
     common_vendor.index.getStorage({

@@ -56,10 +56,10 @@
 		<view class="add_store" v-if="storeState==''">
 			<u-button @click="addStore" type="primary">提交</u-button>
 		</view>
-		<view class="store_button" v-if="storeState=='1'">
+		<view class="add_store" v-if="storeState=='1'">
 			<u-button @click="conSendAddress" type="primary">确认发货地址</u-button>
 		</view>
-		<view class="store_button" v-if="storeState=='2'">
+		<view class="add_store" v-if="storeState=='2'">
 			<u-button @click="conReceAddress" type="primary">确认收货地址</u-button>
 		</view>
 
@@ -78,12 +78,6 @@
 		data() {
 			return {
 				userid:this.$store.state.userid,//用户ID
-				// addressName:'',//地址名称
-				// address:'',//地址
-				// addressNotes:'',//地址备注
-				// contactName:'',//姓名
-				// cantactPhone:'',//电话
-				// address:this.$refs.list.address	
 				currentLocation:{},
 				storeList: [{
 					id:'',
@@ -123,10 +117,10 @@
 			
 			}
 		},
-		components:{
-			Map,
+		// components:{
+		// 	Map,
 			
-		},
+		// },
 		onShow() {
 			var self = this
 			uni.getStorage({
@@ -358,8 +352,7 @@
 							success: function(res) { // 所以，这里返回的结果就是 ： 坐标所在位置的文字描述
 								console.log('坐标所在位置的文字描述', res.result);
 								// 获取到的参数
-								self.plot = res.result
-								.formatted_addresses; // 存入了一个 经过腾讯地图优化过的描述方式，更具人性化特点
+								self.plot = res.result.formatted_addresses; // 存入了一个 经过腾讯地图优化过的描述方式，更具人性化特点
 								self.address = res.result.address; // 也是一串地址
 								// 地址的组成 包含国 省 市 等等。。的详细信息
 								self.addressComponent = res.result.address_component;
@@ -460,7 +453,7 @@
 					},
 					success: function(res) {
 						console.log('将坐标转换为文字描述===解析地址成功',res.result.location);
-						// 一样的作用，继续将地址信息存入vue对象中    
+						// 一样的作用，继续将地址信息存入vue对象中             
 						//  ====> 但问题是：一直都是获取通用的的地址 
 						that.plot = res.result.formatted_addresses;
 						that.address = res.result.address;

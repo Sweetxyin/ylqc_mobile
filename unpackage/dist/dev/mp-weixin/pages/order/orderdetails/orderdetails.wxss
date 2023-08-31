@@ -27,13 +27,14 @@
 .container.data-v-bde4f0ef {
   position: absolute;
   width: 100%;
+  height: 100%;
   background-color: #efefef;
   display: flex;
   flex-direction: column;
 }
 .order_map.data-v-bde4f0ef {
   width: 100%;
-  height: 300rpx;
+  height: 500rpx;
 }
 .serve_info.data-v-bde4f0ef {
   width: 94%;

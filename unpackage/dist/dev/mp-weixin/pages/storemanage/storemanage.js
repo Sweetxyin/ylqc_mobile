@@ -32,10 +32,14 @@ const _sfc_main = {
       // 	longitude:'',//经度
       // }],
       storeState: "",
+      //门店状态
       allList: [],
+      //全部数据
       searchList: [],
+      //搜索数据
       isData: false,
       tips: ""
+      //搜索提示语
     };
   },
   onShow() {
@@ -67,7 +71,6 @@ const _sfc_main = {
         common_vendor.index.navigateBack({
           delta: 1
         });
-        console.log("zhes", this.storeList[index]);
       } else if (this.storeState == 2) {
         common_vendor.index.$emit("upReceData", this.storeList[index]);
         common_vendor.index.navigateBack({

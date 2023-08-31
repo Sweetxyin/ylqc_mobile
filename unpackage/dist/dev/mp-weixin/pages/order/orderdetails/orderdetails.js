@@ -1,6 +1,9 @@
 "use strict";
 const common_vendor = require("../../../common/vendor.js");
-const orderMap = () => "../../mapdemo/mapdemo2.js";
+const utils_qqmapWxJssdk = require("../../../utils/qqmap-wx-jssdk.js");
+var qqmapsdk = new utils_qqmapWxJssdk.QQMapWX({
+  key: "3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46"
+});
 const _sfc_main = {
   data() {
     return {
@@ -58,28 +61,64 @@ const _sfc_main = {
         //收件人联系电话
         itemNum: "",
         //货物数量
-        remark: ""
+        remark: "",
         //订单备注
+        sendLat: "",
+        //发件纬度
+        sendLng: "",
+        //发件经度
+        receLat: "",
+        //收件纬度
+        receLng: ""
+        //收件经度
       }],
-      roadList: [{
-        state: "",
-        //订单状态
-        deliveryTime: "",
-        //订单时间
-        roadName: "",
-        //发件地址
-        roadAddress: "",
-        //收件地址
-        recipient: "",
-        //联系人
-        recePhone: ""
-        //联系电话
-      }]
+      // roadList: [{
+      // 	state:'',//订单状态
+      // 	deliveryTime:'',//订单时间
+      // 	roadName:'',//发件地址
+      // 	roadAddress:'',//收件地址
+      // 	recipient:'',//联系人
+      // 	recePhone:'',//联系电话
+      // }],
+      roadList: [],
+      reportInfo: {
+        lgtd: 116.39742,
+        lttd: 39.909
+      },
+      id: 0,
+      // 使用 marker点击事件 需要填写id
+      title: "map",
+      latitude: 39.909,
+      longitude: 116.39742,
+      //第一组为匹配的垃圾桶
+      covers: [],
+      //存放标记点数组
+      isLocated: false,
+      // 是否被定位
+      //小区
+      plot: {},
+      scale: 12,
+      //详细地址
+      address: "",
+      polyline: [],
+      //地址组成
+      addressComponent: {
+        city: "",
+        district: "",
+        nation: "",
+        province: "",
+        street: "",
+        street_number: ""
+      },
+      startLat: "",
+      startLng: "",
+      destLat: "",
+      destLng: ""
     };
   },
-  components: {
-    orderMap
-  },
+  // components: {
+  // 	orderMap
+  // },
   onLoad(option) {
     this.number = option.number;
     console.log(option.number);
@@ -99,23 +138,120 @@ const _sfc_main = {
         if (res.status) {
           for (var i = 0; i < 1; i++) {
             this.orderList[i] = res.data[i];
+            this.reportInfo.lttd = res.data[i].receLat;
+            this.reportInfo.lgtd = res.data[i].receLng;
+            this.startLat = res.data[i].sendLat;
+            this.startLng = res.data[i].sendLng;
+            this.destLat = res.data[i].receLat;
+            this.destLng = res.data[i].receLng;
+            var obj = {
+              width: 30,
+              height: 30,
+              latitude: Number(res.data[i].sendLat),
+              longitude: Number(res.data[i].sendLng),
+              iconPath: "../../../static/images/other/send.png"
+              // 成功绘制
+            };
+            var bin = {
+              id: "0",
+              latitude: Number(res.data[i].receLat),
+              longitude: Number(res.data[i].receLng),
+              width: 25,
+              height: 35,
+              iconPath: "../../../static/images/other/end.png"
+              // 成功绘制
+            };
+            var arr = [];
+            arr.push(obj);
+            arr.push(bin);
+            this.covers = arr;
           }
           console.log("获取订单详细信息成功！", res);
+          this.initMap();
         } else {
           console.log("获取订单详细信息失败！", res);
+        }
+      });
+    },
+    //根据起点和终点绘制路线
+    initMap() {
+      const that = this;
+      console.log("进入initmap");
+      qqmapsdk.direction({
+        mode: "driving",
+        //可选值：'driving'（驾车）  trucking 货车
+        //from参数不填默认当前地址
+        // latitude纬度    longitude 经度
+        from: {
+          latitude: that.startLat,
+          longitude: that.startLng
+        },
+        to: {
+          latitude: that.destLat,
+          longitude: that.destLng
+        },
+        size: 1,
+        // 车型 1: 微型车  2: 轻型车 3: 中型车 4: 重型车
+        policy: "LEAST_TIME",
+        //'9',  //参考实时路况，高速优先，尽量躲避拥堵
+        height: 4,
+        width: 2.5,
+        length: 13,
+        weight: 6.8,
+        axle_weight: 34,
+        axle_count: 6,
+        is_trailer: 1,
+        success: function(res, data) {
+          let distance = data[0].distance / 1e3;
+          console.log(res);
+          console.log(data);
+          if (distance > 500) {
+            var scale = 7;
+          } else if (distance > 200) {
+            var scale = 10;
+          } else if (distance > 100) {
+            var scale = 12;
+          } else {
+            var scale = 15;
+          }
+          var ret = res;
+          var coors = ret.result.routes[0].polyline, pl = [];
+          var kr = 1e6;
+          for (var i = 2; i < coors.length; i++) {
+            coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+          }
+          for (var i = 0; i < coors.length; i += 2) {
+            pl.push({
+              latitude: coors[i],
+              longitude: coors[i + 1]
+            });
+          }
+          that.polyline = [{
+            points: pl,
+            color: "#4AC37A",
+            width: 5
+          }];
+          that.scale = scale;
+        },
+        fail: function(error) {
+          common_vendor.index.showToast({
+            title: error.message,
+            duration: 3e3,
+            icon: "none"
+          });
+          console.log("调取失败");
         }
       });
     }
   }
 };
 if (!Array) {
-  const _component_orderMap = common_vendor.resolveComponent("orderMap");
   const _easycom_u_avatar2 = common_vendor.resolveComponent("u-avatar");
   const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
   const _easycom_u_grid_item2 = common_vendor.resolveComponent("u-grid-item");
   const _easycom_u_grid2 = common_vendor.resolveComponent("u-grid");
   const _easycom_u_gap2 = common_vendor.resolveComponent("u-gap");
-  (_component_orderMap + _easycom_u_avatar2 + _easycom_u_icon2 + _easycom_u_grid_item2 + _easycom_u_grid2 + _easycom_u_gap2)();
+  (_easycom_u_avatar2 + _easycom_u_icon2 + _easycom_u_grid_item2 + _easycom_u_grid2 + _easycom_u_gap2)();
 }
 const _easycom_u_avatar = () => "../../../uni_modules/uview-plus/components/u-avatar/u-avatar.js";
 const _easycom_u_icon = () => "../../../uni_modules/uview-plus/components/u-icon/u-icon.js";
@@ -127,54 +263,63 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.p({
-      size: "45",
-      src: _ctx.avatarSrc
-    }),
-    b: common_vendor.t($data.licensePlate),
-    c: common_vendor.t($data.driverName),
-    d: common_vendor.p({
-      name: "star-fill",
-      color: "orange",
-      size: "18"
-    }),
-    e: common_vendor.t($data.score),
-    f: common_vendor.f($data.list, (listItem, listIndex, i0) => {
-      return {
-        a: "bde4f0ef-5-" + i0 + "," + ("bde4f0ef-4-" + i0),
-        b: common_vendor.p({
-          customStyle: {
-            paddingTop: "15rpx"
-          },
-          name: listItem.name,
-          size: 26
-        }),
-        c: common_vendor.t(listItem.title),
-        d: listIndex,
-        e: "bde4f0ef-4-" + i0 + ",bde4f0ef-3"
-      };
-    }),
-    g: common_vendor.p({
-      border: false,
-      col: "4"
-    }),
-    h: common_vendor.p({
-      height: "15",
-      bgColor: "#efefef"
-    }),
-    i: common_vendor.f($data.orderList, (item, index, i0) => {
+    a: common_vendor.o((...args) => _ctx.getMapLocation && _ctx.getMapLocation(...args)),
+    b: $data.reportInfo.lttd,
+    c: $data.reportInfo.lgtd,
+    d: $data.scale,
+    e: $data.polyline,
+    f: $data.covers,
+    g: common_vendor.f($data.orderList, (item, index, i0) => {
       return common_vendor.e({
-        a: common_vendor.t(item.amount),
-        b: "bde4f0ef-7-" + i0,
-        c: common_vendor.t(item.sendAddress),
-        d: common_vendor.t(item.sendFullAddress),
-        e: common_vendor.t(item.sender),
-        f: common_vendor.t(item.sendPhone),
-        g: common_vendor.f($data.roadList, (oradItem, oradIndex, i1) => {
+        a: item.state == 2 || item.state == 3 || item.state == 4
+      }, item.state == 2 || item.state == 3 || item.state == 4 ? {
+        b: "bde4f0ef-0-" + i0,
+        c: common_vendor.p({
+          size: "45",
+          src: _ctx.avatarSrc
+        }),
+        d: common_vendor.t($data.licensePlate),
+        e: common_vendor.t($data.driverName),
+        f: "bde4f0ef-1-" + i0,
+        g: common_vendor.p({
+          name: "star-fill",
+          color: "orange",
+          size: "18"
+        }),
+        h: common_vendor.t($data.score),
+        i: common_vendor.f($data.list, (listItem, listIndex, i1) => {
+          return {
+            a: "bde4f0ef-4-" + i0 + "-" + i1 + "," + ("bde4f0ef-3-" + i0 + "-" + i1),
+            b: common_vendor.p({
+              customStyle: {
+                paddingTop: "15rpx"
+              },
+              name: listItem.name,
+              size: 26
+            }),
+            c: common_vendor.t(listItem.title),
+            d: listIndex,
+            e: "bde4f0ef-3-" + i0 + "-" + i1 + "," + ("bde4f0ef-2-" + i0)
+          };
+        }),
+        j: "bde4f0ef-2-" + i0,
+        k: common_vendor.p({
+          border: false,
+          col: "4"
+        })
+      } : {}, {
+        l: "bde4f0ef-5-" + i0,
+        m: common_vendor.t(item.amount),
+        n: "bde4f0ef-6-" + i0,
+        o: common_vendor.t(item.sendAddress),
+        p: common_vendor.t(item.sendFullAddress),
+        q: common_vendor.t(item.sender),
+        r: common_vendor.t(item.sendPhone),
+        s: common_vendor.f($data.roadList, (oradItem, oradIndex, i1) => {
           return common_vendor.e({
-            a: "bde4f0ef-8-" + i0 + "-" + i1,
+            a: "bde4f0ef-7-" + i0 + "-" + i1,
             b: common_vendor.t(oradItem.roadName),
-            c: "bde4f0ef-9-" + i0 + "-" + i1,
+            c: "bde4f0ef-8-" + i0 + "-" + i1,
             d: common_vendor.t(oradItem.roadAddress),
             e: oradItem.state == "4"
           }, oradItem.state == "4" ? {
@@ -189,52 +334,56 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
             k: oradIndex
           });
         }),
-        h: "bde4f0ef-10-" + i0,
-        i: common_vendor.t(item.receAddress),
-        j: "bde4f0ef-11-" + i0,
-        k: common_vendor.t(item.receFullAddress),
-        l: item.state == 0
+        t: "bde4f0ef-9-" + i0,
+        v: common_vendor.t(item.receAddress),
+        w: "bde4f0ef-10-" + i0,
+        x: common_vendor.t(item.receFullAddress),
+        y: item.state == 0
       }, item.state == 0 ? {} : {}, {
-        m: item.state == 1
+        z: item.state == 1
       }, item.state == 1 ? {} : {}, {
-        n: item.state == 2
+        A: item.state == 2
       }, item.state == 2 ? {} : {}, {
-        o: item.state == 4
+        B: item.state == 4
       }, item.state == 4 ? {} : {}, {
-        p: item.state == 3
+        C: item.state == 3
       }, item.state == 3 ? {} : {}, {
-        q: item.state == -1
+        D: item.state == -1
       }, item.state == -1 ? {} : {}, {
-        r: common_vendor.t(item.recipient),
-        s: common_vendor.t(item.recePhone),
-        t: common_vendor.t(item.number),
-        v: common_vendor.t(item.deliveryTime),
-        w: common_vendor.t(item.recePhone),
-        x: common_vendor.t(item.itemNum),
-        y: common_vendor.t(item.remark),
-        z: index
+        E: common_vendor.t(item.recipient),
+        F: common_vendor.t(item.recePhone),
+        G: common_vendor.t(item.number),
+        H: common_vendor.t(item.deliveryTime),
+        I: common_vendor.t(item.recePhone),
+        J: common_vendor.t(item.itemNum),
+        K: common_vendor.t(item.remark),
+        L: index
       });
     }),
-    j: common_vendor.p({
+    h: common_vendor.p({
+      height: "15",
+      bgColor: "#efefef"
+    }),
+    i: common_vendor.p({
       name: "car-fill",
       color: "#00cc33",
       size: "16"
     }),
-    k: common_vendor.p({
+    j: common_vendor.p({
       name: "car-fill",
       color: "#666666",
       size: "16"
     }),
-    l: common_vendor.p({
+    k: common_vendor.p({
       name: "arrow-right",
       size: "14"
     }),
-    m: common_vendor.p({
+    l: common_vendor.p({
       name: "car-fill",
       color: "red",
       size: "16"
     }),
-    n: common_vendor.p({
+    m: common_vendor.p({
       name: "arrow-right",
       size: "14"
     })

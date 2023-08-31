@@ -144,9 +144,8 @@ if (!Math) {
   "./pages/order/orderlist/orderlist.js";
   "./pages/storemanage/eidtstore/eidtstore.js";
   "./pages/mapdemo/mapdemo.js";
-  "./pages/storemanage/sendaddress/sendaddress.js";
-  "./pages/storemanage/receaddress/receaddress.js";
   "./pages/mapdemo/demo/demo.js";
+  "./pages/mapdemo/ordermap/ordermap.js";
 }
 const _sfc_main = {
   data() {

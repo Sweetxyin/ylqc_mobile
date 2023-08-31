@@ -201,28 +201,19 @@
             
         }
         ,{
-            "path" : "pages/storemanage/sendaddress/sendaddress",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "添加地址",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/storemanage/receaddress/receaddress",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "添加地址",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
             "path" : "pages/mapdemo/demo/demo",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "地址",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mapdemo/ordermap/ordermap",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             

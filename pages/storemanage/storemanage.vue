@@ -77,12 +77,11 @@
 				// 	latitude:'',//纬度
 				// 	longitude:'',//经度
 				// }],
-				storeState:'',
-				
-				allList:[],
-				searchList:[],
+				storeState:'',//门店状态
+				allList:[],//全部数据
+				searchList:[],//搜索数据
 				isData:false,
-				tips:""
+				tips:"",//搜索提示语
 			}
 		},
 		
@@ -113,12 +112,14 @@
 			},
 			//返回上一页
 			conStoreData(index){
+				//状态为1时，返回发件数据
 				if(this.storeState==1){
 					uni.$emit('upSendData', this.storeList[index])
 					uni.navigateBack({
 						delta: 1
 					})
-						console.log('zhes',this.storeList[index])
+					// console.log('zhes',this.storeList[index])
+				//状态为2时，返回收件数据
 				}else if(this.storeState==2){
 					uni.$emit('upReceData', this.storeList[index])
 					uni.navigateBack({
@@ -189,6 +190,7 @@
 			//搜索地址
 			changeSearch(){
 				var _this = this
+				//搜索值为空时，显示数据为全部数据
 				if(_this.searchKey === ""){
 					_this.storeList =_this.allList
 					_this.tips=""
@@ -227,7 +229,7 @@
 	.container{
 		position: absolute;
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 		background-color: #f0ffff;
 		display: flex;
 		flex-direction: column;

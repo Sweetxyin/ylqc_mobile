@@ -139,43 +139,66 @@ const _sfc_main = {
     },
     //下单
     addOrder() {
-      this.$api.reqPost("api/yl_orders/CreateOrder", {
-        params: {
-          userid: this.userid,
-          sender: this.sendLocation.sender,
-          sendAddress: this.sendLocation.sendAddress,
-          sendFullAddress: this.sendLocation.sendFullAddress,
-          sendPhone: this.sendLocation.sendPhone,
-          sendLat: this.sendLocation.latitude,
-          sendLng: this.sendLocation.longitude,
-          recipient: this.receLocation.recipient,
-          receAddress: this.receAddress,
-          receFullAddress: this.receLocation.receFullAddress,
-          recePhone: this.receLocation.recePhone,
-          receLat: this.receLocation.latitude,
-          receLng: this.receLocation.longitude,
-          amount: this.price,
-          itemName: this.itemName,
-          itemWeight: this.itemWeight,
-          itemVolume: this.itemVolume,
-          itemNum: this.itemNum,
-          deliveryTime: this.timeValue
-        }
-      }).then((res) => {
-        if (res.status) {
-          common_vendor.index.showToast({
-            title: "提交订单成功！",
-            icon: "none"
-          });
-          console.log("提交成功", res);
-        } else {
-          common_vendor.index.showToast({
-            title: "提交订单失败！",
-            icon: "none"
-          });
-          console.log("提交失败", res);
-        }
-      });
+      if (this.itemWeight == "") {
+        common_vendor.index.showToast({
+          title: "请填写总重量！",
+          icon: "none"
+        });
+      } else if (this.itemVolume == "") {
+        common_vendor.index.showToast({
+          title: "请填写总体积！",
+          icon: "none"
+        });
+      } else if (this.itemNum == "") {
+        common_vendor.index.showToast({
+          title: "请填写数量！",
+          icon: "none"
+        });
+      } else if (this.timeValue == "") {
+        common_vendor.index.showToast({
+          title: "请填写上门时间！",
+          icon: "none"
+        });
+      } else {
+        this.$api.reqPost("api/yl_orders/CreateOrder", {
+          params: {
+            userid: this.userid,
+            sender: this.sendLocation.sender,
+            sendAddress: this.sendLocation.sendAddress,
+            sendFullAddress: this.sendLocation.sendFullAddress,
+            sendPhone: this.sendLocation.sendPhone,
+            sendLat: this.sendLocation.latitude,
+            sendLng: this.sendLocation.longitude,
+            recipient: this.receLocation.recipient,
+            receAddress: this.receAddress,
+            receFullAddress: this.receLocation.receFullAddress,
+            recePhone: this.receLocation.recePhone,
+            receLat: this.receLocation.latitude,
+            receLng: this.receLocation.longitude,
+            amount: this.price,
+            itemName: this.itemName,
+            itemWeight: this.itemWeight,
+            itemVolume: this.itemVolume,
+            itemNum: this.itemNum,
+            deliveryTime: this.timeValue,
+            state: 0
+          }
+        }).then((res) => {
+          if (res.status) {
+            common_vendor.index.showToast({
+              title: "提交订单成功！",
+              icon: "none"
+            });
+            console.log("提交成功", res);
+          } else {
+            common_vendor.index.showToast({
+              title: "提交订单失败！",
+              icon: "none"
+            });
+            console.log("提交失败", res);
+          }
+        });
+      }
     },
     // 检测是否授权
     checkAuthorization() {
@@ -357,7 +380,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     r: common_vendor.o(($event) => $data.itemNum = $event),
     s: common_vendor.p({
-      placeholder: "请输入件数",
+      placeholder: "请输入数量",
       border: "none",
       inputAlign: "right",
       fontSize: "26rpx",

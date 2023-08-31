@@ -22,9 +22,8 @@
     "pages/order/orderlist/orderlist",
     "pages/storemanage/eidtstore/eidtstore",
     "pages/mapdemo/mapdemo",
-    "pages/storemanage/sendaddress/sendaddress",
-    "pages/storemanage/receaddress/receaddress",
-    "pages/mapdemo/demo/demo"
+    "pages/mapdemo/demo/demo",
+    "pages/mapdemo/ordermap/ordermap"
   ],
   "window": {
     "navigationBarTextStyle": "black",

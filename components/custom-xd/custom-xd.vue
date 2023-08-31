@@ -75,9 +75,9 @@
 						 ></u--input>
 					</view>
 					<view class="info_item">
-						<text>件数：</text>
+						<text>数量：</text>
 						<!-- <input type="text" placeholder="请输入件数"> -->
-						<u--input placeholder="请输入件数" border="none" inputAlign="right"
+						<u--input placeholder="请输入数量" border="none" inputAlign="right"
 						   v-model="itemNum" fontSize="26rpx"
 						 ></u--input>
 					</view>
@@ -158,16 +158,7 @@
 			// this.getLocationInfo()
 			// 监听事件  
 			let that = this
-			// uni.$on('upSendData',function(data){
-			// 	// that.sendLocation = data
-			// 	that.sendLocation.sendAddress = data.addressName
-			// 	that.sendLocation.sendFullAddress=data.address
-			// 	that.sendLocation.sender = data.contactName
-			// 	that.sendLocation.sendPhone = data.cantactPhone
-			// 	that.sendLocation.latitude = data.latitude
-			// 	that.sendLocation.longitude = data.longitude
-			// 	console.log('监听到事件来自 upSendData ，携带参数为：' + that.sendLocation);
-			// })
+		
 			uni.$on('upSendData',function(data){
 				// that.sendLocation = data
 				that.sendLocation.sendAddress = data.address
@@ -243,44 +234,68 @@
 			},
 			//下单
 			addOrder(){
-				this.$api.reqPost('api/yl_orders/CreateOrder',{
-					params:{
-						userid:this.userid,
-						sender:this.sendLocation.sender,
-						sendAddress:this.sendLocation.sendAddress,
-						sendFullAddress:this.sendLocation.sendFullAddress,
-						sendPhone:this.sendLocation.sendPhone,
-						sendLat:this.sendLocation.latitude,
-						sendLng:this.sendLocation.longitude,
-						recipient:this.receLocation.recipient,
-						receAddress:this.receAddress,
-						receFullAddress:this.receLocation.receFullAddress,
-						recePhone:this.receLocation.recePhone,
-						receLat:this.receLocation.latitude,
-						receLng:this.receLocation.longitude,
-						amount:this.price,
-						itemName:this.itemName,
-						itemWeight:this.itemWeight,
-						itemVolume:this.itemVolume,
-						itemNum:this.itemNum,
-						deliveryTime:this.timeValue
-						}			
-				}).then(res => {
-					if(res.status){
-						uni.showToast({
-							title:'提交订单成功！',
-							icon:'none'
-						})
-						
-						console.log('提交成功',res)
-					}else{
-						uni.showToast({
-							title:'提交订单失败！',
-							icon:'none'
-						})
-						console.log('提交失败',res)
-					}
-				})
+				if(this.itemWeight==""){
+					uni.showToast({
+						title:'请填写总重量！',
+						icon: 'none',
+					})
+				}else if(this.itemVolume==""){
+					uni.showToast({
+						title:'请填写总体积！',
+						icon: 'none',
+					})
+				}else if(this.itemNum==""){
+					uni.showToast({
+						title:'请填写数量！',
+						icon: 'none',
+					})
+				}else if(this.timeValue==""){
+					uni.showToast({
+						title:'请填写上门时间！',
+						icon: 'none',
+					})
+				}else{
+					this.$api.reqPost('api/yl_orders/CreateOrder',{
+						params:{
+							userid:this.userid,
+							sender:this.sendLocation.sender,
+							sendAddress:this.sendLocation.sendAddress,
+							sendFullAddress:this.sendLocation.sendFullAddress,
+							sendPhone:this.sendLocation.sendPhone,
+							sendLat:this.sendLocation.latitude,
+							sendLng:this.sendLocation.longitude,
+							recipient:this.receLocation.recipient,
+							receAddress:this.receAddress,
+							receFullAddress:this.receLocation.receFullAddress,
+							recePhone:this.receLocation.recePhone,
+							receLat:this.receLocation.latitude,
+							receLng:this.receLocation.longitude,
+							amount:this.price,
+							itemName:this.itemName,
+							itemWeight:this.itemWeight,
+							itemVolume:this.itemVolume,
+							itemNum:this.itemNum,
+							deliveryTime:this.timeValue,
+							state:0
+							}			
+					}).then(res => {
+						if(res.status){
+							uni.showToast({
+								title:'提交订单成功！',
+								icon:'none'
+							})
+							
+							console.log('提交成功',res)
+						}else{
+							uni.showToast({
+								title:'提交订单失败！',
+								icon:'none'
+							})
+							console.log('提交失败',res)
+						}
+					})
+				}
+				
 			},
 			
 			// 检测是否授权
@@ -397,7 +412,6 @@
 									that.sendLocation.longitude=info.location.lng
 									// console.log('1',that.sendLocation.latitude)
 									resolve(location);
-									
 								},
 							});
 						},

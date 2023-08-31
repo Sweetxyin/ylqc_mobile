@@ -2,45 +2,48 @@
 	<view class="container">
 		<!-- 地图 -->
 		<view class="order_map">
-			<orderMap></orderMap>
+			<!-- <orderMap></orderMap> -->
+			<map @tap="getMapLocation" style="width: 100vw; height: 500rpx;" :latitude="reportInfo.lttd"
+				:longitude="reportInfo.lgtd" :scale="scale" :polyline="polyline"  :markers="covers" enable-3D="true" >
+			</map>
 		</view>
-		<!-- 服务信息 -->
-		<view class="serve_info">
-			<!-- 司机信息 -->
-			<view class="driver_info">
-				<!-- 司机头像 -->
-				<view class="driver_avatar">
-					<u-avatar size="45" :src="avatarSrc"></u-avatar>
-				</view>
-				<!-- 其他信息 -->
-				<view class="driver_item">
-					<text>{{licensePlate}}</text>
-					<view class="info_s">
-						<text style="padding-right: 16rpx;">{{driverName}}</text>
-						<u-icon name="star-fill" color="orange" size="18"></u-icon>
-						<text>{{score}}</text>				
+		<!-- 订单信息 -->
+		<view class="order_info" v-for="(item,index) in orderList" :key="index">
+			
+			<!-- 服务信息 -->
+			<view class="serve_info" v-if="item.state==2 || item.state==3 || item.state==4">
+				<!-- 司机信息 -->
+				<view class="driver_info">
+					<!-- 司机头像 -->
+					<view class="driver_avatar">
+						<u-avatar size="45" :src="avatarSrc"></u-avatar>
+					</view>
+					<!-- 其他信息 -->
+					<view class="driver_item">
+						<text>{{licensePlate}}</text>
+						<view class="info_s">
+							<text style="padding-right: 16rpx;">{{driverName}}</text>
+							<u-icon name="star-fill" color="orange" size="18"></u-icon>
+							<text>{{score}}</text>				
+						</view>
 					</view>
 				</view>
+				<!-- 其他服务 -->
+				<view class="serve">
+					<u-grid class="grid" :border="false" col="4">
+					    <u-grid-item  v-for="(listItem,listIndex) in list" :key="listIndex">
+					        <u-icon :customStyle="{paddingTop:15+'rpx'}"
+					            :name="listItem.name" :size="26"></u-icon>
+					        <text style="font-size: 26rpx;">{{listItem.title}}</text>
+					    </u-grid-item>
+					</u-grid>
+				</view>
 			</view>
-			<!-- 其他服务 -->
-			<view class="serve">
-				<u-grid class="grid" :border="false" col="4">
-				    <u-grid-item  v-for="(listItem,listIndex) in list" :key="listIndex">
-				        <u-icon :customStyle="{paddingTop:15+'rpx'}"
-				            :name="listItem.name" :size="26"></u-icon>
-				        <text style="font-size: 26rpx;">{{listItem.title}}</text>
-				    </u-grid-item>
-				</u-grid>
-			</view>
-		</view>
-		<!-- 间隔槽 -->
-		<u-gap height="15" bgColor="#efefef"></u-gap>
-		
-		<!-- 订单信息 -->
-		<view class="order_info">
+			<!-- 间隔槽 -->
+			<u-gap height="15" bgColor="#efefef"></u-gap>
 	
 			<!-- 订单地址及订单详情 -->
-			<view class="address_info" v-for="(item,index) in orderList" :key="index">
+			<view class="address_info" >
 				<!-- 订单信息 -->
 				<view class="info_title">
 					<text style=" font-weight: bold; padding-left: 20rpx;">订单信息</text>
@@ -165,7 +168,11 @@
 
 <script>
 	
-	import orderMap from "../../mapdemo/mapdemo.vue"
+	// import orderMap from "../../mapdemo/ordermap/ordermap.vue"
+	import QQMapWX from '@/utils/qqmap-wx-jssdk.js'
+	var qqmapsdk = new QQMapWX({
+	    key: '3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46'
+	});
 	export default {
 		data() {
 			return {
@@ -204,20 +211,55 @@
 					recePhone:'',//收件人联系电话
 					itemNum:'',//货物数量
 					remark:'',//订单备注
+					sendLat:'',//发件纬度
+					sendLng:'',//发件经度
+					receLat:'',//收件纬度
+					receLng:'',//收件经度
 				}],
-				roadList: [{
-					state:'',//订单状态
-					deliveryTime:'',//订单时间
-					roadName:'',//发件地址
-					roadAddress:'',//收件地址
-					recipient:'',//联系人
-					recePhone:'',//联系电话
-				}],
+				// roadList: [{
+				// 	state:'',//订单状态
+				// 	deliveryTime:'',//订单时间
+				// 	roadName:'',//发件地址
+				// 	roadAddress:'',//收件地址
+				// 	recipient:'',//联系人
+				// 	recePhone:'',//联系电话
+				// }],
+				roadList:[],
+				reportInfo: {
+					lgtd: 116.39742,
+					lttd: 39.909,
+				},
+				id: 0, // 使用 marker点击事件 需要填写id
+				title: 'map',
+				latitude: 39.909,
+				longitude: 116.39742,
+				//第一组为匹配的垃圾桶
+				covers: [], //存放标记点数组
+				isLocated: false, // 是否被定位
+				//小区
+				plot: {},
+				scale:12,
+				//详细地址
+				address: '',
+				polyline:[],
+				//地址组成
+				addressComponent: {
+					city: "",
+					district: "",
+					nation: "",
+					province: "",
+					street: "",
+					street_number: "",
+				},
+				startLat:'',
+				startLng:'',
+				destLat:'',
+				destLng:'',
 			}
 		},
-		components: {
-			orderMap
-		},
+		// components: {
+		// 	orderMap
+		// },
 		onLoad(option) {
 			this.number = option.number
 			console.log(option.number)
@@ -236,14 +278,118 @@
 					if(res.status){
 						for(var i=0;i<1;i++){
 							this.orderList[i] = res.data[i]
+							this.reportInfo.lttd = res.data[i].receLat
+							this.reportInfo.lgtd = res.data[i].receLng
+							this.startLat = res.data[i].sendLat
+							this.startLng = res.data[i].sendLng
+							this.destLat = res.data[i].receLat
+							this.destLng = res.data[i].receLng
+							var obj = {
+								width: 30,
+								height: 30,
+								latitude: Number(res.data[i].sendLat),
+								longitude: Number(res.data[i].sendLng),
+								iconPath: '../../../static/images/other/send.png' // 成功绘制
+							};
+							//垃圾桶====> 猜测是需要在地图上绘制点数
+							var bin = {
+								id: "0",
+								latitude: Number(res.data[i].receLat),
+								longitude: Number(res.data[i].receLng),
+								width: 25,
+								height: 35,
+								iconPath: '../../../static/images/other/end.png', // 成功绘制
+								
+							};
+							var arr = [];
+							arr.push(obj);
+							arr.push(bin);
+							//标记点集合赋值个给了vue对象covers == > 打印出来看看
+							this.covers = arr;
 						}
 						
 						console.log('获取订单详细信息成功！',res)
+						this.initMap()
 					}else{
 						console.log('获取订单详细信息失败！',res)
 					}
 				})
 			},
+			//根据起点和终点绘制路线
+			initMap(){
+			    const that = this;
+				console.log("进入initmap")
+			    qqmapsdk.direction({
+			        mode: 'driving', //可选值：'driving'（驾车）  trucking 货车
+			        //from参数不填默认当前地址
+			        // latitude纬度    longitude 经度
+			        from: {
+			            latitude: that.startLat,
+			            longitude: that.startLng
+			        },
+			        to: {
+			            latitude: that.destLat,
+			            longitude: that.destLng
+			        },
+			        size: 1, // 车型 1: 微型车  2: 轻型车 3: 中型车 4: 重型车
+			        policy: 'LEAST_TIME', //'9',  //参考实时路况，高速优先，尽量躲避拥堵
+			        height: 4,
+			        width: 2.5,
+			        length: 13,
+			        weight: 6.8,
+			        axle_weight: 34,
+			        axle_count: 6,
+			        is_trailer: 1,
+			     success: function(res, data) {
+			           
+			            // distance number  是   方案总距离，单位：米
+			            // duration number  是   方案估算时间（含路况），单位：分钟
+			            //计算缩放比例
+			            let distance = data[0].distance / 1000;
+			            console.log(res);
+			            console.log(data);
+			            if (distance > 500) {
+			            var scale = 7;
+			            } else if (distance > 200) {
+			                var scale = 10;
+			            } else if (distance > 100) {
+			                var scale = 12;
+			            } else {
+			                var scale = 15;
+			            }
+			            var ret = res;
+			            var coors = ret.result.routes[0].polyline,
+			                pl = [];                            
+			            //坐标解压（返回的点串坐标，通过前向差分进行压缩）
+			            var kr = 1000000;
+			            for (var i = 2; i < coors.length; i++) {
+			                coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+			            }
+			            //将解压后的坐标放入点串数组pl中
+			            for (var i = 0; i < coors.length; i += 2) {
+			                pl.push({
+			                    latitude: coors[i],
+			                    longitude: coors[i + 1]
+			                })
+			            }
+			            that.polyline = [{
+			                points: pl,
+			                color: '#4AC37A',
+			                width: 5
+			            }]
+			            that.scale = scale;
+			        },
+			        fail: function(error) {
+			            uni.showToast({
+			                title: error.message,
+			                duration: 3000,
+			                icon: "none",
+			            });
+						console.log("调取失败")
+			        }
+			    })
+			},          
+			
 		}
 	}
 </script>
@@ -252,14 +398,14 @@
 	.container{
 		position: absolute;
 		width: 100%;
-	
+	    height: 100%;
 		background-color: #efefef;
 		display: flex;
 		flex-direction: column;
 	}
 	.order_map{
 		width: 100%;
-		height: 300rpx;
+		height: 500rpx;
 	}
 	.serve_info{
 		// position: absolute;

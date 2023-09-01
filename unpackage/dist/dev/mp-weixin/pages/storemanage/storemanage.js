@@ -22,15 +22,6 @@ const _sfc_main = {
         lng: ""
         //经度
       }],
-      // storeList: [{
-      // 	id:'',
-      // 	addressName:'',//公司名称
-      // 	address:'',//地址
-      // 	contactName:'',//姓名
-      // 	cantactPhone:'',//电话
-      // 	latitude:'',//纬度
-      // 	longitude:'',//经度
-      // }],
       storeState: "",
       //门店状态
       allList: [],
@@ -185,7 +176,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.o($options.changeSearch),
     c: common_vendor.o(($event) => $data.searchKey = $event),
     d: common_vendor.p({
-      placeholder: "搜索地址/姓名/公司名称等",
+      placeholder: "搜索地址",
       clearabled: true,
       showAction: false,
       modelValue: $data.searchKey

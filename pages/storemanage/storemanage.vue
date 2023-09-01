@@ -1,56 +1,59 @@
 <template>
-	<view class="container">
-		<u-gap height="10" bgColor="#f0ffff"></u-gap>
-
-		<view class="store_search" >
-			<u-search placeholder="搜索地址/姓名/公司名称等" v-model="searchKey" :clearabled="true" :showAction="false" @change="changeSearch"></u-search>
-		</view>
-		<u-gap height="5" bgColor="#f0ffff"></u-gap>
-		<view class="" v-if="isData">
-			<view class="store_list" v-for="(item, index) in storeList " :key="index">
-				<view class=""  @click="conStoreData(index)">
-					<view class="list_info" >
-						<view class="item_cname">
-							<u-icon name="map-fill"  size="18"></u-icon>
-							<text>{{item.address}}</text>
+	<view class="nr">
+		<view class="container">
+			<u-gap height="10" bgColor="#f0ffff"></u-gap>
+		
+			<view class="store_search" >
+				<u-search placeholder="搜索地址" v-model="searchKey" :clearabled="true" :showAction="false" @change="changeSearch"></u-search>
+			</view>
+			<u-gap height="5" bgColor="#f0ffff"></u-gap>
+			<view class="" v-if="isData">
+				<view class="store_list" v-for="(item, index) in storeList " :key="index">
+					<view class=""  @click="conStoreData(index)">
+						<view class="list_info" >
+							<view class="item_cname">
+								<u-icon name="map-fill"  size="18"></u-icon>
+								<text>{{item.address}}</text>
+							</view>
+							<!-- <text style="color:darkgray; font-size: 26rpx; padding:13rpx 35rpx 0rpx 0;">{{item.distance}}</text> -->
 						</view>
-						<!-- <text style="color:darkgray; font-size: 26rpx; padding:13rpx 35rpx 0rpx 0;">{{item.distance}}</text> -->
+						
+						<u-gap height="6" bgColor="#ffffff"></u-gap>
+									
+						<view>
+							<text style="margin-left: 65rpx; font-size: 26rpx;">{{item.fullAddress}}</text>
+						</view>
+						
+						<u-gap height="6" bgColor="#ffffff"></u-gap>
+						
+						<view class="item_name">
+							<text style="padding-left: 65rpx; font-size: 26rpx;">{{item.name}}</text>
+							<text style="padding-left: 35rpx; font-size: 26rpx;">{{item.phone}}</text>
+						</view>
 					</view>
 					
-					<u-gap height="6" bgColor="#ffffff"></u-gap>
-								
-					<view>
-						<text style="margin-left: 65rpx; font-size: 26rpx;">{{item.fullAddress}}</text>
+					
+					<view class="list_button">
+						<u-button type="info" shape="circle" size="small" :plain="true" text="编辑" @click="editStore(item)"></u-button>
+						<u-button class="del" type="info" shape="circle" size="small" :plain="true" text="删除" @click="delStore(item)"></u-button>
 					</view>
 					
-					<u-gap height="6" bgColor="#ffffff"></u-gap>
-					
-					<view class="item_name">
-						<text style="padding-left: 65rpx; font-size: 26rpx;">{{item.name}}</text>
-						<text style="padding-left: 35rpx; font-size: 26rpx;">{{item.phone}}</text>
-					</view>
 				</view>
-				
-				
-				<view class="list_button">
-					<u-button type="info" shape="circle" size="small" :plain="true" text="编辑" @click="editStore(item)"></u-button>
-					<u-button class="del" type="info" shape="circle" size="small" :plain="true" text="删除" @click="delStore(item)"></u-button>
+				<view class="noData">
+					{{tips}}
 				</view>
-				
 			</view>
-			<view class="noData">
-				{{tips}}
+			
+			<view class="noData" v-else>
+				您还未添加门店哦！
 			</view>
-		</view>
-		
-		<view class="noData" v-else>
-			您还未添加门店哦！
-		</view>
-		
-		<view class="store_button" >
-			<u-button @click="addStore" type="primary">添加门店</u-button>
+			
+			<view class="store_button" >
+				<u-button @click="addStore" type="primary">添加门店</u-button>
+			</view>
 		</view>
 	</view>
+	
 </template>
 
 <script>
@@ -68,15 +71,6 @@
 					lat:'',//纬度
 					lng:'',//经度
 				}],
-				// storeList: [{
-				// 	id:'',
-				// 	addressName:'',//公司名称
-				// 	address:'',//地址
-				// 	contactName:'',//姓名
-				// 	cantactPhone:'',//电话
-				// 	latitude:'',//纬度
-				// 	longitude:'',//经度
-				// }],
 				storeState:'',//门店状态
 				allList:[],//全部数据
 				searchList:[],//搜索数据
@@ -226,13 +220,15 @@
 </script>
 
 <style lang="scss" scoped>
+	
 	.container{
 		position: absolute;
 		width: 100%;
-		height: 100vh;
+		height: 100%;
+		// background-color: #f6f6f6;
+		// z-index: -1;
 		background-color: #f0ffff;
-		display: flex;
-		flex-direction: column;
+
 	}
 	.store_search{
 		width: 95%;

@@ -13,6 +13,11 @@
 			</view>
 			<view class="add_address">
 				<view>添加地址</view>
+				<view class="">
+					公里：{{distance}}
+					<!-- 纬度：{{sendLocation.latitude}}
+					经度:{{receLocation.longitude}} -->
+				</view>
 			</view>
 		</view>
 		 
@@ -107,6 +112,10 @@
 
 <script>
 	import QQMapWX from '@/utils/qqmap-wx-jssdk.min.js' 
+	// 腾讯地图Api
+	var qqmapsdk = new QQMapWX({
+		key: '3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46' //这里填写自己申请的key，我就不展示了。
+	});
 	export default {
 		name:"custom-xd",
 		data() {
@@ -143,7 +152,7 @@
 				timeValue: '请选择',//时间
 				value1: Number(new Date()),//获取当前时间
 				inputStatus:false,
-				price:'35',//价格
+				price:0.0,//价格
 				itemName:"",//物品名称
 				itemWeight:"",//物品重量
 				itemVolume:"",//物品体积
@@ -151,6 +160,8 @@
 				isShow:false,
 				sendState:1,
 				receState:2,
+				sourceStr:'',//订单号 
+				distance:0.1,//距离
 			};
 		},
 		mounted () {
@@ -168,6 +179,9 @@
 				that.sendLocation.latitude = data.lat
 				that.sendLocation.longitude = data.lng
 				console.log('监听到事件来自 upSendData ，携带参数为：' + that.sendLocation.sendAddress);
+				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致举例
+				that.initMap()
+				 
 			})
 			uni.$on('upReceData',function(data){
 				// that.sendLocation = data
@@ -178,8 +192,22 @@
 				that.receLocation.latitude = data.lat
 				that.receLocation.longitude = data.lng
 				console.log('监听到事件来自 upReceData ，携带参数为：' + that.receLocation);
-			})	
-			   
+				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致举例
+				that.initMap()
+				  
+			})
+			
+			// if(that.receLocation.longitude!="" && that.receLocation.latitude!=""){
+			// 	// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致举例
+			// 	that.distance = that.getMapDistance(
+			// 		that.sendLocation.latitude,
+			// 		that.sendLocation.longitude,
+			// 		that.receLocation.latitude,
+			// 		that.receLocation.longitude
+			// 	)
+			// 	 console.log('输出公里数',this.distance)  
+			// }	
+			
 		},
 		methods: {
 			// 时间选择
@@ -232,6 +260,45 @@
 					url: '/pages/storemanage/storemanage?receState=' + this.receState
 				})
 			},
+			
+			//根据起点和终点绘制路线
+			initMap(){
+			    const that = this;
+			    qqmapsdk.direction({
+			        mode: 'driving', //可选值：'driving'（驾车）  trucking 货车
+			        //from参数不填默认当前地址
+			        // latitude纬度    longitude 经度
+			        from: {
+			            latitude: that.sendLocation.latitude,
+			            longitude: that.sendLocation.longitude,
+			        },
+			        to: {
+			            latitude: that.receLocation.latitude,
+			            longitude: that.receLocation.longitude
+			        },
+				
+			     success: function(res, data) {
+			           
+			            // distance number  是   方案总距离，单位：米
+			            // duration number  是   方案估算时间（含路况），单位：分钟
+			            //计算缩放比例
+			            that.distance = data[0].distance / 1000;
+			            // console.log(res);
+			            console.log(data[0].distance/1000);
+						
+						if(that.distance>5){
+							var n= (that.distance-5)*3.5
+							that.price=Number(n+40).toFixed(1)
+						}else{
+							that.price=40
+						}
+						
+			        },
+			        fail: function(error) {
+						console.log("调取失败",error)
+			        }
+			    })
+			}, 
 			//下单
 			addOrder(){
 				if(this.itemWeight==""){
@@ -286,6 +353,8 @@
 							})
 							
 							console.log('提交成功',res)
+							this.sourceStr = res.data
+							this.toPay()
 						}else{
 							uni.showToast({
 								title:'提交订单失败！',
@@ -297,7 +366,73 @@
 				}
 				
 			},
+			//支付
+			toPay(){
+				this.$api.reqPost('api/yl_user/Pay',{
+					data:{
+						ids:this.userid,
+						payment_code:'wechatpay',
+						payment_type:1,
+						sourceStr:this.sourceStr,
+						params:{}
+					}
+				}).then(res=>{
+					if(res.status){
+						console.log('测试成功',res)
+						uni.requestPayment({
+						    provider: 'wxpay',
+							timeStamp: String(Date.now()),//后端返回的时间戳
+							nonceStr: res.data.nonceStr,//后端返回的随机字符串
+							package: res.data.package,//后端返回的prepay_id
+							signType: 'MD5',
+							paySign: res.data.paySign, //后端返回的签名
+							success: function (res) {
+								console.log('success:' + JSON.stringify(res));
+								this.confirmOrder()
+							},
+							fail: function (err) {
+								console.log('fail:' + JSON.stringify(err));
+							}
+						});
+					}else{
+						
+						console.log('测试失败',res)
+					}
+				})
+			},
+			//确认下单
+			confirmOrder(){
+				this.$api.reqPost('api/yl_orders/AddOrder',{
+					params:{
+						number:this.sourceStr
+					}
+				}).then(res=>{
+					if(res.status){
+						console.log('确认下单成功',res)
+						var sta = 1
+						//确认下单成功后，修改订单状态为1(订单已生成)
+						this.editOrderState(sta)
+					}else{
+						console.log('确认下单失败',res)	
+					}	
+				})
+			},
+			//修改订单状态
+			editOrderState(sta){
 			
+				this.$api.reqPost('api/yl_orders/EditOrder',{
+					params:{
+						number:this.sourceStr,
+						state:sta
+					}
+				}).then(res=>{
+					if(res.status){
+						console.log('修改订单状态成功',res)
+					}else{
+						console.log('修改订单状态失败',res)	
+					}	
+				})
+			},
 			// 检测是否授权
 			checkAuthorization() {
 				var that = this
@@ -307,17 +442,7 @@
 						that.getLocationInfo().then(function(value) {
 							// that.address = value.address
 							that.sendLocation.sendAddress = value.addressName
-							that.location = value
-							// that.sendLocation.latitude=value.latitude
-							// that.sendLocation.longitude=value.longitude
-							//保存缓存
-							// uni.setStorage({
-							//   key:'local',
-							//   data:value,
-							//   success() {
-							//     console.log("用户地址信息已缓存")
-							//   }
-							// })              
+							that.location = value         
 						})
 						console.log('成功')
 					},
@@ -392,10 +517,7 @@
 							// that.sendLocation.latitude=res.latitude;
 							// that.sendLocation.longitude=res.longitude;
 							
-							// 腾讯地图Api
-							const qqmapsdk = new QQMapWX({
-								key: '3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46' //这里填写自己申请的key，我就不展示了。
-							});
+							
 							qqmapsdk.reverseGeocoder({
 								location,
 								success(response) {
@@ -430,6 +552,29 @@
 					});
 				});
 			},	
+			//进行经纬度转换为距离的计算 ===  和下面的方法进行了绑定；也不管他
+			Rad(d) {
+				return d * Math.PI / 180.0; //经纬度转换成三角函数中度分表形式。
+			},
+			
+			/*
+			 计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度
+			 默认单位km // 封装好的方法，也不管了
+			*/
+			getMapDistance(lat1, lng1, lat2, lng2) {
+				var radLat1 = this.Rad(lat1);
+				var radLat2 = this.Rad(lat2);
+				var a = radLat1 - radLat2;
+				var b = this.Rad(lng1) - this.Rad(lng2);
+				var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+					Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+				s = s * 6378.137; // EARTH_RADIUS;
+				s = Math.round(s * 10000) / 10000; //输出为公里
+				//s=s.toFixed(2);
+				// this.distance=s
+				console.log('输出公里数',s)
+				return s;
+			},
 		
 		},
 				
@@ -586,7 +731,7 @@
 		border-radius: 30rpx;
 	}
 	.price{
-		padding-left: 45%;
+		padding-left: 42.5%;
 		padding-top: 10rpx;
 	}
 	.add_button{

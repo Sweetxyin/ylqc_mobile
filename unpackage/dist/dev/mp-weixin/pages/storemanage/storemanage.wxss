@@ -27,10 +27,8 @@
 .container.data-v-69cfbcd8 {
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #f0ffff;
-  display: flex;
-  flex-direction: column;
 }
 .store_search.data-v-69cfbcd8 {
   width: 95%;

@@ -152,7 +152,7 @@
 				timeValue: '请选择',//时间
 				value1: Number(new Date()),//获取当前时间
 				inputStatus:false,
-				price:0.0,//价格
+				price:0.01,//价格
 				itemName:"",//物品名称
 				itemWeight:"",//物品重量
 				itemVolume:"",//物品体积
@@ -179,8 +179,8 @@
 				that.sendLocation.latitude = data.lat
 				that.sendLocation.longitude = data.lng
 				console.log('监听到事件来自 upSendData ，携带参数为：' + that.sendLocation.sendAddress);
-				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致举例
-				that.initMap()
+				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致距离
+				// that.initMap()
 				 
 			})
 			uni.$on('upReceData',function(data){
@@ -192,13 +192,13 @@
 				that.receLocation.latitude = data.lat
 				that.receLocation.longitude = data.lng
 				console.log('监听到事件来自 upReceData ，携带参数为：' + that.receLocation);
-				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致举例
-				that.initMap()
+				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致距离
+				// that.initMap()
 				  
 			})
 			
 			// if(that.receLocation.longitude!="" && that.receLocation.latitude!=""){
-			// 	// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致举例
+			// 	// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致距离
 			// 	that.distance = that.getMapDistance(
 			// 		that.sendLocation.latitude,
 			// 		that.sendLocation.longitude,
@@ -278,7 +278,6 @@
 			        },
 				
 			     success: function(res, data) {
-			           
 			            // distance number  是   方案总距离，单位：米
 			            // duration number  是   方案估算时间（含路况），单位：分钟
 			            //计算缩放比例
@@ -354,6 +353,7 @@
 							
 							console.log('提交成功',res)
 							this.sourceStr = res.data
+							// this.conOrder()
 							this.toPay()
 						}else{
 							uni.showToast({
@@ -368,29 +368,37 @@
 			},
 			//支付
 			toPay(){
-				this.$api.reqPost('api/yl_user/Pay',{
+				var that = this
+				that.$api.reqPost('api/yl_user/Pay',{
 					data:{
-						ids:this.userid,
+						ids:that.sourceStr,
 						payment_code:'wechatpay',
 						payment_type:1,
-						sourceStr:this.sourceStr,
-						params:{}
+						params:{
+							trade_type:"JSAPI"
+						}
 					}
 				}).then(res=>{
 					if(res.status){
 						console.log('测试成功',res)
 						uni.requestPayment({
 						    provider: 'wxpay',
-							timeStamp: String(Date.now()),//后端返回的时间戳
+							timeStamp: res.data.timeStamp,//后端返回的时间戳
 							nonceStr: res.data.nonceStr,//后端返回的随机字符串
 							package: res.data.package,//后端返回的prepay_id
 							signType: 'MD5',
 							paySign: res.data.paySign, //后端返回的签名
 							success: function (res) {
+								that.conOrder()
 								console.log('success:' + JSON.stringify(res));
-								this.confirmOrder()
+								// this.confirmOrder()
+								
 							},
 							fail: function (err) {
+								uni.showToast({
+									title:'取消支付',
+									icon:'none'
+								})
 								console.log('fail:' + JSON.stringify(err));
 							}
 						});
@@ -401,7 +409,7 @@
 				})
 			},
 			//确认下单
-			confirmOrder(){
+			conOrder(){
 				this.$api.reqPost('api/yl_orders/AddOrder',{
 					params:{
 						number:this.sourceStr

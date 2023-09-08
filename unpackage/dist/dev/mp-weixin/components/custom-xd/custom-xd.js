@@ -58,7 +58,7 @@ const _sfc_main = {
       value1: Number(/* @__PURE__ */ new Date()),
       //获取当前时间
       inputStatus: false,
-      price: 0,
+      price: 0.01,
       //价格
       itemName: "",
       //物品名称
@@ -88,7 +88,6 @@ const _sfc_main = {
       that.sendLocation.latitude = data.lat;
       that.sendLocation.longitude = data.lng;
       console.log("监听到事件来自 upSendData ，携带参数为：" + that.sendLocation.sendAddress);
-      that.initMap();
     });
     common_vendor.index.$on("upReceData", function(data) {
       that.receAddress = data.address;
@@ -98,7 +97,6 @@ const _sfc_main = {
       that.receLocation.latitude = data.lat;
       that.receLocation.longitude = data.lng;
       console.log("监听到事件来自 upReceData ，携带参数为：" + that.receLocation);
-      that.initMap();
     });
   },
   methods: {
@@ -245,20 +243,22 @@ const _sfc_main = {
     },
     //支付
     toPay() {
-      this.$api.reqPost("api/yl_user/Pay", {
+      var that = this;
+      that.$api.reqPost("api/yl_user/Pay", {
         data: {
-          ids: this.userid,
+          ids: that.sourceStr,
           payment_code: "wechatpay",
           payment_type: 1,
-          sourceStr: this.sourceStr,
-          params: {}
+          params: {
+            trade_type: "JSAPI"
+          }
         }
       }).then((res) => {
         if (res.status) {
           console.log("测试成功", res);
           common_vendor.index.requestPayment({
             provider: "wxpay",
-            timeStamp: String(Date.now()),
+            timeStamp: res.data.timeStamp,
             //后端返回的时间戳
             nonceStr: res.data.nonceStr,
             //后端返回的随机字符串
@@ -268,10 +268,14 @@ const _sfc_main = {
             paySign: res.data.paySign,
             //后端返回的签名
             success: function(res2) {
+              that.conOrder();
               console.log("success:" + JSON.stringify(res2));
-              this.confirmOrder();
             },
             fail: function(err) {
+              common_vendor.index.showToast({
+                title: "取消支付",
+                icon: "none"
+              });
               console.log("fail:" + JSON.stringify(err));
             }
           });
@@ -281,7 +285,7 @@ const _sfc_main = {
       });
     },
     //确认下单
-    confirmOrder() {
+    conOrder() {
       this.$api.reqPost("api/yl_orders/AddOrder", {
         params: {
           number: this.sourceStr

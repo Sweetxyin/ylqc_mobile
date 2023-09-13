@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const api_api = require("./api.js");
-const commoneUrl = "https://www.kunzhou.club:8080/";
+const commoneUrl = "http://43.138.139.46:1001/";
 common_vendor.index.getStorageSync("userinfo_Data").id;
 const fetch = (url, opt) => {
   var _a;

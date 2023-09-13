@@ -145,7 +145,7 @@ const _sfc_main = {
         url: "/pages/storemanage/storemanage?receState=" + this.receState
       });
     },
-    //根据起点和终点绘制路线
+    //根据起点和终点绘制路线,计算其路线公里数，再根据公里数计算订单价格
     initMap() {
       const that = this;
       qqmapsdk.direction({
@@ -255,7 +255,7 @@ const _sfc_main = {
         }
       }).then((res) => {
         if (res.status) {
-          console.log("测试成功", res);
+          console.log("测试支付后端接口成功", res);
           common_vendor.index.requestPayment({
             provider: "wxpay",
             timeStamp: res.data.timeStamp,

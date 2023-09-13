@@ -1,23 +1,22 @@
 <template>
 	<view class="container">
 		<view class="invoice_header">
-			
 		</view>
-		<view class="invoice_list" v-for="(item, index) in indexList"
-					:key="index">			
+		<view class="invoice_list" v-for="(item, index) in indexList" :key="index">			
 			<view class="order_code">
+			
 				<u-checkbox-group
 				    v-model="checkboxValue"
 				    placement="column"
 					shape="circle"
 					size="18"
-				    @change="checkboxChange">
+				    @change="changeitem(item)">
 					<u-checkbox
-					    :customStyle="{marginBottom: '5px',marginTop:'2px'}"
-					    >
+						:label="item.orderId" :name="item.orderId" :checked="item.checked"
+					    :customStyle="{marginBottom: '5px',marginTop:'2px'}" >
 					</u-checkbox>
 				</u-checkbox-group>
-				<text>订单编号：{{item.orderId}}</text>
+				<!-- <text>订单编号：{{item.orderId}}</text> -->
 			</view>
 			<view class="order_time">
 				<u-icon name="clock-fill"  size="16"></u-icon>
@@ -34,17 +33,26 @@
 		<!-- 底部 -->
 		<view class="invoice_bottom">
 			<view class="order_number">
-			    <text style="color: #F99B04;">{{order_total}}</text>
+			    <text style="color: #F99B04;">{{totalNumber}}</text>
 			    <text>个订单，共</text>
-			    <text style="color: #F99B04;">{{order_price}}</text>
+			    <text style="color: #F99B04;">{{totalPrice}}</text>
 				<text>元</text>
 			</view>
 			<view class="checkbox_status">
-			    <!-- <u-radio-group v-model="value">
-			    	<u-radio :customStyle="{marginRight: '10px'}" label="全选"></u-radio>
-					<u-radio :customStyle="{marginRight: '15px'}" label="全不选"></u-radio>
-			    </u-radio-group> -->
-				<u-radio-group
+		<!-- 	 <checkbox-group @change="selectAll">
+			 	<checkbox :checked="allChecked">全选</checkbox>
+			 </checkbox-group> -->
+			 <u-checkbox-group
+			    v-model="checkboxValue"
+			    placement="column"
+			 	shape="circle"
+			 	size="20"
+			    @change="selectAll">
+			 	<u-checkbox label="全选" :checked="allChecked"  
+				:customStyle="{marginRight: '15px'}">
+			 	</u-checkbox>
+			 </u-checkbox-group>
+				<!-- <u-radio-group
 				    v-model="radiovalue"
 					size="20"
 				    placement="row"
@@ -62,9 +70,9 @@
 				      @change="radioChange"
 				    >
 				    </u-radio>
-				  </u-radio-group>
+				  </u-radio-group> -->
 				<view class="next_button">
-				    <u-button @click="next_invoice" style="margin-left: 15rpx;" type="primary" size="small" text="下一步"></u-button>
+				    <u-button @click="nextInvoice" style="margin-left: 15rpx;" type="primary" size="small" text="下一步"></u-button>
 				</view>
 			</view>
 			 
@@ -85,41 +93,97 @@
 					orderTime:'2023.5.17',
 					startAddress:'柳州市延龙汽车',
 					endAddress:'柳州市万象城',
-					price:50
+					price:50,
+					checked: false,
+					numberBox: 1,
 				},{
 					orderId:'234',
 					orderTime:'2023.5.18',
 					startAddress:'柳州市阳和科三考场',
 					endAddress:'柳州市地王新天地',
-					price:65
+					price:65,
+					checked: false,
+					numberBox: 1,
 					}
 				],
-				order_total:2,//订单数量
-				order_price:115,//订单价格
-				radiolist1: [{
-				    name: '全页全选',
-				    disabled: false
-				}, {
+
+				radiolist1: [
+				// 	{
+				//     name: '全页全选',
+				//     disabled: false
+				// }, 
+				{
 				    name: '全部全选',
 				    disabled: false
 				}],
-			
+				checkList: [], //选中值
+				allChecked: false, //是否全选
+				// totalNumber:0
 			}
 		},
+		//计算
+		computed: {
+			//计算总价
+			totalPrice() {
+				let totalPrice = 0
+				this.indexList.map(item => {
+					item.checked ? totalPrice += item.numberBox * item.price : totalPrice += 0
+				})
+				return totalPrice.toFixed(2); // 保留两位小数（否则会价格会出现多位小数）
+			},
+			//计算总算
+			totalNumber() {
+				let totalNumber = 0
+				this.indexList.map(item => {
+					item.checked ? totalNumber += item.numberBox : totalNumber += 0
+				})
+				return totalNumber; 
+			}
+		},
+
 		methods: {
-			checkboxChange(n) {
-			            console.log('change', n);
-			},
-			groupChange(n) {
-			    console.log('groupChange', n);
-			},
-			radioChange(n) {
-				if(n=="全选"){
-					
+			//单选
+			changeitem(item) {
+				item.checked = !item.checked
+				if (!item.checked) {
+					this.allChecked = false
+				} else {
+					// 判断每一个商品是否是被选择的状态
+					const cartList = this.indexList.every(item => {
+						return item.checked === true
+					})
+					if (cartList) {
+						this.allChecked = true
+					} else {
+						this.allChecked = false
+					}
 				}
-				console.log('radioChange', n);
+			},			
+			//全选，全不选
+			selectAll() {
+				this.allChecked = !this.allChecked
+				if (this.allChecked) {
+					this.indexList.map(item => {
+						item.checked = true
+					})
+				} else {
+					this.indexList.map(item => {
+						item.checked = false
+					})
+				}
 			},
-			next_invoice(){
+			// groupChange(n) {
+			//     console.log('groupChange', n);
+			// },
+			// radioChange(n) {
+			// 	if(n=="全选"){
+					
+			// 	}
+			// 	console.log('radioChange', n);
+			// },
+			
+			//跳转到下一页
+			nextInvoice(){
 				uni.navigateTo({
 				    url: '/pages/orderinvoice/invoicing'
 				   

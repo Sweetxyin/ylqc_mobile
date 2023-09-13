@@ -2,7 +2,7 @@
 import { api } from './api.js'
 
 // const commoneUrl  = "https://www.kunzhou.club:8080/api/"; //公共路径 
-const commoneUrl  = "https://www.kunzhou.club:8080/" // 测试用的，正常使用改成自己公司的
+const commoneUrl  = "http://43.138.139.46:1001/" // 测试用的，正常使用改成自己公司的
 
 const userId = uni.getStorageSync("userinfo_Data").id //用户id
 

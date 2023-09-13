@@ -261,7 +261,7 @@
 				})
 			},
 			
-			//根据起点和终点绘制路线
+			//根据起点和终点绘制路线,计算其路线公里数，再根据公里数计算订单价格
 			initMap(){
 			    const that = this;
 			    qqmapsdk.direction({
@@ -276,7 +276,6 @@
 			            latitude: that.receLocation.latitude,
 			            longitude: that.receLocation.longitude
 			        },
-				
 			     success: function(res, data) {
 			            // distance number  是   方案总距离，单位：米
 			            // duration number  是   方案估算时间（含路况），单位：分钟
@@ -284,9 +283,10 @@
 			            that.distance = data[0].distance / 1000;
 			            // console.log(res);
 			            console.log(data[0].distance/1000);
-						
+						//根据起始终点计算订单价格，如果小于5公里为40，每多一公里加3.5
 						if(that.distance>5){
 							var n= (that.distance-5)*3.5
+							//Number().toFiced(1)为计算后的值保留一位小数点
 							that.price=Number(n+40).toFixed(1)
 						}else{
 							that.price=40
@@ -352,8 +352,9 @@
 							})
 							
 							console.log('提交成功',res)
+							//订单号赋值
 							this.sourceStr = res.data
-							// this.conOrder()
+							//提交订单后，执行支付功能
 							this.toPay()
 						}else{
 							uni.showToast({
@@ -380,7 +381,7 @@
 					}
 				}).then(res=>{
 					if(res.status){
-						console.log('测试成功',res)
+						console.log('测试支付后端接口成功',res)
 						uni.requestPayment({
 						    provider: 'wxpay',
 							timeStamp: res.data.timeStamp,//后端返回的时间戳
@@ -389,6 +390,7 @@
 							signType: 'MD5',
 							paySign: res.data.paySign, //后端返回的签名
 							success: function (res) {
+								//执行确认订单功能
 								that.conOrder()
 								console.log('success:' + JSON.stringify(res));
 								// this.confirmOrder()
@@ -403,7 +405,6 @@
 							}
 						});
 					}else{
-						
 						console.log('测试失败',res)
 					}
 				})
@@ -524,8 +525,6 @@
 							location.latitude = res.latitude;
 							// that.sendLocation.latitude=res.latitude;
 							// that.sendLocation.longitude=res.longitude;
-							
-							
 							qqmapsdk.reverseGeocoder({
 								location,
 								success(response) {

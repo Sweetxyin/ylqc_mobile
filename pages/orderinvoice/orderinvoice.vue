@@ -12,7 +12,7 @@
 					size="18"
 				    @change="changeitem(item)">
 					<u-checkbox
-						:label="item.orderId" :name="item.orderId" :checked="item.checked"
+						:label="item.number" :name="item.number" :checked="item.checked"
 					    :customStyle="{marginBottom: '5px',marginTop:'2px'}" >
 					</u-checkbox>
 				</u-checkbox-group>
@@ -20,12 +20,12 @@
 			</view>
 			<view class="order_time">
 				<u-icon name="clock-fill"  size="16"></u-icon>
-                <text>订单时间：{{item.orderTime}}</text>
+                <text>订单时间：{{item.createTime}}</text>
 			</view>
-			<view class="">{{item.startAddress}}</view>
+			<view class="">{{item.sendAddress}}</view>
 			<view>
-			<text class="order_endAddress">{{item.endAddress}}</text>
-			<text class="order_price">{{item.price}}元</text>
+			<text class="order_endAddress">{{item.receAddress}}</text>
+			<text class="order_price">{{item.amount}}元</text>
 			</view>
 			
 		</view>
@@ -86,25 +86,18 @@
 	export default {
 		data() {
 			return {
+				userId:this.$store.state.userid,
 				checkboxValue:[],
 				radiovalue:[],
 				indexList: [{
-					orderId:'123',
-					orderTime:'2023.5.17',
-					startAddress:'柳州市延龙汽车',
-					endAddress:'柳州市万象城',
-					price:50,
+					number:'',
+					createTime:'',
+					sendAddress:'',
+					receAddress:'',
+					amount:0,
 					checked: false,
-					numberBox: 1,
-				},{
-					orderId:'234',
-					orderTime:'2023.5.18',
-					startAddress:'柳州市阳和科三考场',
-					endAddress:'柳州市地王新天地',
-					price:65,
-					checked: false,
-					numberBox: 1,
-					}
+					// numberBox: 1,
+				}
 				],
 
 				radiolist1: [
@@ -121,13 +114,17 @@
 				// totalNumber:0
 			}
 		},
+		onLoad() {
+			this.getOrderInvoice()
+			
+		},
 		//计算
 		computed: {
 			//计算总价
 			totalPrice() {
 				let totalPrice = 0
 				this.indexList.map(item => {
-					item.checked ? totalPrice += item.numberBox * item.price : totalPrice += 0
+					item.checked ? totalPrice += 1 * item.amount : totalPrice += 0
 				})
 				return totalPrice.toFixed(2); // 保留两位小数（否则会价格会出现多位小数）
 			},
@@ -135,13 +132,30 @@
 			totalNumber() {
 				let totalNumber = 0
 				this.indexList.map(item => {
-					item.checked ? totalNumber += item.numberBox : totalNumber += 0
+					item.checked ? totalNumber += 1 : totalNumber += 0
 				})
 				return totalNumber; 
 			}
 		},
 
 		methods: {
+			//获取开票订单
+			getOrderInvoice(){
+				var _this = this
+				_this.$api.reqPost('api/yl_orders/QueryInvoice',{
+					params:{
+						id:this.userId
+					}
+				}).then(res => {
+					if(res.status){
+						_this.indexList = res.data
+						console.log('获取订单开票信息成功！',res)
+						// console.log('输出',_this.indexList.numberBox)
+					}else{
+						console.log('获取订单开票信息失败！',res)
+					}
+				})
+			},
 			//单选
 			changeitem(item) {
 				item.checked = !item.checked

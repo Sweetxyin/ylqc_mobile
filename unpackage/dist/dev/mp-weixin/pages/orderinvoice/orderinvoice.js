@@ -3,26 +3,18 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
+      userId: this.$store.state.userid,
       checkboxValue: [],
       radiovalue: [],
       indexList: [
         {
-          orderId: "123",
-          orderTime: "2023.5.17",
-          startAddress: "柳州市延龙汽车",
-          endAddress: "柳州市万象城",
-          price: 50,
-          checked: false,
-          numberBox: 1
-        },
-        {
-          orderId: "234",
-          orderTime: "2023.5.18",
-          startAddress: "柳州市阳和科三考场",
-          endAddress: "柳州市地王新天地",
-          price: 65,
-          checked: false,
-          numberBox: 1
+          number: "",
+          createTime: "",
+          sendAddress: "",
+          receAddress: "",
+          amount: 0,
+          checked: false
+          // numberBox: 1,
         }
       ],
       radiolist1: [
@@ -42,13 +34,16 @@ const _sfc_main = {
       // totalNumber:0
     };
   },
+  onLoad() {
+    this.getOrderInvoice();
+  },
   //计算
   computed: {
     //计算总价
     totalPrice() {
       let totalPrice = 0;
       this.indexList.map((item) => {
-        item.checked ? totalPrice += item.numberBox * item.price : totalPrice += 0;
+        item.checked ? totalPrice += 1 * item.amount : totalPrice += 0;
       });
       return totalPrice.toFixed(2);
     },
@@ -56,12 +51,28 @@ const _sfc_main = {
     totalNumber() {
       let totalNumber = 0;
       this.indexList.map((item) => {
-        item.checked ? totalNumber += item.numberBox : totalNumber += 0;
+        item.checked ? totalNumber += 1 : totalNumber += 0;
       });
       return totalNumber;
     }
   },
   methods: {
+    //获取开票订单
+    getOrderInvoice() {
+      var _this = this;
+      _this.$api.reqPost("api/yl_orders/QueryInvoice", {
+        params: {
+          id: this.userId
+        }
+      }).then((res) => {
+        if (res.status) {
+          _this.indexList = res.data;
+          console.log("获取订单开票信息成功！", res);
+        } else {
+          console.log("获取订单开票信息失败！", res);
+        }
+      });
+    },
     //单选
     changeitem(item) {
       item.checked = !item.checked;
@@ -127,8 +138,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       return {
         a: "3b7f7ffb-1-" + i0 + "," + ("3b7f7ffb-0-" + i0),
         b: common_vendor.p({
-          label: item.orderId,
-          name: item.orderId,
+          label: item.number,
+          name: item.number,
           checked: item.checked,
           customStyle: {
             marginBottom: "5px",
@@ -139,10 +150,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         d: "3b7f7ffb-0-" + i0,
         e: common_vendor.o(($event) => $data.checkboxValue = $event, index),
         f: "3b7f7ffb-2-" + i0,
-        g: common_vendor.t(item.orderTime),
-        h: common_vendor.t(item.startAddress),
-        i: common_vendor.t(item.endAddress),
-        j: common_vendor.t(item.price),
+        g: common_vendor.t(item.createTime),
+        h: common_vendor.t(item.sendAddress),
+        i: common_vendor.t(item.receAddress),
+        j: common_vendor.t(item.amount),
         k: index
       };
     }),

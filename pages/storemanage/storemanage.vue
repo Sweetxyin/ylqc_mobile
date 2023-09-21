@@ -224,7 +224,7 @@
 	.container{
 		position: absolute;
 		width: 100%;
-		height: 100%;
+		// height: 100%;
 		// background-color: #f6f6f6;
 		// z-index: -1;
 		background-color: #f0ffff;
@@ -277,9 +277,12 @@
 		margin-bottom: 5%;
 	}
 	.noData{
+		display: flex;
 		font-size: 36rpx;
 		margin-top: 70%;
 		margin-left: 30%;
+		height: 100vh;
+		background-color: #f0ffff;
 	}
 	.del{
 		margin-left: 15rpx;

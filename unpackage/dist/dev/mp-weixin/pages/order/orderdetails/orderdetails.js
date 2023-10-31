@@ -113,7 +113,8 @@ const _sfc_main = {
       startLat: "",
       startLng: "",
       destLat: "",
-      destLng: ""
+      destLng: "",
+      driverList: {}
     };
   },
   // components: {
@@ -149,7 +150,7 @@ const _sfc_main = {
               height: 30,
               latitude: Number(res.data[i].sendLat),
               longitude: Number(res.data[i].sendLng),
-              iconPath: "../../../static/images/other/send.png"
+              iconPath: "https://www.baexnyqc.cn/images/other/send.png"
               // 成功绘制
             };
             var bin = {
@@ -158,7 +159,7 @@ const _sfc_main = {
               longitude: Number(res.data[i].receLng),
               width: 25,
               height: 35,
-              iconPath: "../../../static/images/other/end.png"
+              iconPath: "https://www.baexnyqc.cn/images/other/end.png"
               // 成功绘制
             };
             var arr = [];
@@ -166,6 +167,8 @@ const _sfc_main = {
             arr.push(bin);
             this.covers = arr;
           }
+          this.driverList = res.data[1];
+          console.log("输出司机信息成功！", this.driverList);
           console.log("获取订单详细信息成功！", res);
           this.initMap();
         } else {
@@ -278,8 +281,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
           size: "45",
           src: _ctx.avatarSrc
         }),
-        d: common_vendor.t($data.licensePlate),
-        e: common_vendor.t($data.driverName),
+        d: common_vendor.t($data.driverList.licensePlate),
+        e: common_vendor.t($data.driverList.realName),
         f: "bde4f0ef-1-" + i0,
         g: common_vendor.p({
           name: "star-fill",

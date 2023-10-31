@@ -31,7 +31,9 @@ const _sfc_main = {
         //收件地址
         amount: ""
         //价格	
-      }]
+      }],
+      sourceStr: ""
+      //订单号 
     };
   },
   onShow() {
@@ -165,6 +167,81 @@ const _sfc_main = {
           }
         }
       });
+    },
+    //支付
+    toPay(item) {
+      var that = this;
+      that.$api.reqPost("api/yl_user/Pay", {
+        data: {
+          ids: item.number,
+          payment_code: "wechatpay",
+          payment_type: 1,
+          params: {
+            trade_type: "JSAPI"
+          }
+        }
+      }).then((res) => {
+        if (res.status) {
+          console.log("测试支付后端接口成功", res);
+          common_vendor.index.requestPayment({
+            provider: "wxpay",
+            timeStamp: res.data.timeStamp,
+            //后端返回的时间戳
+            nonceStr: res.data.nonceStr,
+            //后端返回的随机字符串
+            package: res.data.package,
+            //后端返回的prepay_id
+            signType: "MD5",
+            paySign: res.data.paySign,
+            //后端返回的签名
+            success: function(res2) {
+              that.sourceStr = item.number;
+              that.conOrder();
+              console.log("success:" + JSON.stringify(res2));
+            },
+            fail: function(err) {
+              common_vendor.index.showToast({
+                title: "取消支付",
+                icon: "none"
+              });
+              console.log("fail:" + JSON.stringify(err));
+            }
+          });
+        } else {
+          console.log("支付失败", res);
+        }
+      });
+    },
+    //确认下单
+    conOrder() {
+      this.$api.reqPost("api/yl_orders/AddOrder", {
+        params: {
+          number: this.sourceStr
+        }
+      }).then((res) => {
+        if (res.status) {
+          console.log("确认下单成功", res);
+          var sta = 1;
+          this.editOrderState(sta);
+        } else {
+          console.log("确认下单失败", res);
+        }
+      });
+    },
+    //修改订单状态
+    editOrderState(sta) {
+      this.$api.reqPost("api/yl_orders/EditOrder", {
+        params: {
+          number: this.sourceStr,
+          state: sta
+        }
+      }).then((res) => {
+        if (res.status) {
+          console.log("修改订单状态成功", res);
+        } else {
+          console.log("修改订单状态失败", res);
+        }
+      });
     }
   }
 };
@@ -230,14 +307,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         o: common_vendor.o(($event) => $options.toOrderDetail(item), index),
         p: item.state == 0
       }, item.state == 0 ? {
-        q: common_vendor.o(($event) => _ctx.doEditOrder(item), index),
+        q: common_vendor.o(($event) => $options.toPay(item), index),
         r: "70d1dd14-5-" + i0,
         s: common_vendor.p({
           type: "info",
           shape: "circle",
           size: "small",
           plain: true,
-          text: "修改订单"
+          text: "付款"
         })
       } : {}, {
         t: item.state == 0 || item.state == 1

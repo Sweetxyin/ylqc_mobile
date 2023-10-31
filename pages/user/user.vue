@@ -59,7 +59,7 @@
 		data() {
 			return {
 				hasLogin:this.$store.state.hasLogin,//登录状态
-				avatarSrc:'../../static/images/other/tx.jpg',
+				avatarSrc:'https://www.baexnyqc.cn/images/other/tx.jpg',
 				userInfo:{
 					name:'',//昵称
 					avatar:'',//头像

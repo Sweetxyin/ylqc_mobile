@@ -45,14 +45,14 @@
 						    </u-radio>
 						  </u-radio-group>
 						<navigator url="" class="add_icon">
-							<image src="../../static/images/index_icon/add_annex.png" ></image>
+							<image src="https://www.baexnyqc.cn/images/index_icon/add_annex.png" ></image>
 							<text>自动识别物件信息生成订单列表</text>
 						</navigator>
 					</view>
 				
 					<view class="download_annex">
 						<text>附件模板</text>
-						<image src="../../static/images/index_icon/download.png" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/index_icon/download.png" mode=""></image>
 					</view>	
 				</view>
 				<view class="info_list">

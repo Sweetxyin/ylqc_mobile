@@ -55,7 +55,7 @@
 		       </view>
 		       
 		       <view class="processing_2">
-		       	<u-button v-if="item.state==0 " type="info" shape="circle" size="small" :plain="true" text="修改订单" @click="doEditOrder(item)"></u-button>
+		       	<u-button v-if="item.state==0 " type="info" shape="circle" size="small" :plain="true" text="付款" @click="toPay(item)"></u-button>
 		       	<u-button v-if="item.state==0 || item.state==1" type="info" shape="circle" style="margin-left:15rpx;" size="small" :plain="true" text="取消订单" @click="cancelOrder(item)"></u-button>
 		       	<u-button v-if="item.state==-1 || item.state==4" type="info" shape="circle" style="margin-left:15rpx;" size="small" :plain="true" text="删除订单" @click="doDelete(item)"></u-button>
 		       </view>
@@ -103,7 +103,8 @@
 				sendAddress:'',//始发地址
 				receAddress:'',//收件地址
 				amount:'',//价格	
-			}]
+			}],
+			sourceStr:'',//订单号 
          }
       },
 	  onShow(){
@@ -136,7 +137,7 @@
 					  console.log(this.allList[i]);
 					  this.typeList.push(this.allList[i]);
 				  }else if(this.allList[i].state == -1 && e.index == 2 ){
-					  console.log(this.allList[i]);
+					  console.log(this.allList[i]); 
 					  this.typeList.push(this.allList[i]);
 				  }
                }
@@ -246,7 +247,83 @@
 			 		}
 			 	}
 			 })
-		 }
+		 },
+		 //支付
+		 toPay(item){
+		 	var that = this
+		 	that.$api.reqPost('api/yl_user/Pay',{
+		 		data:{
+		 			ids:item.number,
+		 			payment_code:'wechatpay',
+		 			payment_type:1,
+		 			params:{
+		 				trade_type:"JSAPI"
+		 			}
+		 		}
+		 	}).then(res=>{
+		 		if(res.status){
+		 			console.log('测试支付后端接口成功',res)
+		 			uni.requestPayment({
+		 			    provider: 'wxpay',
+		 				timeStamp: res.data.timeStamp,//后端返回的时间戳
+		 				nonceStr: res.data.nonceStr,//后端返回的随机字符串
+		 				package: res.data.package,//后端返回的prepay_id
+		 				signType: 'MD5',
+		 				paySign: res.data.paySign, //后端返回的签名
+		 				success: function (res) {
+							that.sourceStr=item.number
+		 					//执行确认订单功能
+		 					that.conOrder()
+		 					console.log('success:' + JSON.stringify(res));
+		 					// this.confirmOrder()
+		 					
+		 				},
+		 				fail: function (err) {
+		 					uni.showToast({
+		 						title:'取消支付',
+		 						icon:'none'
+		 					})
+		 					console.log('fail:' + JSON.stringify(err));
+		 				}
+		 			});
+		 		}else{
+		 			console.log('支付失败',res)
+		 		}
+		 	})
+		 },
+		 //确认下单
+		 conOrder(){
+		 	this.$api.reqPost('api/yl_orders/AddOrder',{
+		 		params:{
+		 			number:this.sourceStr
+		 		}
+		 	}).then(res=>{
+		 		if(res.status){
+		 			console.log('确认下单成功',res)
+		 			var sta = 1
+		 			//确认下单成功后，修改订单状态为1(订单已生成)
+		 			this.editOrderState(sta)
+		 		}else{
+		 			console.log('确认下单失败',res)	
+		 		}	
+		 	})
+		 },
+		 //修改订单状态
+		 editOrderState(sta){
+		 
+		 	this.$api.reqPost('api/yl_orders/EditOrder',{
+		 		params:{
+		 			number:this.sourceStr,
+		 			state:sta
+		 		}
+		 	}).then(res=>{
+		 		if(res.status){
+		 			console.log('修改订单状态成功',res)
+		 		}else{
+		 			console.log('修改订单状态失败',res)	
+		 		}	
+		 	})
+		 },
       }
    }
 </script>

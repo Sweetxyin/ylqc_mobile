@@ -141,7 +141,7 @@
 					height: 30,
 					latitude:  res.data.latitude,
 					longitude: res.data.longitude,
-					iconPath: '../../../static/images/index_icon/dw.png'
+					iconPath: 'https://www.baexnyqc.cn/images/index_icon/dw.png'
 				};
 				var arr = [];
 				arr.push(obj);
@@ -319,7 +319,7 @@
 							height: 30,
 							latitude: Number(self.storeList.lat),
 							longitude: Number(self.storeList.lng),
-							iconPath: '../../../static/images/index_icon/dw.png' // 成功绘制
+							iconPath: 'https://www.baexnyqc.cn/images/index_icon/dw.png' // 成功绘制
 						};
 					
 						// 这里定位了一个集合， 并将前面给的三个标记点存入 
@@ -455,7 +455,7 @@
 					height: 30,
 					latitude: that.storeList.lat,
 					longitude: that.storeList.lng,
-					iconPath: '../../../static/images/index_icon/dw.png'
+					iconPath: 'https://www.baexnyqc.cn/images/index_icon/dw.png'
 				};
 				var arr = [];
 				arr.push(obj);

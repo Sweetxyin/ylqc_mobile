@@ -2,8 +2,11 @@
 	<view class="container">
 		<view class="invoice_header">
 		</view>
-		<view class="invoice_list" v-for="(item, index) in indexList" :key="index">			
-			<view class="order_code">
+		<view  v-if="isData==false" class="empty_data">
+			您还没有可开票的订单哦！
+		</view>
+		<view v-else class="invoice_list" v-for="(item, index) in indexList" :key="index">			
+			<view class="order_code" >
 			
 				<u-checkbox-group
 				    v-model="checkboxValue"
@@ -111,6 +114,7 @@
 				}],
 				checkList: [], //选中值
 				allChecked: false, //是否全选
+				isData:false,
 				// totalNumber:0
 			}
 		},
@@ -148,7 +152,16 @@
 					}
 				}).then(res => {
 					if(res.status){
-						_this.indexList = res.data
+						if(res.data==null){
+							_this.isData=false
+							console.log(_this.isData)
+						}else{
+							_this.indexList = res.data
+							
+							_this.isData =true
+							console.log(_this.isData)
+						}
+						
 						console.log('获取订单开票信息成功！',res)
 						// console.log('输出',_this.indexList.numberBox)
 					}else{
@@ -217,6 +230,10 @@
 		background-color: #efefef;
 		display: flex;
 		flex-direction: column;
+	}
+	.empty_data{
+		margin-top:60%;
+		margin-left: 25%;
 	}
 	.invoice_list{
 		height:190rpx;

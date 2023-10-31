@@ -88,6 +88,7 @@ const _sfc_main = {
       that.sendLocation.latitude = data.lat;
       that.sendLocation.longitude = data.lng;
       console.log("监听到事件来自 upSendData ，携带参数为：" + that.sendLocation.sendAddress);
+      that.initMap();
     });
     common_vendor.index.$on("upReceData", function(data) {
       that.receAddress = data.address;
@@ -97,6 +98,7 @@ const _sfc_main = {
       that.receLocation.latitude = data.lat;
       that.receLocation.longitude = data.lng;
       console.log("监听到事件来自 upReceData ，携带参数为：" + that.receLocation);
+      that.initMap();
     });
   },
   methods: {
@@ -280,7 +282,7 @@ const _sfc_main = {
             }
           });
         } else {
-          console.log("测试失败", res);
+          console.log("支付失败", res);
         }
       });
     },

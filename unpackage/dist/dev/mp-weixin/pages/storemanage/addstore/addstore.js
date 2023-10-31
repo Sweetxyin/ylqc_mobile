@@ -78,7 +78,7 @@ const _sfc_main = {
           height: 30,
           latitude: res.data.latitude,
           longitude: res.data.longitude,
-          iconPath: "../../../static/images/index_icon/dw.png"
+          iconPath: "https://www.baexnyqc.cn/images/index_icon/dw.png"
         };
         var arr = [];
         arr.push(obj);
@@ -232,7 +232,7 @@ const _sfc_main = {
             height: 30,
             latitude: Number(self.reportInfo.lttd),
             longitude: Number(self.reportInfo.lgtd),
-            iconPath: "../../../static/images/index_icon/dw.png"
+            iconPath: "https://www.baexnyqc.cn/images/index_icon/dw.png"
             // 成功绘制
           };
           var arr = [];
@@ -347,7 +347,7 @@ const _sfc_main = {
         height: 30,
         latitude: that.reportInfo.lttd,
         longitude: that.reportInfo.lgtd,
-        iconPath: "../../../static/images/index_icon/dw.png"
+        iconPath: "https://www.baexnyqc.cn/images/index_icon/dw.png"
       };
       var arr = [];
       arr.push(obj);

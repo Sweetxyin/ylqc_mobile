@@ -32,6 +32,10 @@
   display: flex;
   flex-direction: column;
 }
+.empty_data.data-v-3b7f7ffb {
+  margin-top: 60%;
+  margin-left: 25%;
+}
 .invoice_list.data-v-3b7f7ffb {
   height: 190rpx;
   width: 92%;

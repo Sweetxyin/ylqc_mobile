@@ -47,14 +47,14 @@
 						    </u-radio>
 						  </u-radio-group>
 						<navigator url="" class="add_icon">
-							<image src="../../static/images/index_icon/add_annex.png" ></image>
+							<image src="https://www.baexnyqc.cn/images/index_icon/add_annex.png" ></image>
 							<text>自动识别物件信息生成订单列表</text>
 						</navigator>
 					</view>
 				
 					<view class="download_annex">
 						<text>附件模板</text>
-						<image src="../../static/images/index_icon/download.png" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/index_icon/download.png" mode=""></image>
 					</view>	
 				</view>
 				<view class="info_list">
@@ -180,7 +180,7 @@
 				that.sendLocation.longitude = data.lng
 				console.log('监听到事件来自 upSendData ，携带参数为：' + that.sendLocation.sendAddress);
 				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致距离
-				// that.initMap()
+				that.initMap()
 				 
 			})
 			uni.$on('upReceData',function(data){
@@ -193,7 +193,7 @@
 				that.receLocation.longitude = data.lng
 				console.log('监听到事件来自 upReceData ，携带参数为：' + that.receLocation);
 				// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致距离
-				// that.initMap()
+				that.initMap()
 				  
 			})
 			
@@ -405,7 +405,7 @@
 							}
 						});
 					}else{
-						console.log('测试失败',res)
+						console.log('支付失败',res)
 					}
 				})
 			},

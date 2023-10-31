@@ -7,17 +7,17 @@
 			<swiper  :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="../../static/images/swiper_bg/2.jpg" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/swiper_bg/2.jpg" mode=""></image>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="../../static/images/swiper_bg/3.jpg" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/swiper_bg/3.jpg" mode=""></image>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="../../static/images/swiper_bg/4.jpg" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/swiper_bg/4.jpg" mode=""></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -62,37 +62,37 @@
 		<view class="other_services">
 			<view class="services_list">
 				<navigator class="services_item" url="/pages/complaint/complaint">
-					<image src="../../static/images/index_icon/consultation.png"></image>
+					<image src="https://www.baexnyqc.cn/images/index_icon/consultation.png"></image>
 					<text>咨询投诉</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator url="" class="services_item">
-					<image src="../../static/images/index_icon/driver.png"></image>
+					<image src="https://www.baexnyqc.cn/images/index_icon/driver.png"></image>
 					<text>司机加入</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator url="" class="services_item">
-					<image src="../../static/images/index_icon/business.png"></image>
+					<image src="https://www.baexnyqc.cn/images/index_icon/business.png"></image>
 					<text>商家入驻</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator url="" class="services_item">
-					<image src="../../static/images/index_icon/logistics.png"></image>
+					<image src="https://www.baexnyqc.cn/images/index_icon/logistics.png"></image>
 					<text>物流加盟</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator url="/pages/mapdemo/demo/demo" class="services_item">
-					<image src="../../static/images/index_icon/recruit.png"></image>
+					<image src="https://www.baexnyqc.cn/images/index_icon/recruit.png"></image>
 					<text>人才招聘</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator url="/pages/mapdemo/mapdemo" class="services_item">
-					<image src="../../static/images/index_icon/community.png"></image>
+					<image src="https://www.baexnyqc.cn/images/index_icon/community.png"></image>
 					<text>互动社区</text>
 				</navigator>
 			</view>

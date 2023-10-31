@@ -20,9 +20,9 @@
 					</view>
 					<!-- 其他信息 -->
 					<view class="driver_item">
-						<text>{{licensePlate}}</text>
+						<text>{{driverList.licensePlate}}</text>
 						<view class="info_s">
-							<text style="padding-right: 16rpx;">{{driverName}}</text>
+							<text style="padding-right: 16rpx;">{{driverList.realName}}</text>
 							<u-icon name="star-fill" color="orange" size="18"></u-icon>
 							<text>{{score}}</text>				
 						</view>
@@ -255,6 +255,7 @@
 				startLng:'',
 				destLat:'',
 				destLng:'',
+				driverList:{}
 			}
 		},
 		// components: {
@@ -289,7 +290,7 @@
 								height: 30,
 								latitude: Number(res.data[i].sendLat),
 								longitude: Number(res.data[i].sendLng),
-								iconPath: '../../../static/images/other/send.png' // 成功绘制
+								iconPath: 'https://www.baexnyqc.cn/images/other/send.png' // 成功绘制
 							};
 							//垃圾桶====> 猜测是需要在地图上绘制点数
 							var bin = {
@@ -298,7 +299,7 @@
 								longitude: Number(res.data[i].receLng),
 								width: 25,
 								height: 35,
-								iconPath: '../../../static/images/other/end.png', // 成功绘制
+								iconPath: 'https://www.baexnyqc.cn/images/other/end.png', // 成功绘制
 								
 							};
 							var arr = [];
@@ -307,7 +308,8 @@
 							//标记点集合赋值个给了vue对象covers == > 打印出来看看
 							this.covers = arr;
 						}
-						
+						this.driverList = res.data[1]
+						console.log('输出司机信息成功！',this.driverList)
 						console.log('获取订单详细信息成功！',res)
 						this.initMap()
 					}else{

@@ -29,8 +29,9 @@ const _sfc_main = {
       ],
       checkList: [],
       //选中值
-      allChecked: false
+      allChecked: false,
       //是否全选
+      isData: false
       // totalNumber:0
     };
   },
@@ -66,7 +67,14 @@ const _sfc_main = {
         }
       }).then((res) => {
         if (res.status) {
-          _this.indexList = res.data;
+          if (res.data == null) {
+            _this.isData = false;
+            console.log(_this.isData);
+          } else {
+            _this.indexList = res.data;
+            _this.isData = true;
+            console.log(_this.isData);
+          }
           console.log("获取订单开票信息成功！", res);
         } else {
           console.log("获取订单开票信息失败！", res);
@@ -133,8 +141,10 @@ if (!Math) {
   (_easycom_u_checkbox + _easycom_u_checkbox_group + _easycom_u_icon + _easycom_u_button)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: common_vendor.f($data.indexList, (item, index, i0) => {
+  return common_vendor.e({
+    a: $data.isData == false
+  }, $data.isData == false ? {} : {
+    b: common_vendor.f($data.indexList, (item, index, i0) => {
       return {
         a: "3b7f7ffb-1-" + i0 + "," + ("3b7f7ffb-0-" + i0),
         b: common_vendor.p({
@@ -157,40 +167,41 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         k: index
       };
     }),
-    b: common_vendor.p({
+    c: common_vendor.p({
       placement: "column",
       shape: "circle",
       size: "18",
       modelValue: $data.checkboxValue
     }),
-    c: common_vendor.p({
+    d: common_vendor.p({
       name: "clock-fill",
       size: "16"
-    }),
-    d: common_vendor.t($options.totalNumber),
-    e: common_vendor.t($options.totalPrice),
-    f: common_vendor.p({
+    })
+  }, {
+    e: common_vendor.t($options.totalNumber),
+    f: common_vendor.t($options.totalPrice),
+    g: common_vendor.p({
       label: "全选",
       checked: $data.allChecked,
       customStyle: {
         marginRight: "15px"
       }
     }),
-    g: common_vendor.o($options.selectAll),
-    h: common_vendor.o(($event) => $data.checkboxValue = $event),
-    i: common_vendor.p({
+    h: common_vendor.o($options.selectAll),
+    i: common_vendor.o(($event) => $data.checkboxValue = $event),
+    j: common_vendor.p({
       placement: "column",
       shape: "circle",
       size: "20",
       modelValue: $data.checkboxValue
     }),
-    j: common_vendor.o($options.nextInvoice),
-    k: common_vendor.p({
+    k: common_vendor.o($options.nextInvoice),
+    l: common_vendor.p({
       type: "primary",
       size: "small",
       text: "下一步"
     })
-  };
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-3b7f7ffb"], ["__file", "F:/daima/dm/ylqc_mobile/pages/orderinvoice/orderinvoice.vue"]]);
 wx.createPage(MiniProgramPage);

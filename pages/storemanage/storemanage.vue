@@ -222,9 +222,9 @@
 <style lang="scss" scoped>
 	
 	.container{
-		position: absolute;
+		// position: absolute;
 		width: 100%;
-		// height: 100%;
+		height: 100vh;
 		// background-color: #f6f6f6;
 		// z-index: -1;
 		background-color: #f0ffff;

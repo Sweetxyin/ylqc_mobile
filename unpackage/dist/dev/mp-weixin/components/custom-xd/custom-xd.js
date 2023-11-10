@@ -167,14 +167,29 @@ const _sfc_main = {
           that.distance = data[0].distance / 1e3;
           console.log(data[0].distance / 1e3);
           if (that.distance > 5) {
-            var n = (that.distance - 5) * 3.5;
-            that.price = Number(n + 40).toFixed(1);
+            that.getFreight();
           } else {
             that.price = 40;
           }
         },
         fail: function(error) {
           console.log("调取失败", error);
+        }
+      });
+    },
+    //根据公里数获取运费
+    getFreight() {
+      this.$api.reqPost("api/yl_user/Freight", {
+        params: {
+          userid: this.userid,
+          mileage: this.distance
+        }
+      }).then((res) => {
+        if (res.status) {
+          console.log("获取运费成功", res);
+          this.price = res.data.freight;
+        } else {
+          console.log("获取运费失败", res);
         }
       });
     },

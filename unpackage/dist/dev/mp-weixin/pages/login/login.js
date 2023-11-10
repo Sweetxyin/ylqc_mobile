@@ -172,7 +172,13 @@ const _sfc_main = {
           });
           _this.setToken(res.data);
           common_vendor.index.setStorageSync("token", res.data.token);
-          common_vendor.index.reLaunch({ url: "/pages/index/index" });
+          if (res.data.roles == "driver") {
+            common_vendor.index.setStorageSync("identify", "driver");
+            common_vendor.index.reLaunch({ url: "/pages/seizeorders/seizeorders" });
+          } else {
+            common_vendor.index.setStorageSync("identify", "user");
+            common_vendor.index.reLaunch({ url: "/pages/index/index" });
+          }
         } else {
           common_vendor.index.showToast({
             title: "登录失败",

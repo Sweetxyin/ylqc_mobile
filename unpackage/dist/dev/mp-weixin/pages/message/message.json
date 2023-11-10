@@ -3,6 +3,7 @@
   "enablePullDownRefresh": true,
   "usingComponents": {
     "u-gap": "../../uni_modules/uview-plus/components/u-gap/u-gap",
-    "u-avatar": "../../uni_modules/uview-plus/components/u-avatar/u-avatar"
+    "u-avatar": "../../uni_modules/uview-plus/components/u-avatar/u-avatar",
+    "tabbar": "../../components/tabbar/tabbar"
   }
 }

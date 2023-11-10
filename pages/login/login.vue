@@ -232,8 +232,15 @@
 						 _this.setToken(res.data)
 						 // console.log("检查是否成功将数据存进vuex",_this.$store.state);
 						 uni.setStorageSync('token',res.data.token)
+						 if(res.data.roles == 'driver'){
+						    uni.setStorageSync('identify','driver')
+						 	uni.reLaunch({ url: '/pages/seizeorders/seizeorders' })
+						 }else{
+						    uni.setStorageSync('identify','user')
+						 	uni.reLaunch({ url: '/pages/index/index' })
+						 }
 						 // console.log('输出token',uni.getStorageSync('token'))
-						 uni.reLaunch({ url: '/pages/index/index' })
+						 // uni.reLaunch({ url: '/pages/index/index' })
 					 }else{
 						 uni.showToast({
 						     title: '登录失败',

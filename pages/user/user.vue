@@ -5,7 +5,10 @@
 			<view class="user_login" v-if="hasLogin==true">
 				<u-avatar size="50" :src="userInfo.avatar"></u-avatar>
 				<text >{{userInfo.name}}</text>
-				<text @click="toAuth">前往认证</text>
+				<view v-show="identify!='driver'">
+					<text @click="toAuth">前往认证</text>
+				</view>
+				
 			</view>
 			<view class="user_login" @click="onLogin" v-else="hasLogin==false">
 				<u-icon name="account" size="50"></u-icon>
@@ -19,7 +22,13 @@
 			</view>
 		</view>
 		<view class="user_service">
-			<view class="services_list">
+			<view class="services_list" v-if="identify=='driver'">
+				<navigator class="services_item" url="/pages/yearbill/driver_yearbill/driver_yearbill">
+					<u-icon name="red-packet" size="30"></u-icon>
+					<text>年度账单</text>
+				</navigator>
+			</view>
+			<view class="services_list" v-else>
 				<navigator class="services_item" url="/pages/yearbill/yearbill">
 					<u-icon name="red-packet" size="30"></u-icon>
 					<text>年度账单</text>
@@ -37,7 +46,7 @@
 					<text>发票报销</text>
 				</navigator>
 			</view>
-			<view class="services_list">
+			<view class="services_list" v-show="identify!='driver'">
 				<navigator class="services_item" url="/pages/storemanage/storemanage">
 					<u-icon name="order" size="30"></u-icon>
 					<text>门店管理</text>
@@ -50,6 +59,7 @@
 		</view>
 	
 	</view>
+	<tabbar selectedIndex = 4></tabbar>
 </template>
 
 <script>
@@ -59,11 +69,13 @@
 		data() {
 			return {
 				hasLogin:this.$store.state.hasLogin,//登录状态
+				openid:this.$store.state.openid,
 				avatarSrc:'https://www.baexnyqc.cn/images/other/tx.jpg',
 				userInfo:{
 					name:'',//昵称
 					avatar:'',//头像
-				}
+				},
+				identify:uni.getStorageSync('identify'),
 			}
 		},
 	    
@@ -90,22 +102,43 @@
 			getUserInfo(){
 				var _this = this
 				if(_this.hasLogin){
-					_this.$api.reqPost('api/yl_user/GetUserInfo').then(res => {
-						if(res.status){
-							_this.userInfo = res.data
-							if(res.data.name==null){
-								let val = res.data.phone
-								let reg = /^(.{3}).*(.{4})$/
-								_this.userInfo.name=val.replace(reg, '$1****$2')
+					if(_this.identify=='driver'){
+						_this.$api.reqPost('api/yl_driver/GetUser',{
+							params:{
+								openid:_this.openid
 							}
-							console.log('获取用户信息成功！',res)
-						}else{
-							console.log('获取用户信息失败！',res)
-						}
-					})
+						}).then(res => {
+							if(res.status){
+								_this.userInfo = res.data
+								if(res.data.name==null){
+									let val = res.data.phone
+									let reg = /^(.{3}).*(.{4})$/
+									_this.userInfo.name=val.replace(reg, '$1****$2')
+								}
+								console.log('获取司机用户信息成功！',res)
+							}else{
+								console.log('获取司机用户信息失败！',res)
+							}
+						})
+					}else{
+						_this.$api.reqPost('api/yl_user/GetUserInfo').then(res => {
+							if(res.status){
+								_this.userInfo = res.data
+								if(res.data.name==null){
+									let val = res.data.phone
+									let reg = /^(.{3}).*(.{4})$/
+									_this.userInfo.name=val.replace(reg, '$1****$2')
+								}
+								console.log('获取客户信息成功！',res)
+							}else{
+								console.log('获取客户信息失败！',res)
+							}
+						})
+					}
+					
 				}
 				
-			}
+			},
 			
 		}
 	}

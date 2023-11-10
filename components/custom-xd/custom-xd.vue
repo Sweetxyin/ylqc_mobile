@@ -196,18 +196,6 @@
 				that.initMap()
 				  
 			})
-			
-			// if(that.receLocation.longitude!="" && that.receLocation.latitude!=""){
-			// 	// 这个方法是调用了测算距离的方法，算出来了两个经纬度之间的大致距离
-			// 	that.distance = that.getMapDistance(
-			// 		that.sendLocation.latitude,
-			// 		that.sendLocation.longitude,
-			// 		that.receLocation.latitude,
-			// 		that.receLocation.longitude
-			// 	)
-			// 	 console.log('输出公里数',this.distance)  
-			// }	
-			
 		},
 		methods: {
 			// 时间选择
@@ -285,9 +273,10 @@
 			            console.log(data[0].distance/1000);
 						//根据起始终点计算订单价格，如果小于5公里为40，每多一公里加3.5
 						if(that.distance>5){
-							var n= (that.distance-5)*3.5
-							//Number().toFiced(1)为计算后的值保留一位小数点
-							that.price=Number(n+40).toFixed(1)
+							// var n= (that.distance-5)*3.5
+							// //Number().toFiced(1)为计算后的值保留一位小数点
+							// that.price=Number(n+40).toFixed(1)
+							that.getFreight()
 						}else{
 							that.price=40
 						}
@@ -298,6 +287,24 @@
 			        }
 			    })
 			}, 
+			//根据公里数获取运费
+			getFreight(){
+				this.$api.reqPost('api/yl_user/Freight',{
+					params:{
+						userid:this.userid,
+						mileage:this.distance,
+					}
+				}).then(res => {
+					if(res.status){
+						console.log('获取运费成功',res)
+						this.price = res.data.freight
+						
+					}else{
+						console.log('获取运费失败',res)
+					}
+				})		
+					
+			},
 			//下单
 			addOrder(){
 				if(this.itemWeight==""){

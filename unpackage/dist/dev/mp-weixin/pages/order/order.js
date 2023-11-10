@@ -1,8 +1,5 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const Processing = () => "../../components/order-status/order-processing.js";
-const Complete = () => "../../components/order-status/order-complete.js";
-const Cancel = () => "../../components/order-status/order-cancel.js";
 const _sfc_main = {
   data() {
     return {
@@ -10,67 +7,85 @@ const _sfc_main = {
       //登录状态
       userid: this.$store.state.userid,
       //用户ID
-      list1: [{
-        name: "进行中"
-      }, {
-        name: "已完成"
-      }, {
-        name: "已取消"
-      }],
-      orderList: [{
-        id: "",
-        number: "",
-        //订单编号
-        state: "",
-        //订单状态
-        deliveryTime: "",
-        //订单时间
-        sendAddress: "",
-        //始发地址
-        receAddress: "",
-        //收件地址
-        amount: ""
-        //价格
-      }],
-      tabIndex: 0,
-      // tabStatus:true
+      tabsList: [
+        { name: "进行中" },
+        { name: "已完成" },
+        { name: "已取消" }
+      ],
       orderTotal: 0,
       //订单数量
-      order_state: 1
+      typeList: "",
+      //显示的状态列表
+      tabIndex: 0,
+      allList: [{}]
+      //          allList:  [{
+      // 	id:'',
+      // 	number:'',//订单编号
+      // 	state:'',//订单状态
+      // 	deliveryTime:'',//订单时间
+      // 	sendAddress:'',//始发地址
+      // 	receAddress:'',//收件地址
+      // 	amount:'',//价格	
+      // }],
     };
   },
-  components: {
-    Processing,
-    Complete,
-    Cancel
-  },
-  onLoad() {
+  onShow() {
     this.getOrderList();
   },
+  //    onLoad() {
+  // this.getOrderList()
+  // // this.change(0)
+  //    },
   methods: {
-    // 订单状态tab切换
-    tabChang(index) {
-      this.tabIndex = index.index;
-    },
     // 跳转到登录页
     toLogin() {
       common_vendor.index.navigateTo({
         url: "/pages/login/login"
       });
     },
+    change(e) {
+      console.log(e);
+      this.tabIndex = e.index;
+      this.typeList = [];
+      for (var i = 0; i < this.allList.length; i++) {
+        if ((this.allList[i].state == 0 || this.allList[i].state == 1 || this.allList[i].state == 2 || this.allList[i].state == 3) && e.index == 0) {
+          console.log(this.allList[i]);
+          this.typeList.push(this.allList[i]);
+        } else if (this.allList[i].state == 4 && e.index == 1) {
+          console.log(this.allList[i]);
+          this.typeList.push(this.allList[i]);
+        } else if (this.allList[i].state == -1 && e.index == 2) {
+          console.log(this.allList[i]);
+          this.typeList.push(this.allList[i]);
+        }
+      }
+    },
     // 获取用户订单信息
     getOrderList() {
       var _this = this;
-      _this.$api.reqPost("api/yl_orders/QueryForUser", {
-        params: { userid: _this.userid }
+      _this.$api.reqPost("api/yl_orders/QueryForDriver", {
+        params: { driverid: _this.userid }
       }).then((res) => {
         if (res.status) {
           if (res.data == null) {
             _this.orderTotal = 0;
             console.log("获取订单信息成功,订单数量为0", res);
           } else {
-            _this.orderList = res.data;
+            _this.allList = res.data;
             _this.orderTotal = res.data.length;
+            _this.typeList = [];
+            for (var i = 0; i < _this.allList.length; i++) {
+              if ((_this.allList[i].state == 0 || _this.allList[i].state == 1 || _this.allList[i].state == 2 || _this.allList[i].state == 3) && _this.tabIndex == 0) {
+                console.log(_this.allList[i]);
+                _this.typeList.push(_this.allList[i]);
+              } else if (_this.allList[i].state == 4 && _this.tabIndex == 1) {
+                console.log(_this.allList[i]);
+                _this.typeList.push(_this.allList[i]);
+              } else if (_this.allList[i].state == -1 && _this.tabIndex == 2) {
+                console.log(_this.allList[i]);
+                _this.typeList.push(_this.allList[i]);
+              }
+            }
             console.log("获取订单信息成功", res);
           }
         } else {
@@ -81,13 +96,13 @@ const _sfc_main = {
     // 修改订单
     onEditOrder(item) {
       common_vendor.index.navigateTo({
-        url: "/pages/order/orderdetails?number=" + item.number
+        url: "/pages/order/orderdetails/orderdetails?number=" + item.number
       });
     },
     //跳转到订单详情页
     toOrderDetail(item) {
       common_vendor.index.navigateTo({
-        url: "/pages/order/orderdetails?number=" + item.number
+        url: "/pages/order/driver_orderdetails/orderdetails?number=" + item.number
       });
     },
     // 删除订单
@@ -118,167 +133,165 @@ const _sfc_main = {
           }
         }
       });
+    },
+    //取消订单
+    cancelOrder(item) {
+      var _this = this;
+      common_vendor.index.showModal({
+        title: "确定要取消" + item.number + "订单吗？",
+        success: function(res) {
+          if (res.confirm) {
+            _this.$api.reqPost("api/yl_orders/OrderCancel", {
+              params: {
+                id: item.id
+              }
+            }).then((res2) => {
+              if (res2.status) {
+                console.log("取消订单成功!", res2);
+                common_vendor.index.showToast({
+                  title: "取消订单成功"
+                });
+                _this.getOrderList();
+              } else {
+                console.log("取消订单失败!");
+              }
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        }
+      });
     }
   }
 };
 if (!Array) {
   const _easycom_u_tabs2 = common_vendor.resolveComponent("u-tabs");
-  const _easycom_u_sticky2 = common_vendor.resolveComponent("u-sticky");
   const _easycom_u_empty2 = common_vendor.resolveComponent("u-empty");
   const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
   const _easycom_u_button2 = common_vendor.resolveComponent("u-button");
-  const _component_Cancel = common_vendor.resolveComponent("Cancel");
-  (_easycom_u_tabs2 + _easycom_u_sticky2 + _easycom_u_empty2 + _easycom_u_icon2 + _easycom_u_button2 + _component_Cancel)();
+  const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
+  (_easycom_u_tabs2 + _easycom_u_empty2 + _easycom_u_icon2 + _easycom_u_button2 + _easycom_tabbar2)();
 }
 const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
-const _easycom_u_sticky = () => "../../uni_modules/uview-plus/components/u-sticky/u-sticky.js";
 const _easycom_u_empty = () => "../../uni_modules/uview-plus/components/u-empty/u-empty.js";
 const _easycom_u_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_u_button = () => "../../uni_modules/uview-plus/components/u-button/u-button.js";
+const _easycom_tabbar = () => "../../components/tabbar/tabbar.js";
 if (!Math) {
-  (_easycom_u_tabs + _easycom_u_sticky + _easycom_u_empty + _easycom_u_icon + _easycom_u_button)();
+  (_easycom_u_tabs + _easycom_u_empty + _easycom_u_icon + _easycom_u_button + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.o($options.tabChang),
+    a: common_vendor.o($options.change),
     b: common_vendor.p({
-      list: $data.list1,
+      list: $data.tabsList,
       scrollable: false,
-      current: $data.tabIndex,
-      itemStyle: "padding-left: 41px; padding-right:39px; height: 34px;",
+      lineColor: "#3c9cff",
       activeStyle: {
-        color: "#3c9cff",
-        transform: "scale(1.05)"
+        color: "#3c9cff"
+      },
+      inactiveStyle: {
+        color: "#898989"
       }
     }),
-    c: common_vendor.p({
-      bgColor: "#fff"
-    }),
-    d: $data.hasLogin == true
+    c: $data.hasLogin == true
   }, $data.hasLogin == true ? common_vendor.e({
-    e: $data.tabIndex === 0
-  }, $data.tabIndex === 0 ? common_vendor.e({
-    f: $data.orderTotal === 0
+    d: $data.orderTotal === 0
   }, $data.orderTotal === 0 ? {
+    e: common_vendor.p({
+      mode: "order",
+      icon: "http://cdn.uviewui.com/uview/empty/car.png"
+    })
+  } : {
+    f: common_vendor.f($data.typeList, (item, index, i0) => {
+      return common_vendor.e({
+        a: common_vendor.t(item.number),
+        b: item.state == 0
+      }, item.state == 0 ? {} : {}, {
+        c: item.state == 1
+      }, item.state == 1 ? {} : {}, {
+        d: item.state == 2
+      }, item.state == 2 ? {} : {}, {
+        e: item.state == 3
+      }, item.state == 3 ? {} : {}, {
+        f: item.state == 4
+      }, item.state == 4 ? {} : {}, {
+        g: item.state == -1
+      }, item.state == -1 ? {} : {}, {
+        h: "93207a4f-2-" + i0,
+        i: common_vendor.t(item.deliveryTime),
+        j: "93207a4f-3-" + i0,
+        k: common_vendor.t(item.sendAddress),
+        l: "93207a4f-4-" + i0,
+        m: common_vendor.t(item.receAddress),
+        n: common_vendor.t(item.amount),
+        o: common_vendor.o(($event) => $options.toOrderDetail(item), index),
+        p: item.state == 0
+      }, item.state == 0 ? {
+        q: common_vendor.o(($event) => _ctx.doEditOrder(item), index),
+        r: "93207a4f-5-" + i0,
+        s: common_vendor.p({
+          type: "info",
+          shape: "circle",
+          size: "small",
+          plain: true,
+          text: "修改订单"
+        })
+      } : {}, {
+        t: item.state == 0 || item.state == 1
+      }, item.state == 0 || item.state == 1 ? {
+        v: common_vendor.o(($event) => $options.cancelOrder(item), index),
+        w: "93207a4f-6-" + i0,
+        x: common_vendor.p({
+          type: "info",
+          shape: "circle",
+          size: "small",
+          plain: true,
+          text: "取消订单"
+        })
+      } : {}, {
+        y: item.state == -1 || item.state == 4
+      }, item.state == -1 || item.state == 4 ? {
+        z: common_vendor.o(($event) => $options.doDelete(item), index),
+        A: "93207a4f-7-" + i0,
+        B: common_vendor.p({
+          type: "info",
+          shape: "circle",
+          size: "small",
+          plain: true,
+          text: "删除订单"
+        })
+      } : {}, {
+        C: index
+      });
+    }),
     g: common_vendor.p({
-      mode: "order",
-      icon: "http://cdn.uviewui.com/uview/empty/car.png"
-    })
-  } : {}, {
-    h: $data.orderList.state == 0
-  }, $data.orderList.state == 0 ? {
-    i: common_vendor.f($data.orderList, (item, index, i0) => {
-      return {
-        a: common_vendor.t(item.number),
-        b: common_vendor.t(item.state),
-        c: "6e367b95-3-" + i0,
-        d: common_vendor.t(item.deliveryTime),
-        e: "6e367b95-4-" + i0,
-        f: common_vendor.t(item.sendAddress),
-        g: "6e367b95-5-" + i0,
-        h: common_vendor.t(item.receAddress),
-        i: common_vendor.t(item.amount),
-        j: common_vendor.o(($event) => $options.toOrderDetail(item), index),
-        k: common_vendor.o(($event) => _ctx.doEditOrder(item), index),
-        l: "6e367b95-6-" + i0,
-        m: "6e367b95-7-" + i0,
-        n: index
-      };
-    }),
-    j: common_vendor.p({
       name: "clock-fill",
       size: "14"
     }),
-    k: common_vendor.p({
+    h: common_vendor.p({
       name: "car-fill",
       color: "#00cc33",
       size: "16"
     }),
-    l: common_vendor.p({
+    i: common_vendor.p({
       name: "car-fill",
       color: "#dc143c",
       size: "16"
-    }),
-    m: common_vendor.p({
-      type: "info",
-      shape: "circle",
-      size: "small",
-      plain: true,
-      text: "修改订单"
-    }),
-    n: common_vendor.p({
-      type: "info",
-      shape: "circle",
-      size: "small",
-      plain: true,
-      text: "取消订单"
     })
-  } : {}) : $data.tabIndex === 1 ? common_vendor.e({
-    p: $data.orderTotal === 0
-  }, $data.orderTotal === 0 ? {
-    q: common_vendor.p({
-      mode: "order",
-      icon: "http://cdn.uviewui.com/uview/empty/car.png"
-    })
-  } : {}, {
-    r: $data.orderTotal != 0 && $data.orderList.state == 4
-  }, $data.orderTotal != 0 && $data.orderList.state == 4 ? {
-    s: common_vendor.f($data.orderList, (item, index, i0) => {
-      return {
-        a: common_vendor.t(item.number),
-        b: common_vendor.t(item.state),
-        c: "6e367b95-9-" + i0,
-        d: common_vendor.t(item.deliveryTime),
-        e: "6e367b95-10-" + i0,
-        f: common_vendor.t(item.sendAddress),
-        g: "6e367b95-11-" + i0,
-        h: common_vendor.t(item.receAddress),
-        i: common_vendor.t(item.amount),
-        j: common_vendor.o(($event) => $options.toOrderDetail(item), index),
-        k: common_vendor.o(($event) => $options.doDelete(item), index),
-        l: "6e367b95-12-" + i0,
-        m: index
-      };
-    }),
-    t: common_vendor.p({
-      name: "clock-fill",
-      size: "14"
-    }),
-    v: common_vendor.p({
-      name: "car-fill",
-      color: "#00cc33",
-      size: "16"
-    }),
-    w: common_vendor.p({
-      name: "car-fill",
-      color: "#dc143c",
-      size: "16"
-    }),
-    x: common_vendor.p({
-      type: "info",
-      shape: "circle",
-      size: "small",
-      plain: true,
-      text: "删除订单"
-    })
-  } : {}) : common_vendor.e({
-    y: $data.orderTotal === 0
-  }, $data.orderTotal === 0 ? {
-    z: common_vendor.p({
-      mode: "order",
-      icon: "http://cdn.uviewui.com/uview/empty/car.png"
-    })
-  } : {}), {
-    o: $data.tabIndex === 1
   }) : {}, {
-    A: $data.hasLogin == false
+    j: $data.hasLogin == false
   }, $data.hasLogin == false ? {
-    B: common_vendor.o($options.toLogin),
-    C: common_vendor.p({
+    k: common_vendor.o($options.toLogin),
+    l: common_vendor.p({
       type: "primary",
       text: "去登录"
     })
-  } : {});
+  } : {}, {
+    m: common_vendor.p({
+      selectedIndex: "1"
+    })
+  });
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/daima/dm/ylqc_mobile/pages/order/order.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "F:/daima/dm/ylqc_mobile/pages/order/order.vue"]]);
 wx.createPage(MiniProgramPage);

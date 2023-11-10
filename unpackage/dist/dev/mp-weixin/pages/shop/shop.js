@@ -64,14 +64,16 @@ if (!Array) {
   const _easycom_u_grid_item2 = common_vendor.resolveComponent("u-grid-item");
   const _easycom_u_grid2 = common_vendor.resolveComponent("u-grid");
   const _easycom_u_toast2 = common_vendor.resolveComponent("u-toast");
-  (_easycom_u_icon2 + _easycom_u_grid_item2 + _easycom_u_grid2 + _easycom_u_toast2)();
+  const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
+  (_easycom_u_icon2 + _easycom_u_grid_item2 + _easycom_u_grid2 + _easycom_u_toast2 + _easycom_tabbar2)();
 }
 const _easycom_u_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_u_grid_item = () => "../../uni_modules/uview-plus/components/u-grid-item/u-grid-item.js";
 const _easycom_u_grid = () => "../../uni_modules/uview-plus/components/u-grid/u-grid.js";
 const _easycom_u_toast = () => "../../uni_modules/uview-plus/components/u-toast/u-toast.js";
+const _easycom_tabbar = () => "../../components/tabbar/tabbar.js";
 if (!Math) {
-  (_easycom_u_icon + _easycom_u_grid_item + _easycom_u_grid + _easycom_u_toast)();
+  (_easycom_u_icon + _easycom_u_grid_item + _easycom_u_grid + _easycom_u_toast + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -114,7 +116,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       border: false,
       col: "2"
     }),
-    f: common_vendor.sr("uToast", "2a6aaf81-7")
+    f: common_vendor.sr("uToast", "2a6aaf81-7"),
+    g: common_vendor.p({
+      selectedIndex: "3"
+    })
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-2a6aaf81"], ["__file", "F:/daima/dm/ylqc_mobile/pages/shop/shop.vue"]]);

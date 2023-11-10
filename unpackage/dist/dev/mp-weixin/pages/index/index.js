@@ -150,11 +150,13 @@ if (!Array) {
   const _easycom_u_subsection2 = common_vendor.resolveComponent("u-subsection");
   const _component_Delivery = common_vendor.resolveComponent("Delivery");
   const _component_Custom = common_vendor.resolveComponent("Custom");
-  (_easycom_u_subsection2 + _component_Delivery + _component_Custom)();
+  const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
+  (_easycom_u_subsection2 + _component_Delivery + _component_Custom + _easycom_tabbar2)();
 }
 const _easycom_u_subsection = () => "../../uni_modules/uview-plus/components/u-subsection/u-subsection.js";
+const _easycom_tabbar = () => "../../components/tabbar/tabbar.js";
 if (!Math) {
-  _easycom_u_subsection();
+  (_easycom_u_subsection + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -167,7 +169,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       current: $data.subIndex
     }),
     c: $data.subIndex === 1
-  }, $data.subIndex === 1 ? {} : {});
+  }, $data.subIndex === 1 ? {} : {}, {
+    d: common_vendor.p({
+      selectedIndex: "0"
+    })
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-1cf27b2a"], ["__file", "F:/daima/dm/ylqc_mobile/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

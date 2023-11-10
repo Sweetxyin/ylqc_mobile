@@ -5,6 +5,7 @@
     "u-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon",
     "u-grid-item": "../../uni_modules/uview-plus/components/u-grid-item/u-grid-item",
     "u-grid": "../../uni_modules/uview-plus/components/u-grid/u-grid",
-    "u-toast": "../../uni_modules/uview-plus/components/u-toast/u-toast"
+    "u-toast": "../../uni_modules/uview-plus/components/u-toast/u-toast",
+    "tabbar": "../../components/tabbar/tabbar"
   }
 }

@@ -32,6 +32,7 @@
 			<u-toast ref="uToast" />
 		</view>
 	</view>
+	<tabbar selectedIndex = 3></tabbar>
 </template>
 
 <script>

@@ -2,23 +2,7 @@
 	<view class="container">
 		<view class="authentication_info">
 			
-			<view class="info_title">
-				<text>公司信息</text>
-			</view>
-			<view class="company_info">
-				<view class="info_item">
-					<text style="padding-left: 35rpx;">公司名称</text>
-					 <u--input placeholder="请输入" border="none" inputAlign="right" 
-					    v-model="companyName" fontSize="28rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
-					  ></u--input>
-				</view>
-				<view class="info_item">
-					<text style="padding-left: 35rpx;">公司地址</text>
-					 <u--input placeholder="请输入" border="none" inputAlign="right"
-					    v-model="companyAddress" fontSize="28rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
-					  ></u--input>
-				</view>
-			</view>
+			
 			
 			<view class="info_title">
 				<text>实名认证</text>
@@ -43,15 +27,55 @@
 					  ></u--input>
 				</view>
 			</view>
-			<!-- <view class="">
-				这是{{openid}}
+			
+			<view class="" v-if="identify=='driver'">
+				<view class="info_title">
+					<text>车辆信息</text>
+				</view>
+				<view class="company_info">
+					<view class="info_item">
+						<text style="padding-left: 40rpx;">车牌</text>
+						 <u--input placeholder="请输入" border="none" inputAlign="right" 
+						    v-model="licensePlate" fontSize="30rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+						  ></u--input>
+					</view>
+					<view class="info_item">
+						<text style="padding-left: 40rpx;">车型</text>
+						 <u--input placeholder="请输入" border="none" inputAlign="right"
+						    v-model="carType" fontSize="30rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+						  ></u--input>
+					</view>
+				</view>
+				
+				<view class="submit_button">
+					<u-button type="primary" text="提交认证" @click="toDriverAuthentication"></u-button>
+				</view>
 			</view>
-			<view class="">
-				是{{$store.state.openid}}
-			</view> -->
-			<view class="submit_button">
-				<u-button type="primary" text="提交认证" @click="toAuthentication"></u-button>
+			
+			<view class="" v-else>
+				<view class="info_title" >
+					<text>公司信息</text>
+				</view>
+				<view class="company_info">
+					<view class="info_item">
+						<text style="padding-left: 35rpx;">公司名称</text>
+						 <u--input placeholder="请输入" border="none" inputAlign="right" 
+						    v-model="companyName" fontSize="28rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+						  ></u--input>
+					</view>
+					<view class="info_item">
+						<text style="padding-left: 35rpx;">公司地址</text>
+						 <u--input placeholder="请输入" border="none" inputAlign="right"
+						    v-model="companyAddress" fontSize="28rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+						  ></u--input>
+					</view>
+				</view>
+				
+				<view class="submit_button">
+					<u-button type="primary" text="提交认证" @click="toAuthentication"></u-button>
+				</view>
 			</view>
+			
 			
 		</view>
 	</view>
@@ -67,7 +91,10 @@
 				realname:'',//真实姓名
 				phone:'',//电话号码
 				IDcard:'',//身份证号
+				licensePlate:'',//车牌
+				carType:'',//车型
 				openid:this.$store.state.openid,
+				identify:uni.getStorageSync('identify'),
 				// token:this.$store.state.token
 			}
 		},
@@ -77,7 +104,7 @@
 			}
 		},
 		methods: {
-			//提交认证
+			//提交客户认证
 			toAuthentication(){
 				var _this = this
 				if(_this.realname==""){
@@ -104,6 +131,61 @@
 							phone:_this.phone,
 							IDcard:_this.IDcard,
 							openid:_this.openid,
+							}			
+					}).then(res => {
+						if(res.status){
+							uni.showToast({
+								title:'提交认证成功！',
+								icon:'none'
+							})
+							console.log('提交成功',res)
+						}else{
+							uni.showToast({
+								title:'提交认证失败！',
+								icon:'none'
+							})
+							console.log('提交失败',res)
+						}
+					})
+				}
+			},
+			//提交司机认证
+			toDriverAuthentication(){
+				var _this = this
+				if(_this.realname==""){
+					uni.showToast({
+						title:'请填写真实姓名！',
+						icon: 'none',
+					})
+				}else if(_this.phone==""){
+					uni.showToast({
+						title:'请填写电话号码！',
+						icon: 'none',
+					})
+				}else if(_this.IDcard==""){
+					uni.showToast({
+						title:'请填写身份证号！',
+						icon: 'none',
+					})
+				}else if(_this.licensePlate==""){
+					uni.showToast({
+						title:'请填写车牌！',
+						icon: 'none',
+					})
+				}else if(_this.carType==""){
+					uni.showToast({
+						title:'请填写车型！',
+						icon: 'none',
+					})
+				}else{
+					_this.$api.reqPost('api/yl_driver/Edit',{
+						data:{
+							
+							realName:_this.realname,
+							phone:_this.phone,
+							idCard:_this.IDcard,
+							licensePlate:_this.licensePlate,
+							carType:_this.carType,
 							}			
 					}).then(res => {
 						if(res.status){

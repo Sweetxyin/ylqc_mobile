@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "换电",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "tabbar": "../../components/tabbar/tabbar"
+  }
+}

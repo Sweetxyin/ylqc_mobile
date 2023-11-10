@@ -250,14 +250,16 @@ if (!Array) {
   const _easycom_u_empty2 = common_vendor.resolveComponent("u-empty");
   const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
   const _easycom_u_button2 = common_vendor.resolveComponent("u-button");
-  (_easycom_u_tabs2 + _easycom_u_empty2 + _easycom_u_icon2 + _easycom_u_button2)();
+  const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
+  (_easycom_u_tabs2 + _easycom_u_empty2 + _easycom_u_icon2 + _easycom_u_button2 + _easycom_tabbar2)();
 }
 const _easycom_u_tabs = () => "../../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_u_empty = () => "../../../uni_modules/uview-plus/components/u-empty/u-empty.js";
 const _easycom_u_icon = () => "../../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_u_button = () => "../../../uni_modules/uview-plus/components/u-button/u-button.js";
+const _easycom_tabbar = () => "../../../components/tabbar/tabbar.js";
 if (!Math) {
-  (_easycom_u_tabs + _easycom_u_empty + _easycom_u_icon + _easycom_u_button)();
+  (_easycom_u_tabs + _easycom_u_empty + _easycom_u_icon + _easycom_u_button + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -366,7 +368,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       type: "primary",
       text: "去登录"
     })
-  } : {});
+  } : {}, {
+    m: common_vendor.p({
+      selectedIndex: "1"
+    })
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-70d1dd14"], ["__file", "F:/daima/dm/ylqc_mobile/pages/order/orderlist/orderlist.vue"]]);
 wx.createPage(MiniProgramPage);

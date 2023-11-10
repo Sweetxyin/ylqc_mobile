@@ -1,6 +1,14 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/defalutStart/defalutStart",
+    "pages/ber/nullPage2/nullPage2",
+    "pages/ber/nullPage3/nullPage3",
+    "pages/ber/nullPage4/nullPage4",
+    "pages/ber/nullPage5/nullPage5",
+    "pages/seizeorders/seizeorders",
+    "pages/change_electricity/change_electricity",
+    "pages/order/service/service",
     "pages/order/order",
     "pages/message/message",
     "pages/shop/shop",
@@ -19,12 +27,16 @@
     "pages/login/login",
     "pages/login/phonelogin",
     "pages/order/orderdetails/orderdetails",
+    "pages/order/driver_orderdetails/orderdetails",
     "pages/order/orderlist/orderlist",
     "pages/storemanage/eidtstore/eidtstore",
     "pages/mapdemo/mapdemo",
     "pages/mapdemo/demo/demo",
-    "pages/mapdemo/ordermap/ordermap"
+    "pages/mapdemo/ordermap/ordermap",
+    "pages/authentication/authentication",
+    "pages/yearbill/driver_yearbill/driver_yearbill"
   ],
+
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -33,38 +45,29 @@
   },
   "lazyCodeLoading": "requiredComponents",
   "tabBar": {
+    "custom": true,
     "color": "#7A7E83",
     "selectedColor": "#61c2f4",
     "list": [
       {
-        "text": "首页",
-        "pagePath": "pages/index/index",
-        "iconPath": "./static/images/tab_icon/index.png",
-        "selectedIconPath": "./static/images/tab_icon/index_active.png"
+        "pagePath": "pages/defalutStart/defalutStart",
+        "text": "null界面"
       },
       {
-        "text": "订单",
-        "pagePath": "pages/order/orderlist/orderlist",
-        "iconPath": "./static/images/tab_icon/order.png",
-        "selectedIconPath": "./static/images/tab_icon/order_active.png"
+        "pagePath": "pages/ber/nullPage2/nullPage2",
+        "text": "null界面"
       },
       {
-        "text": "消息",
-        "pagePath": "pages/message/message",
-        "iconPath": "./static/images/tab_icon/message.png",
-        "selectedIconPath": "./static/images/tab_icon/message_active.png"
+        "pagePath": "pages/ber/nullPage3/nullPage3",
+        "text": "null界面"
       },
       {
-        "text": "商城",
-        "pagePath": "pages/shop/shop",
-        "iconPath": "./static/images/tab_icon/shop.png",
-        "selectedIconPath": "./static/images/tab_icon/shop_active.png"
+        "pagePath": "pages/ber/nullPage4/nullPage4",
+        "text": "null界面"
       },
       {
-        "text": "我的",
-        "pagePath": "pages/user/user",
-        "iconPath": "./static/images/tab_icon/user.png",
-        "selectedIconPath": "./static/images/tab_icon/user_active.png"
+        "pagePath": "pages/ber/nullPage5/nullPage5",
+        "text": "null界面"
       }
     ]
   },
@@ -73,11 +76,13 @@
       "desc": "获取您的个人即位置信息"
     }
   },
-
+  "plugins": {},
   "requiredPrivateInfos": [
     "getLocation",
     "choosePoi",
     "chooseLocation"
   ],
-  "usingComponents": {}
+  "usingComponents": {
+    "tabbar": "/components/tabbar/tabbar"
+  }
 }

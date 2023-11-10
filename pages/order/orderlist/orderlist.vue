@@ -79,6 +79,7 @@
 	  </view>
 
    </view>
+   <tabbar selectedIndex = 1></tabbar>
 </template>
  
 <script>

@@ -30,6 +30,7 @@
 		</view>
 		
 	</view>
+	<tabbar selectedIndex = 2></tabbar>
 </template>
 
 <script>

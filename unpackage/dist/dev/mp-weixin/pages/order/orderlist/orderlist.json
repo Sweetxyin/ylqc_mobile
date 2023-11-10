@@ -5,6 +5,7 @@
     "u-tabs": "../../../uni_modules/uview-plus/components/u-tabs/u-tabs",
     "u-empty": "../../../uni_modules/uview-plus/components/u-empty/u-empty",
     "u-icon": "../../../uni_modules/uview-plus/components/u-icon/u-icon",
-    "u-button": "../../../uni_modules/uview-plus/components/u-button/u-button"
+    "u-button": "../../../uni_modules/uview-plus/components/u-button/u-button",
+    "tabbar": "../../../components/tabbar/tabbar"
   }
 }

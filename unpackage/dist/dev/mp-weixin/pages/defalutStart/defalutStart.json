@@ -1,0 +1,8 @@
+{
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "tabbar": "../../components/tabbar/tabbar"
+  }
+}

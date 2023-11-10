@@ -7,10 +7,17 @@ const store = new Vuex.Store({
 // #endif
 
 // #ifdef VUE3
+import {
+	//userRoleIndexPath,
+	setOfficialTabbar,
+	cleaarTabbar
+} from './config_static/tabbar_data.js'
+
 import { createStore } from 'vuex'
 const store = createStore({
 // #endif
 	state: {//存放状态
+		TABBAR_INDEX_PATH: null, //首页路径
 	    //登录状态，默认未登录
 		hasLogin: false,
 		token: '',
@@ -26,6 +33,26 @@ const store = createStore({
 		
 	},
 	mutations: {
+		setTabbarList(state) {
+			let userRole = '3' //1超管 2商家 3用户
+			// 超管
+			if (userRole === '1') {
+				state.TABBAR_INDEX_PATH = setOfficialTabbar(userRole, ['1', '2', '3', '4'])
+			}
+			// 商家
+			else if (userRole === '2') {
+				state.TABBAR_INDEX_PATH = setOfficialTabbar(userRole, ['5', '6', '7'])
+			}
+			// 用户
+			else {
+				state.TABBAR_INDEX_PATH = setOfficialTabbar(userRole, ['8', '9'])
+			}
+		},
+		
+		// 关闭产品或退出登录 初始化tabbar状态 防止不同角色多或者少tabbar减少配置
+		clearState(state) {
+			cleaarTabbar()
+		},
 		setToken(state,auth){
 			state.token = auth.token
 		},

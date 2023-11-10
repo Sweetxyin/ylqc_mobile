@@ -67,7 +67,7 @@
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator url="" class="services_item">
+				<navigator url="/pages/authentication/authentication" class="services_item">
 					<image src="https://www.baexnyqc.cn/images/index_icon/driver.png"></image>
 					<text>司机加入</text>
 				</navigator>
@@ -97,8 +97,11 @@
 				</navigator>
 			</view>
 		</view>
-		
+		<view class="box">
+			
+		</view>
 	</view>
+	<tabbar selectedIndex = 0></tabbar>
 </template>
 
 <script>
@@ -125,7 +128,10 @@
 		// const location =  this.getLocationInfo();
 		
 		 // this.position = location.address
-        // this.sectionChange(0)，  
+        // this.sectionChange(0)， 
+		 // 显示tabbar
+		 // uni.showTabBar()
+		 
 		},
 		
 		methods: {
@@ -318,6 +324,8 @@
 			font-size: 26rpx;
 			margin-top: 10rpx;
 		}
-	
+		.box{
+			height:105rpx;
+		}
 
 </style>

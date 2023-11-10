@@ -16,31 +16,7 @@
 					    v-model="userInfo.name" fontSize="26rpx" disabled="false" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
-				<view class="info_item">
-					<text style="padding-left: 35rpx;">公司名称</text>
-					 <u--input placeholder="请输入公司名称" border="none" inputAlign="right"
-					    v-model="userInfo.company" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
-					  ></u--input>
-				</view>
-				<view class="info_item">
-					<text style="padding-left: 35rpx;">公司地址</text>
-					 <u--input placeholder="请输入公司地址" border="none" inputAlign="right"
-					    v-model="userInfo.address" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
-					  ></u--input>
-				</view>
-				<view class="info_item">
-					<text style="padding-left: 35rpx;">电话号码</text>
-					 <u--input placeholder="请输入电话号码" border="none" inputAlign="right"
-					    v-model="userInfo.phone" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
-					  ></u--input>
-				</view>
-			</view>
 			
-			<view class="info_title">
-				<text>实名认证</text>
-			</view>
-			
-			<view class="authentication_info">
 				<view class="info_item">
 					<text style="padding-left: 35rpx;">真实姓名</text>
 					 <u--input border="none" inputAlign="right"
@@ -53,7 +29,56 @@
 					    v-model="userInfo.idCrad" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 					  ></u--input>
 				</view>
+				<view class="info_item">
+					<text style="padding-left: 35rpx;">电话号码</text>
+					 <u--input placeholder="请输入电话号码" border="none" inputAlign="right"
+					    v-model="userInfo.phone" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+					  ></u--input>
+				</view>
 			</view>
+			
+			<view class="" v-if="identify=='driver'">
+				<view class="info_title">
+					<text>车辆信息</text>
+				</view>
+				
+				<view class="authentication_info">
+					<view class="info_item">
+						<text style="padding-left: 40rpx;">车牌</text>
+						 <u--input border="none" inputAlign="right"
+						    v-model="userInfo.licensePlate" fontSize="30rpx" :disabled="inputStatus"  class="input_right"
+						  ></u--input>
+					</view>
+					<view class="info_item">
+						<text style="padding-left: 40rpx;">车型</text>
+						 <u--input border="none" inputAlign="right"
+						    v-model="userInfo.carType" fontSize="30rpx" :disabled="inputStatus" class="input_right"
+						  ></u--input>
+					</view>
+				</view>
+			</view>
+			
+			<view class="" v-else>
+				<view class="info_title">
+					<text>公司信息</text>
+				</view>
+				
+				<view class="authentication_info">
+					<view class="info_item">
+						<text style="padding-left: 35rpx;">公司名称</text>
+						 <u--input placeholder="请输入公司名称" border="none" inputAlign="right"
+						    v-model="userInfo.company" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+						  ></u--input>
+					</view>
+					<view class="info_item">
+						<text style="padding-left: 35rpx;">公司地址</text>
+						 <u--input placeholder="请输入公司地址" border="none" inputAlign="right"
+						    v-model="userInfo.address" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
+						  ></u--input>
+					</view>
+				</view>
+			</view>
+			
 
 			<view class="other_info">
 				<u-cell-group class="setting-list" :border="false">
@@ -90,9 +115,14 @@
 					address:'',//公司地址
 					idCrad:'',//身份证号
 					phone:'',//电话号码
+					licensePlate:'',//车牌
+					carType:'',//车型
 				},
+				
 				inputStatus:false,
-				userToken:this.$store.state.token
+				userToken:this.$store.state.token,
+				identify:uni.getStorageSync('identify'),
+				openid:this.$store.state.openid,
 			}
 		},
 		onShow() {
@@ -115,7 +145,10 @@
 								if(res.status){
 									console.log('注销登录成功!')
 									uni.removeStorageSync('token')
+									uni.removeStorageSync('identify')
 									console.log('检查token是否移除',uni.getStorageSync('token'))
+									console.log('检查identify是否移除',uni.getStorageSync('identify'))
+									
 									_this.userLogout()
 									console.log("检查是否成功将数据移除vuex",_this.$store.state);
 									uni.reLaunch({ url: '/pages/index/index' })
@@ -133,20 +166,43 @@
 			//获取用户信息
 			getUserInfo(){
 				var _this = this
-				_this.$api.reqPost('api/yl_user/GetUserInfo').then(res=>{
+				if(_this.identify=='driver'){
+					_this.$api.reqPost('api/yl_driver/GetUser',{
+						params:{
+							openid:_this.openid
+						},
+					}).then(res=>{
 					if(res.status){
 						_this.userInfo = res.data
 						if(res.data.idCrad != ""){
+						
 							let val = res.data.idCrad
 							let reg = /^(.{3}).*(.{2})$/
 							_this.userInfo.idCrad=val.replace(reg, '$1*************$2')
+						console.log('sfzh',val)
 						}
 						console.log('获取用户信息成功',res)
-					}else{
-						console.log('获取用户信息失败',res)
-					}
-				})
-			}
+						}else{
+							console.log('获取用户信息失败',res)
+						}
+					})
+				}else{
+					_this.$api.reqPost('api/yl_user/GetUserInfo').then(res=>{
+						if(res.status){
+							_this.userInfo = res.data
+							if(res.data.idCrad != ""){
+								let val = res.data.idCrad
+								let reg = /^(.{3}).*(.{2})$/
+								_this.userInfo.idCrad=val.replace(reg, '$1*************$2')
+							}
+							console.log('获取用户信息成功',res)
+						}else{
+							console.log('获取用户信息失败',res)
+						}
+					})
+				}
+			},
+			
 
 		}
 	}

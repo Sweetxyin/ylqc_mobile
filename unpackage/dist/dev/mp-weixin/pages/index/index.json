@@ -1,9 +1,11 @@
 {
-  "navigationBarTitleText": "首页",
-  "enablePullDownRefresh": true,
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
   "usingComponents": {
     "delivery": "../../components/delivery/delivery",
     "custom": "../../components/custom-xd/custom-xd",
-    "u-subsection": "../../uni_modules/uview-plus/components/u-subsection/u-subsection"
+    "u-subsection": "../../uni_modules/uview-plus/components/u-subsection/u-subsection",
+    "tabbar": "../../components/tabbar/tabbar"
   }
 }

@@ -30,7 +30,7 @@ import { createSSRApp } from 'vue'
 // 引入全局uviewPlus
 import uviewPlus from '@/uni_modules/uview-plus'
 import api from './api/index'
-
+import tabbar from '@/components/tabbar/tabbar.vue'
 
 export function createApp() {
   const app = createSSRApp(App)
@@ -38,6 +38,7 @@ export function createApp() {
   app.config.globalProperties.productionTip = false
   app.use(uviewPlus)
   app.use(store)
+  app.component("tabbar", tabbar); // 2.调用app.component方法全局注册组件
   return {
     app
   }

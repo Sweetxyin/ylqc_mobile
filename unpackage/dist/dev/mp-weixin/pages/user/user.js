@@ -5,13 +5,15 @@ const _sfc_main = {
     return {
       hasLogin: this.$store.state.hasLogin,
       //登录状态
+      openid: this.$store.state.openid,
       avatarSrc: "https://www.baexnyqc.cn/images/other/tx.jpg",
       userInfo: {
         name: "",
         //昵称
         avatar: ""
         //头像
-      }
+      },
+      identify: common_vendor.index.getStorageSync("identify")
     };
   },
   onShow() {
@@ -36,19 +38,39 @@ const _sfc_main = {
     getUserInfo() {
       var _this = this;
       if (_this.hasLogin) {
-        _this.$api.reqPost("api/yl_user/GetUserInfo").then((res) => {
-          if (res.status) {
-            _this.userInfo = res.data;
-            if (res.data.name == null) {
-              let val = res.data.phone;
-              let reg = /^(.{3}).*(.{4})$/;
-              _this.userInfo.name = val.replace(reg, "$1****$2");
+        if (_this.identify == "driver") {
+          _this.$api.reqPost("api/yl_driver/GetUser", {
+            params: {
+              openid: _this.openid
             }
-            console.log("获取用户信息成功！", res);
-          } else {
-            console.log("获取用户信息失败！", res);
-          }
-        });
+          }).then((res) => {
+            if (res.status) {
+              _this.userInfo = res.data;
+              if (res.data.name == null) {
+                let val = res.data.phone;
+                let reg = /^(.{3}).*(.{4})$/;
+                _this.userInfo.name = val.replace(reg, "$1****$2");
+              }
+              console.log("获取司机用户信息成功！", res);
+            } else {
+              console.log("获取司机用户信息失败！", res);
+            }
+          });
+        } else {
+          _this.$api.reqPost("api/yl_user/GetUserInfo").then((res) => {
+            if (res.status) {
+              _this.userInfo = res.data;
+              if (res.data.name == null) {
+                let val = res.data.phone;
+                let reg = /^(.{3}).*(.{4})$/;
+                _this.userInfo.name = val.replace(reg, "$1****$2");
+              }
+              console.log("获取客户信息成功！", res);
+            } else {
+              console.log("获取客户信息失败！", res);
+            }
+          });
+        }
       }
     }
   }
@@ -58,14 +80,16 @@ if (!Array) {
   const _easycom_u_avatar2 = common_vendor.resolveComponent("u-avatar");
   const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
   const _easycom_u__text2 = common_vendor.resolveComponent("u--text");
-  (_easycom_u_gap2 + _easycom_u_avatar2 + _easycom_u_icon2 + _easycom_u__text2)();
+  const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
+  (_easycom_u_gap2 + _easycom_u_avatar2 + _easycom_u_icon2 + _easycom_u__text2 + _easycom_tabbar2)();
 }
 const _easycom_u_gap = () => "../../uni_modules/uview-plus/components/u-gap/u-gap.js";
 const _easycom_u_avatar = () => "../../uni_modules/uview-plus/components/u-avatar/u-avatar.js";
 const _easycom_u_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_u__text = () => "../../uni_modules/uview-plus/components/u--text/u--text.js";
+const _easycom_tabbar = () => "../../components/tabbar/tabbar.js";
 if (!Math) {
-  (_easycom_u_gap + _easycom_u_avatar + _easycom_u_icon + _easycom_u__text)();
+  (_easycom_u_gap + _easycom_u_avatar + _easycom_u_icon + _easycom_u__text + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -80,37 +104,50 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       src: $data.userInfo.avatar
     }),
     d: common_vendor.t($data.userInfo.name),
-    e: common_vendor.o((...args) => $options.toAuth && $options.toAuth(...args))
+    e: common_vendor.o((...args) => $options.toAuth && $options.toAuth(...args)),
+    f: $data.identify != "driver"
   } : {
-    g: common_vendor.p({
+    h: common_vendor.p({
       name: "account",
       size: "50"
     }),
-    h: common_vendor.p({
+    i: common_vendor.p({
       text: "立即登录/认证"
     }),
-    i: common_vendor.o((...args) => $options.onLogin && $options.onLogin(...args))
+    j: common_vendor.o((...args) => $options.onLogin && $options.onLogin(...args))
   }, {
-    f: $data.hasLogin == false,
-    j: common_vendor.p({
+    g: $data.hasLogin == false,
+    k: common_vendor.p({
       name: "setting",
       size: "25"
     }),
-    k: common_vendor.p({
+    l: $data.identify == "driver"
+  }, $data.identify == "driver" ? {
+    m: common_vendor.p({
       name: "red-packet",
       size: "30"
-    }),
-    l: common_vendor.p({
+    })
+  } : {
+    n: common_vendor.p({
+      name: "red-packet",
+      size: "30"
+    })
+  }, {
+    o: common_vendor.p({
       name: "gift",
       size: "30"
     }),
-    m: common_vendor.p({
+    p: common_vendor.p({
       name: "rmb-circle",
       size: "30"
     }),
-    n: common_vendor.p({
+    q: common_vendor.p({
       name: "order",
       size: "30"
+    }),
+    r: $data.identify != "driver",
+    s: common_vendor.p({
+      selectedIndex: "4"
     })
   });
 }

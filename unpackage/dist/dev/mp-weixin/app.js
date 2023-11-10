@@ -4,6 +4,7 @@ const common_vendor = require("./common/vendor.js");
 const store_index = require("./store/index.js");
 const uni_modules_uviewPlus_index = require("./uni_modules/uview-plus/index.js");
 const api_index = require("./api/index.js");
+require("./store/config_static/tabbar_data.js");
 require("./uni_modules/uview-plus/libs/mixin/mixin.js");
 require("./uni_modules/uview-plus/libs/mixin/mpMixin.js");
 require("./uni_modules/uview-plus/libs/luch-request/core/Request.js");
@@ -123,6 +124,14 @@ require("./api/request.js");
 require("./api/api.js");
 if (!Math) {
   "./pages/index/index.js";
+  "./pages/defalutStart/defalutStart.js";
+  "./pages/ber/nullPage2/nullPage2.js";
+  "./pages/ber/nullPage3/nullPage3.js";
+  "./pages/ber/nullPage4/nullPage4.js";
+  "./pages/ber/nullPage5/nullPage5.js";
+  "./pages/seizeorders/seizeorders.js";
+  "./pages/change_electricity/change_electricity.js";
+  "./pages/order/service/service.js";
   "./pages/order/order.js";
   "./pages/message/message.js";
   "./pages/shop/shop.js";
@@ -141,11 +150,14 @@ if (!Math) {
   "./pages/login/login.js";
   "./pages/login/phonelogin.js";
   "./pages/order/orderdetails/orderdetails.js";
+  "./pages/order/driver_orderdetails/orderdetails.js";
   "./pages/order/orderlist/orderlist.js";
   "./pages/storemanage/eidtstore/eidtstore.js";
   "./pages/mapdemo/mapdemo.js";
   "./pages/mapdemo/demo/demo.js";
   "./pages/mapdemo/ordermap/ordermap.js";
+  "./pages/authentication/authentication.js";
+  "./pages/yearbill/driver_yearbill/driver_yearbill.js";
 }
 const _sfc_main = {
   data() {
@@ -160,12 +172,14 @@ const _sfc_main = {
   }
 };
 const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "F:/daima/dm/ylqc_mobile/App.vue"]]);
+const tabbar = () => "./components/tabbar/tabbar.js";
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.config.globalProperties.$api = api_index.api;
   app.config.globalProperties.productionTip = false;
   app.use(uni_modules_uviewPlus_index.uviewPlus);
   app.use(store_index.store);
+  app.component("tabbar", tabbar);
   return {
     app
   };

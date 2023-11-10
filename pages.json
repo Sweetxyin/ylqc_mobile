@@ -5,10 +5,86 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页",
-				"enablePullDownRefresh": true
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"softinputNavBar": "none"
+				},
+				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/defalutStart/defalutStart",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"softinputNavBar": "none"
+				},
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/ber/nullPage2/nullPage2",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
+		}, {
+			"path": "pages/ber/nullPage3/nullPage3",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
+		}, {
+			"path": "pages/ber/nullPage4/nullPage4",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
+		}, {
+			"path": "pages/ber/nullPage5/nullPage5",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
+		},
+		{
+		    "path" : "pages/seizeorders/seizeorders",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "抢单",
+		        "enablePullDownRefresh": false
+		    }
+		},
+		{
+		    "path" : "pages/change_electricity/change_electricity",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "换电",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/order/service/service",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "送达确认",
+		        "enablePullDownRefresh": false
+		    }
+		    
 		}
+		// ,{
+		// 	"path": "pages/index/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "首页",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// }
         ,{
             "path" : "pages/order/order",
             "style" :                                                                                    
@@ -173,6 +249,15 @@
             }
             
         }
+		,{
+		    "path" : "pages/order/driver_orderdetails/orderdetails",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "订单详情",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
         ,{
             "path" : "pages/order/orderlist/orderlist",
             "style" :                                                                                    
@@ -218,44 +303,79 @@
             }
             
         }
+        ,{
+            "path" : "pages/authentication/authentication",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "司机认证",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/yearbill/driver_yearbill/driver_yearbill",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "司机年度账单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
+		"custom": true, 
 		"color": "#7A7E83",
 		"selectedColor": "#61c2f4",
-		"list": [
-			{
-				"text": "首页",
-				"pagePath": "pages/index/index",
-				"iconPath": "./static/images/tab_icon/index.png",
-				"selectedIconPath": "./static/images/tab_icon/index_active.png"
-			},
-			{
-				"text": "订单",
-				"pagePath": "pages/order/orderlist/orderlist",
-				"iconPath": "./static/images/tab_icon/order.png",
-				"selectedIconPath": "./static/images/tab_icon/order_active.png"
-			},
-			{
-				"text": "消息",
-				"pagePath": "pages/message/message",
-				"iconPath": "./static/images/tab_icon/message.png",
-				"selectedIconPath": "./static/images/tab_icon/message_active.png"
-			},
+		// "list": [
+		// 	{
+		// 		"text": "首页",
+		// 		"pagePath": "pages/index/index",
+		// 		"iconPath": "./static/images/tab_icon/index.png",
+		// 		"selectedIconPath": "./static/images/tab_icon/index_active.png"
+		// 	},
+		// 	{
+		// 		"text": "订单",
+		// 		"pagePath": "pages/order/orderlist/orderlist",
+		// 		"iconPath": "./static/images/tab_icon/order.png",
+		// 		"selectedIconPath": "./static/images/tab_icon/order_active.png"
+		// 	},
+		// 	{
+		// 		"text": "消息",
+		// 		"pagePath": "pages/message/message",
+		// 		"iconPath": "./static/images/tab_icon/message.png",
+		// 		"selectedIconPath": "./static/images/tab_icon/message_active.png"
+		// 	},
 			
-			{
-				"text": "商城",
-				"pagePath": "pages/shop/shop",
-				"iconPath": "./static/images/tab_icon/shop.png",
-				"selectedIconPath": "./static/images/tab_icon/shop_active.png"
-			},
+		// 	{
+		// 		"text": "商城",
+		// 		"pagePath": "pages/shop/shop",
+		// 		"iconPath": "./static/images/tab_icon/shop.png",
+		// 		"selectedIconPath": "./static/images/tab_icon/shop_active.png"
+		// 	},
 			
-			{
-				"text": "我的",
-				"pagePath": "pages/user/user",
-				"iconPath": "./static/images/tab_icon/user.png",
-				"selectedIconPath": "./static/images/tab_icon/user_active.png"
-			}
-		]
+		// 	{
+		// 		"text": "我的",
+		// 		"pagePath": "pages/user/user",
+		// 		"iconPath": "./static/images/tab_icon/user.png",
+		// 		"selectedIconPath": "./static/images/tab_icon/user_active.png"
+		// 	}
+		// ]
+		"list": [{
+			"pagePath": "pages/defalutStart/defalutStart",
+			"text": "null界面"
+		}, {
+			"pagePath": "pages/ber/nullPage2/nullPage2",
+			"text": "null界面"
+		}, {
+			"pagePath": "pages/ber/nullPage3/nullPage3",
+			"text": "null界面"
+		}, {
+			"pagePath": "pages/ber/nullPage4/nullPage4",
+			"text": "null界面"
+		}, {
+			"pagePath": "pages/ber/nullPage5/nullPage5",
+			"text": "null界面"
+		}]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

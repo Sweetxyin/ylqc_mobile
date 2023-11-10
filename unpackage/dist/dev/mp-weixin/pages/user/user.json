@@ -5,6 +5,7 @@
     "u-gap": "../../uni_modules/uview-plus/components/u-gap/u-gap",
     "u-avatar": "../../uni_modules/uview-plus/components/u-avatar/u-avatar",
     "u-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon",
-    "u--text": "../../uni_modules/uview-plus/components/u--text/u--text"
+    "u--text": "../../uni_modules/uview-plus/components/u--text/u--text",
+    "tabbar": "../../components/tabbar/tabbar"
   }
 }

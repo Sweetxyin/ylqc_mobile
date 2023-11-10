@@ -1,8 +1,11 @@
 "use strict";
+const store_config_static_tabbar_data = require("./config_static/tabbar_data.js");
 const common_vendor = require("../common/vendor.js");
 const store = common_vendor.createStore({
   state: {
     //存放状态
+    TABBAR_INDEX_PATH: null,
+    //首页路径
     //登录状态，默认未登录
     hasLogin: false,
     token: "",
@@ -16,6 +19,16 @@ const store = common_vendor.createStore({
   },
   getters: {},
   mutations: {
+    setTabbarList(state) {
+      let userRole = "3";
+      {
+        state.TABBAR_INDEX_PATH = store_config_static_tabbar_data.setOfficialTabbar(userRole, ["8", "9"]);
+      }
+    },
+    // 关闭产品或退出登录 初始化tabbar状态 防止不同角色多或者少tabbar减少配置
+    clearState(state) {
+      store_config_static_tabbar_data.cleaarTabbar();
+    },
     setToken(state, auth) {
       state.token = auth.token;
     },

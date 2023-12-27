@@ -5,7 +5,9 @@
   "usingComponents": {
     "delivery": "../../components/delivery/delivery",
     "custom": "../../components/custom-xd/custom-xd",
+    "u-gap": "../../uni_modules/uview-plus/components/u-gap/u-gap",
     "u-subsection": "../../uni_modules/uview-plus/components/u-subsection/u-subsection",
+    "u-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon",
     "tabbar": "../../components/tabbar/tabbar"
   }
 }

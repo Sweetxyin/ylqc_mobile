@@ -230,6 +230,7 @@
 						     duration: 3000
 						 })
 						 _this.setToken(res.data)
+						 uni.setStorage('isLogout',false)
 						 // console.log("检查是否成功将数据存进vuex",_this.$store.state);
 						 uni.setStorageSync('token',res.data.token)
 						 if(res.data.roles == 'driver'){

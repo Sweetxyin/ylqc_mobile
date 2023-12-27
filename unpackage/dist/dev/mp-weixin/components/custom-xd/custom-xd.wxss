@@ -34,25 +34,28 @@
   border-top-right-radius: 20rpx;
 }
 .delivery_t .t_item.data-v-8a31d45c {
-  width: 90%;
-  height: 100rpx;
+  width: 94%;
+  height: 115rpx;
   display: flex;
-  background-color: #efefef;
+  background-color: #f1f1f1;
   border: 1rpx solid #efefef;
   border-radius: 30rpx;
   align-content: center;
   justify-content: space-between;
   align-items: center;
   margin-top: 15rpx;
-  margin-left: 4.5%;
+  margin-left: 2.2%;
 }
 .delivery_t .t_item .item_list.data-v-8a31d45c {
+  width: 74%;
   display: flex;
   padding-left: 10rpx;
+  font-size: 32rpx;
 }
 .delivery_t .t_item .item_md.data-v-8a31d45c {
-  font-size: 26rpx;
-  padding-right: 10rpx;
+  font-size: 32rpx;
+  padding-right: 8rpx;
+  font-weight: bold;
 }
 .delivery_t .add_address.data-v-8a31d45c {
   color: #808069;
@@ -138,14 +141,16 @@
   font-size: 26rpx;
 }
 .article_info .info_list .info_item.data-v-8a31d45c {
-  height: 65rpx;
+  height: 70rpx;
   display: flex;
   align-items: center;
   margin-top: 10rpx;
   border-bottom: 2rpx solid #efefef;
+  padding-left: 15rpx;
+  font-size: 32rpx;
 }
 .article_info .info_list .info_item input.data-v-8a31d45c {
-  font-size: 26rpx;
+  font-size: 32rpx;
 }
 .delivery_order.data-v-8a31d45c {
   display: flex;

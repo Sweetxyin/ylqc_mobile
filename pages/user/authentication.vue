@@ -139,6 +139,9 @@
 								icon:'none'
 							})
 							console.log('提交成功',res)
+							uni.navigateTo({
+							    url: '/pages/user/user'
+							})
 						}else{
 							uni.showToast({
 								title:'提交认证失败！',

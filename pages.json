@@ -108,7 +108,7 @@
             "path" : "pages/shop/shop",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "积分商城",
+                "navigationBarTitleText": "商城",
                 "enablePullDownRefresh": true
             }
             
@@ -320,6 +320,64 @@
                 "enablePullDownRefresh": false
             }
             
+        }
+        ,{
+            "path" : "pages/other_services/recruit/recruit",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "人才招聘",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/other_services/recruit_details/recruit_details",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "岗位详情",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+        {
+        	"path" : "pages/other_services/community/community",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "互动社区",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/other_services/car_rental/car_rental",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "延龙新能源租车服务",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/other_services/car_rental/car_detail/car_detail",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "详情",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/shop/shop_detail/shop_detail",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "商品详情",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/shop/place_order/place_order",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "提交订单",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"tabBar": {

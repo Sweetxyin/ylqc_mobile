@@ -12,17 +12,18 @@
 				<!-- <navigator url="../../pages/storemanage/storemanage" class="item_md">|&nbsp;门店选择</navigator> -->
 			</view>
 			<view class="add_address">
-				<view>添加地址</view>
-				<view class="">
+				<u-gap height="10" bgColor="#ffffff"></u-gap>
+				<!-- <view>添加地址</view> -->
+				<!-- <view class="">
 					公里：{{distance}}
-				</view>
+				</view> -->
 			</view>
 		</view>
 		 
 		<view class="article_info">
 			<form action=""  @submit="formSubmit">
 				<view class="info_t"><text>物品信息</text></view>
-				<view class="add_annex">
+				<!-- <view class="add_annex">
 					<view class="add_t">
 						<text style="padding: 10rpx 0 0 10rpx;">添加附件</text>
 						<u-radio-group   
@@ -54,7 +55,7 @@
 						<text>附件模板</text>
 						<image src="https://www.baexnyqc.cn/images/index_icon/download.png" mode=""></image>
 					</view>	
-				</view>
+				</view> -->
 				<view class="info_list">
 					<view class="info_item">
 						<text>物品名称：</text>
@@ -271,9 +272,10 @@
 			            console.log(data[0].distance/1000);
 						//根据起始终点计算订单价格，如果小于5公里为40，每多一公里加3.5
 						if(that.distance>5){
-							var n= (that.distance-5)*3.5
-							//toFiced(1)为计算后的值保留一位小数点
-							that.price=Number(n+40).toFixed(1)
+							// var n= (that.distance-5)*3.5
+							// //Number().toFiced(1)为计算后的值保留一位小数点
+							// that.price=Number(n+40).toFixed(1)
+							that.getFreight()
 						}else{
 							that.price=40
 						}
@@ -284,6 +286,24 @@
 			        }
 			    })
 			}, 
+			//根据公里数获取运费
+			getFreight(){
+				this.$api.reqPost('api/yl_user/Freight',{
+					params:{
+						userid:this.userid,
+						mileage:this.distance,
+					}
+				}).then(res => {
+					if(res.code==200){
+						console.log('获取运费成功',res)
+						this.price = res.data.freight.toFixed(1)
+						
+					}else{
+						console.log('获取运费失败',res)
+					}
+				})		
+					
+			},
 			//下单
 			addOrder(){
 				if(this.itemWeight==""){
@@ -587,8 +607,8 @@
 		border-top-left-radius: 20rpx;
 		border-top-right-radius: 20rpx;
 		.t_item{
-			width: 90%;
-			height: 100rpx;
+			width: 94%;
+			height: 115rpx;
 			display: flex;
 			background-color: #efefef;
 			border: 1rpx solid #efefef;
@@ -597,14 +617,18 @@
 			justify-content: space-between;
 			align-items:center;
 			margin-top:15rpx;
-			margin-left: 4.5%;
+			margin-left: 2.2%;
+			
 			.item_list{
+				width: 74%;
 				display: flex;
 				padding-left: 10rpx;
+				font-size: 32rpx;
 			}
 			.item_md{
-				font-size: 26rpx;
-				padding-right: 10rpx;
+				font-size: 32rpx;
+				padding-right: 8rpx;
+				font-weight: bold;
 			}
 		}
 		.add_address{
@@ -615,7 +639,7 @@
 			line-height: 60rpx;
 		}
 	}
-
+	
 	.article_info{
 		display: flex;
 		width: 94%;
@@ -658,7 +682,7 @@
 				height: 50rpx;
 				width: 100%;
 				display: flex;
-
+	
 				.add_icon{
 					display: flex;
 				}
@@ -679,7 +703,7 @@
 				display: flex;
 			    align-self:flex-end;
 				margin-top: 20rpx;
-
+	
 			}
 			.download_annex text{
 				font-size: 20rpx;
@@ -699,14 +723,16 @@
 			margin-left: 3%;
 			font-size: 26rpx;
 			.info_item{
-				height: 65rpx;
+				height: 70rpx;
 				display: flex;
 				align-items: center;
 				margin-top: 10rpx;
 				border-bottom: 2rpx solid #efefef;
+				padding-left: 15rpx;
+				font-size: 32rpx;
 			}
 			.info_item input{
-				font-size:26rpx;
+				font-size:32rpx;
 			}
 		}
 		

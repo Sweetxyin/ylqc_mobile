@@ -62,6 +62,11 @@ const store = createStore({
 			state.userInfo = userInfo
 			state.openid = userInfo.openid
 			state.userid = userInfo.id
+			if(userInfo.roles == 'driver' && !uni.getStorageSync('isLogout')){
+			uni.reLaunch({
+				url: "/pages/seizeorders/seizeorders"
+			})
+			}
 		},
 		userOpenId(state) {
 			state.openid = state

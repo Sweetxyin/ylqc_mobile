@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "岗位详情",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-gap": "../../../uni_modules/uview-plus/components/u-gap/u-gap"
+  }
+}

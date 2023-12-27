@@ -1,23 +1,33 @@
 <template>
 
 	<view class="container">
-		
+		<u-gap height="40" bgColor="#f0ffff"></u-gap>
 		<!-- 首页轮播图 -->
 		<view class="uni_swiper">
-			<swiper  :autoplay="true" :interval="3000" :duration="1000" :circular="true">
+			
+			<swiper class="swiper" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="https://www.baexnyqc.cn/images/swiper_bg/2.jpg" mode=""></image>
+						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/2.jpg" mode=""></image> -->
+						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg4.png"  ></image>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item" @click="zcar">
+						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg1.png"  ></image>
+						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/3.jpg" mode=""></image> -->
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="https://www.baexnyqc.cn/images/swiper_bg/3.jpg" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg2.png"  ></image>
+						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/4.jpg" mode=""></image> -->
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="https://www.baexnyqc.cn/images/swiper_bg/4.jpg" mode=""></image>
+						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg3.png"  ></image>
+						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/4.jpg" mode=""></image> -->
 					</view>
 				</swiper-item>
 			</swiper>
@@ -31,8 +41,9 @@
 					 <u-subsection 
 					 :list="list" 
 					 mode="button"
-					 inactiveColor="#fff"
-					 activeColor="#000000" 
+					 inactiveColor="#000000"
+					 activeColor="#00BAB2" 
+					 fontSize="16"
 					 :current="subIndex"
 					  @change="sectionChange"
 					  style=" background-color:transparent;">
@@ -61,18 +72,24 @@
 		<!-- 其他服务 -->
 		<view class="other_services">
 			<view class="services_list">
-				<navigator class="services_item" url="/pages/complaint/complaint">
-					<image src="https://www.baexnyqc.cn/images/index_icon/consultation.png"></image>
+				<view @click="zxts" class="services_item" >
+					<!-- <image src="https://www.baexnyqc.cn/images/index_icon/consultation.png"></image> -->
+					<u-icon name="kefu-ermai" color="#FA7473" size="32" bold="true"></u-icon>
 					<text>咨询投诉</text>
-				</navigator>
+				</view>
 			</view>
 			<view class="services_list">
-				<navigator url="/pages/authentication/authentication" class="services_item">
+				<!-- <navigator url="/pages/authentication/authentication" class="services_item">
 					<image src="https://www.baexnyqc.cn/images/index_icon/driver.png"></image>
 					<text>司机加入</text>
-				</navigator>
+				</navigator> -->
+				<view @click="driverJion" class="services_item">
+					<!-- <image src="https://www.baexnyqc.cn/images/index_icon/driver.png"></image> -->
+					<u-icon name="car" color="#87CEEB" size="32"  bold="true"></u-icon>
+					<text>司机加入</text>
+				</view>
 			</view>
-			<view class="services_list">
+			<!-- <view class="services_list">
 				<navigator url="" class="services_item">
 					<image src="https://www.baexnyqc.cn/images/index_icon/business.png"></image>
 					<text>商家入驻</text>
@@ -83,18 +100,20 @@
 					<image src="https://www.baexnyqc.cn/images/index_icon/logistics.png"></image>
 					<text>物流加盟</text>
 				</navigator>
-			</view>
+			</view> -->
 			<view class="services_list">
-				<navigator url="/pages/mapdemo/demo/demo" class="services_item">
-					<image src="https://www.baexnyqc.cn/images/index_icon/recruit.png"></image>
+				<navigator url="/pages/other_services/recruit/recruit" class="services_item">
+					<!-- <image src="https://www.baexnyqc.cn/images/index_icon/recruit.png"></image> -->
+					<u-icon name="plus-people-fill" color="#F9CE5D" size="32"></u-icon>
 					<text>人才招聘</text>
 				</navigator>
 			</view>
 			<view class="services_list">
-				<navigator url="/pages/mapdemo/mapdemo" class="services_item">
-					<image src="https://www.baexnyqc.cn/images/index_icon/community.png"></image>
+				<view @click="community"  class="services_item">
+					<u-icon name="integral" color="#87CEEB" size="32"></u-icon>
+					<!-- <image src="https://www.baexnyqc.cn/images/index_icon/community.png"></image> -->
 					<text>互动社区</text>
-				</navigator>
+				</view>
 			</view>
 		</view>
 		<view class="box">
@@ -112,12 +131,11 @@
 	export default {
 		data() {
 			return {
+				hasLogin:this.$store.state.hasLogin,//登录状态
 				list: ['客户下单', '配送VIP'],
 				subIndex:0,//导航条索引值
 				position:'',
 				addressName:'',
-				
-				
 			}
 		},
 		components:{
@@ -140,131 +158,54 @@
 				this.subIndex=index
 				// console.log(this.subIndex)
 			},
-			// // 检测是否授权
-			// 			checkAuthorization() {
-			// 				var that = this
-			// 				uni.authorize({
-			// 					scope: 'scope.userLocation',
-			// 					success() { //1.1 允许授权
-			// 						that.getLocationInfo().then(function(value) {
-			// 							// that.address = value.address
-			// 							that.addressName = value.addressName
-			// 							that.location = value
-			// 							that.latitude=value.latitude
-			// 							that.longitude=value.longitude
-			// 							//保存缓存
-			// 							uni.setStorage({
-			// 							  key:'local',
-			// 							  data:value,
-			// 							  success() {
-			// 							    console.log("用户地址信息已缓存")
-			// 							  }
-			// 							})              
-			// 						})
-			// 						console.log('成功')
-			// 					},
-			// 					fail() { //1.2 拒绝授权
-			// 						uni.showModal({
-			// 							content: '检测到您没打开权限，是否去设置打开？',
-			// 							confirmText: "确认",
-			// 							cancelText: '取消',
-			// 							success: (res) => {
-			// 								if (res.confirm) {
-			// 									uni.openSetting({
-			// 										success: (res) => {
-			// 											console.log(res);
-			// 											that.getLocationInfo().then(function(value) {											
-			// 												that.address = value.address
-			// 												that.location = value
-			// 												that.latitude=value.latitude
-			// 												that.longitude=value.longitude
-			// 												//保存缓存
-			// 												uni.setStorage({
-			// 												  key:'local',
-			// 												  data:value,
-			// 												  success() {
-			// 												    console.log("用户地址信息已缓存")
-			// 												  }
-			// 												}) 
-			// 											})
-			// 										}
-			// 									})
-			// 								} else {
-			// 									console.log('取消');
-			// 									return false;
-			// 								}
-			// 							}
-			// 						})
-			// 						return false;
-			// 					}
-			// 				})
-			 
-			// 			},
-			// //获取位置信息
-			// 			async getLocationInfo() {
-			// 				return new Promise((resolve) => {
-			// 					uni.showToast({
-			// 						icon: "none",
-			// 						title: "正在定位中…",
-			// 						duration: 500
-			// 					})
-			 
-			// 					//位置信息默认数据
-			// 					let location = {
-			// 						longitude: 0,
-			// 						latitude: 0,
-			// 						province: "",
-			// 						city: "",
-			// 						area: "",
-			// 						street: "",
-			// 						address: "",
-			// 						addressName:"",
-			// 					};
-			// 					var that = this
-			                        
-			// 					uni.getLocation({
-			// 						type: "gcj02",
-			// 						success(res) {
-			//                             //先拿到经度和纬度，后面再用地图转换成具体的地址信息。
-			// 							location.longitude = res.longitude;
-			// 							location.latitude = res.latitude;
-			// 							// 腾讯地图Api
-			// 							const qqmapsdk = new QQMapWX({
-			// 								key: '3LYBZ-HJBC3-KG73O-R4M44-CXWWH-3ZF46' //这里填写自己申请的key，我就不展示了。
-			// 							});
-			// 							qqmapsdk.reverseGeocoder({
-			// 								location,
-			// 								success(response) {
-			// 									console.log('调用成功',res)
-			// 									let info = response.result;
-			// 									location.province = info.address_component.province;
-			// 									location.city = info.address_component.city;
-			// 									location.area = info.address_component.district;
-			// 									location.street = info.address_component.street;
-			// 									location.addressName = info.formatted_addresses.recommend;
-			// 									location.address= info.formatted_addresses.standard_address
-			// 									that.addressName=info.formatted_addresses.recommend;
-			// 									// that.latitude=info.latitude
-			// 									// that.longitude=info.longitude
-			// 									resolve(location);
-			// 								},
-			// 							});
-			// 						},
-			// 						fail(err) {
-									
-			// 							if (err.errMsg.indexOf("fail") !== -1) {
-			// 								uni.showToast({
-			// 									icon: "none",
-			// 									title: "您拒绝了定位授权，将无法使用定位功能",
-			// 									duration: 1000
-			// 								})
-			// 								//跳转到手动开启页面
-			// 							}
-			// 							resolve(location);
-			// 						},
-			// 					});
-			// 				});
-			// 			},
+			isLoginAction(){
+				if(this.hasLogin==false){
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}else{
+					console.log('什么也不做')
+				}
+			},
+			driverJion(){
+				if(this.hasLogin==false){
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/authentication/authentication'
+					})
+				}
+			},
+			zxts(){
+				if(this.hasLogin==false){
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/complaint/complaint'
+					})
+				}
+			},
+			community(){
+				if(this.hasLogin==false){
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/other_services/community/community'
+					})
+				}
+			},
+			zcar(){
+				uni.navigateTo({
+					url:'/pages/other_services/car_rental/car_rental'
+				})
+			},
+
 		}
 	}
 </script>
@@ -274,21 +215,32 @@
 		// background-color: #add8e6;
 		background-color: #f0ffff;
 	}
+	.swiper{
+		height: 400rpx;
+	}
 	.swiper-item{
-		height: 330rpx;
+		height:400rpx;
 	}
 	.swiper-item image{
 		width: 100%;
 		height: 100%;
 	}
+	
+	.uni_swiper{
+		height: 400rpx;
+	}
     .menuTab {
+		margin-top: 10rpx;
 		padding-left: 10%;
 		padding-right: 10%;
+		margin-bottom: 10rpx;
 	    background-color: transparent;
+		// background-color: #ffffff;
 	}
 	.menu {
-		margin:-58rpx 0rpx 0rpx 0rpx;
-		z-index: 1;
+		// margin:-58rpx 0rpx 0rpx 0rpx;
+		// z-index: 1;
+		
 		.menu_item  .u-tabs{
 			// width: 100rpx;
 		}
@@ -309,7 +261,7 @@
 			width: 25%;
 		}
 	    .services_item{
-	    	 height: 130rpx;
+	    	 height: 120rpx;
 	    	 display: flex;
 	    	 flex-direction: column;
 	    	 align-items: center;
@@ -317,11 +269,11 @@
 	    	 box-sizing: border-box;
 	    }
 		.services_item image{
-			width: 60rpx;
-			height: 60rpx;
+			width: 45rpx;
+			height: 45rpx;
 		}
 		.services_item text{
-			font-size: 26rpx;
+			font-size: 28rpx;
 			margin-top: 10rpx;
 		}
 		.box{

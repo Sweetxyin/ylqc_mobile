@@ -49,6 +49,8 @@ const _sfc_main = {
                 console.log("注销登录成功!");
                 common_vendor.index.removeStorageSync("token");
                 common_vendor.index.removeStorageSync("identify");
+                common_vendor.index.setStorageSync("isLogout", true);
+                console.log("检查是否登出", common_vendor.index.getStorageSync("isLogout"));
                 console.log("检查token是否移除", common_vendor.index.getStorageSync("token"));
                 console.log("检查identify是否移除", common_vendor.index.getStorageSync("identify"));
                 _this.userLogout();

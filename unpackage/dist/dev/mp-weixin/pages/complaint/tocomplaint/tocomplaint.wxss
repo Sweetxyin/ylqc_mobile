@@ -66,3 +66,50 @@
   bottom: 0;
   margin-left: 30%;
 }
+.photo-area.data-v-810b14b9 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+.photo-area .photo-list.data-v-810b14b9 {
+  flex: 0 0 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.photo-area .photo-list .photo-item.data-v-810b14b9 {
+  width: 180rpx;
+  height: 180rpx;
+  background: #f2f6f9;
+  margin-right: 5px;
+  position: relative;
+}
+.photo-area .photo-list .photo-item image.data-v-810b14b9 {
+  width: 180rpx;
+  height: 180rpx;
+}
+.photo-area .photo-list .photo-item .iconfont.data-v-810b14b9 {
+  color: #FFFFFF;
+  font-size: 32rpx;
+  position: absolute;
+  right: 4rpx;
+  top: 4rpx;
+}
+.photo-area .photo-list .photo-item.data-v-810b14b9:nth-child(3) {
+  margin-right: 0px;
+}
+.photo-area .btn-camera.data-v-810b14b9 {
+  width: 180rpx;
+  height: 180rpx;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  background: #F7F7F7;
+  border-radius: 9rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.photo-area .btn-camera .iconfont.data-v-810b14b9 {
+  color: #FFFFFF;
+  font-size: 100rpx;
+}

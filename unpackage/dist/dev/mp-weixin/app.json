@@ -34,16 +34,21 @@
     "pages/mapdemo/demo/demo",
     "pages/mapdemo/ordermap/ordermap",
     "pages/authentication/authentication",
-    "pages/yearbill/driver_yearbill/driver_yearbill"
+    "pages/yearbill/driver_yearbill/driver_yearbill",
+    "pages/other_services/recruit/recruit",
+    "pages/other_services/recruit_details/recruit_details",
+    "pages/other_services/community/community",
+    "pages/other_services/car_rental/car_rental",
+    "pages/other_services/car_rental/car_detail/car_detail",
+    "pages/shop/shop_detail/shop_detail",
+    "pages/shop/place_order/place_order"
   ],
-
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  "lazyCodeLoading": "requiredComponents",
   "tabBar": {
     "custom": true,
     "color": "#7A7E83",

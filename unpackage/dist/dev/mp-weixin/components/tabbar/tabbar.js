@@ -16,7 +16,20 @@ const _sfc_main = {
       firstshow: true
     };
   },
+  onLoad() {
+  },
   created() {
+    console.log("触发tabbar created");
+    const _this = this;
+    var userInfo = this.$store.state.userInfo;
+    console.log("获取存进的token", common_vendor.index.getStorageSync("token"));
+    console.log("是否登出", common_vendor.index.getStorageSync("isLogout"));
+    if (Object.keys(userInfo).length != 0 || common_vendor.index.getStorageSync("isLogout")) {
+      console.log("获取到store.state用户数据");
+      console.log(this.$store.state.userInfo);
+    } else {
+      _this.doToken();
+    }
     this.tabbarinit();
   },
   onShow() {
@@ -27,6 +40,7 @@ const _sfc_main = {
     this.firstshow = false;
   },
   methods: {
+    ...common_vendor.mapMutations(["login", "setToken"]),
     tabbarinit() {
       this.currentIndex = this.selectedIndex;
       var _this = this;
@@ -98,6 +112,52 @@ const _sfc_main = {
           }
         ];
       }
+    },
+    // 获取code
+    getLoginCode(callback) {
+      common_vendor.index.login({
+        provider: "weixin",
+        success: async (res) => {
+          this.code = res.code;
+          return callback(res.code);
+        }
+      });
+    },
+    //获取token
+    doToken() {
+      if (common_vendor.index.getStorage("identify"))
+        common_vendor.index.removeStorage("identify");
+      const _this = this;
+      console.log("重新获取用户数据");
+      _this.getLoginCode(function(code) {
+        _this.$api.reqPost("api/yl_user/OnLogin", {
+          data: {
+            code: _this.code
+          }
+        }).then((res) => {
+          if (res.status) {
+            if (res.data.auth) {
+              _this.setToken(res.data.auth);
+              common_vendor.index.setStorageSync("token", res.data.auth.token);
+              console.log("检查是否成功存进token", common_vendor.index.getStorageSync("token"));
+              console.log("检查是否成功将token存进vuex", _this.$store.state);
+            }
+            if (res.data.user) {
+              _this.login(res.data.user);
+              console.log("检查是否成功将数据存进vuex", _this.$store.state);
+            }
+            _this.openid = res.otherData;
+            console.log("成功后获取openid：" + _this.$store.state.openid);
+            if (res.data.user) {
+              if (res.data.user.roles == "driver") {
+                common_vendor.index.setStorageSync("identify", "driver");
+              } else {
+                common_vendor.index.setStorageSync("identify", "user");
+              }
+            }
+          }
+        });
+      });
     },
     switchTab(item, index) {
       this.currentIndex = index;

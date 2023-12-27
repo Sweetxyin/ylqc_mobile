@@ -58,3 +58,7 @@
   margin-top: 5rpx;
   border-bottom: 2rpx solid #efefef;
 }
+.noData.data-v-a5f545bd {
+  margin-top: 55%;
+  margin-left: 25%;
+}

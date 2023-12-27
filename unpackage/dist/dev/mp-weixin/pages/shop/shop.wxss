@@ -25,14 +25,36 @@
 /* 透明度 */
 /* 文章场景相关 */
 .container.data-v-2a6aaf81 {
-  background-color: #f0ffff;
+  background-color: #ffffff;
 }
-.shop_header.data-v-2a6aaf81 {
-  height: 300rpx;
+.car_header.data-v-2a6aaf81 {
+  height: 400rpx;
   width: 100%;
-  background-color: #b0e0e6;
 }
-.shop_list.data-v-2a6aaf81 {
+.car_header image.data-v-2a6aaf81 {
+  height: 100%;
+  width: 100%;
+}
+.car_list.data-v-2a6aaf81 {
   height: 200rpx;
   width: 100%;
+  display: flex;
+  border-bottom: 2rpx solid #efefef;
+}
+.car_list .car_item.data-v-2a6aaf81 {
+  width: 94%;
+  height: 200rpx;
+  display: flex;
+  flex-direction: row;
+  padding-left: 2.5%;
+}
+.car_list .car_item .car_image image.data-v-2a6aaf81 {
+  width: 200rpx;
+  height: 170rpx;
+  padding-top: 9%;
+}
+.car_list .car_item .car_font.data-v-2a6aaf81 {
+  padding-left: 25rpx;
+  padding-top: 9%;
+  font-size: 30rpx;
 }

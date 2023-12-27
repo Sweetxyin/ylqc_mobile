@@ -65,7 +65,9 @@ const _sfc_main = {
               icon: "none"
             });
             console.log("提交成功", res);
-            _this.logout();
+            common_vendor.index.navigateTo({
+              url: "/pages/seizeorders/seizeorders"
+            });
           } else {
             common_vendor.index.showToast({
               title: "提交认证失败！",

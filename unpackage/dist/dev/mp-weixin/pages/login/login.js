@@ -171,6 +171,7 @@ const _sfc_main = {
             duration: 3e3
           });
           _this.setToken(res.data);
+          common_vendor.index.setStorage("isLogout", false);
           common_vendor.index.setStorageSync("token", res.data.token);
           if (res.data.roles == "driver") {
             common_vendor.index.setStorageSync("identify", "driver");

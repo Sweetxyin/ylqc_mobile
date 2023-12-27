@@ -1,6 +1,6 @@
 "use strict";
-const store_config_static_tabbar_data = require("./config_static/tabbar_data.js");
 const common_vendor = require("../common/vendor.js");
+const store_config_static_tabbar_data = require("./config_static/tabbar_data.js");
 const store = common_vendor.createStore({
   state: {
     //存放状态
@@ -38,6 +38,11 @@ const store = common_vendor.createStore({
       state.userInfo = userInfo;
       state.openid = userInfo.openid;
       state.userid = userInfo.id;
+      if (userInfo.roles == "driver" && !common_vendor.index.getStorageSync("isLogout")) {
+        common_vendor.index.reLaunch({
+          url: "/pages/seizeorders/seizeorders"
+        });
+      }
     },
     userOpenId(state) {
       state.openid = state;

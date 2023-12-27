@@ -158,6 +158,13 @@ if (!Math) {
   "./pages/mapdemo/ordermap/ordermap.js";
   "./pages/authentication/authentication.js";
   "./pages/yearbill/driver_yearbill/driver_yearbill.js";
+  "./pages/other_services/recruit/recruit.js";
+  "./pages/other_services/recruit_details/recruit_details.js";
+  "./pages/other_services/community/community.js";
+  "./pages/other_services/car_rental/car_rental.js";
+  "./pages/other_services/car_rental/car_detail/car_detail.js";
+  "./pages/shop/shop_detail/shop_detail.js";
+  "./pages/shop/place_order/place_order.js";
 }
 const _sfc_main = {
   data() {

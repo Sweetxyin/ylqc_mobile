@@ -12,9 +12,10 @@
 				<!-- <navigator url="../../pages/storemanage/storemanage" class="item_md">|&nbsp;门店选择</navigator> -->
 			</view>
 			<view class="add_address">
-				<view>添加地址</view>
+				<u-gap height="10" bgColor="#ffffff"></u-gap>
+				<!-- <view>添加地址</view> -->
 				<view class="">
-					公里：{{distance}}
+					<!-- 公里：{{distance}} -->
 					<!-- 纬度：{{sendLocation.latitude}}
 					经度:{{receLocation.longitude}} -->
 				</view>
@@ -24,7 +25,7 @@
 		<view class="article_info">
 			<form action=""  @submit="formSubmit" >
 				<view class="info_t"><text>物品信息</text></view>
-				<view class="add_annex">
+				<!-- <view class="add_annex">
 					<view class="add_t">
 						<text style="padding: 10rpx 0 0 10rpx;">添加附件</text>
 						<u-radio-group   
@@ -56,34 +57,34 @@
 						<text>附件模板</text>
 						<image src="https://www.baexnyqc.cn/images/index_icon/download.png" mode=""></image>
 					</view>	
-				</view>
+				</view> -->
 				<view class="info_list">
 					<view class="info_item">
 						<text>物品名称：</text>
 						<!-- <input type="text" placeholder="请输入物品名称"> -->
 						 <u--input placeholder="请输入物品名称" border="none" inputAlign="right"
-						    v-model="itemName" fontSize="26rpx" :disabled="inputStatus"
+						    v-model="itemName" fontSize="30rpx" :disabled="inputStatus"
 						  ></u--input>
 					</view>
 					<view class="info_item">
 						<text>预估总重量(kg)：</text>
 						<!-- <input type="text" placeholder="请输入总重量"> -->
 						<u--input placeholder="请输入总重量" border="none" inputAlign="right"
-						   v-model="itemWeight" fontSize="26rpx" :disabled="inputStatus"
+						   v-model="itemWeight" fontSize="30rpx" :disabled="inputStatus"
 						 ></u--input>
 					</view>
 					<view class="info_item">
 						<text>总体积(m²)：</text>
 						<!-- <input type="text" placeholder="请输入总体积"> -->
 						<u--input placeholder="请输入总体积" border="none" inputAlign="right"
-						   v-model="itemVolume" fontSize="26rpx"
+						   v-model="itemVolume" fontSize="30rpx" 
 						 ></u--input>
 					</view>
 					<view class="info_item">
 						<text>数量：</text>
 						<!-- <input type="text" placeholder="请输入件数"> -->
 						<u--input placeholder="请输入数量" border="none" inputAlign="right"
-						   v-model="itemNum" fontSize="26rpx"
+						   v-model="itemNum" fontSize="30rpx"
 						 ></u--input>
 					</view>
 					<view class="info_item" @click="show = true">
@@ -120,6 +121,7 @@
 		name:"custom-xd",
 		data() {
 			return {
+				hasLogin:this.$store.state.hasLogin,//登录状态
 				userid:this.$store.state.userid,//用户ID
 				sendLocation:[{
 					sendAddress:"",//发件地址
@@ -161,7 +163,7 @@
 				sendState:1,
 				receState:2,
 				sourceStr:'',//订单号 
-				distance:0.1,//距离
+				distance:0,//距离
 			};
 		},
 		mounted () {
@@ -226,27 +228,55 @@
 			
 			//跳转至发货地址选择
 			toSendAddress(){
-				uni.navigateTo({
-					url:'/pages/storemanage/addstore/addstore?sendState=' + this.sendState
-				})
+				if(this.hasLogin){
+					uni.navigateTo({
+						url:'/pages/storemanage/addstore/addstore?sendState=' + this.sendState
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
+				
 			},
 			//跳转至收货地址选择
 			toAddress(){
-				uni.navigateTo({
-					url:'/pages/storemanage/addstore/addstore?receState=' + this.receState
-				})
+				if(this.hasLogin){
+					uni.navigateTo({
+						url:'/pages/storemanage/addstore/addstore?receState=' + this.receState
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
+				
 			},
 			//跳转到门店管理页携带参数发件标识参数
 			toSelectStore(){
-				uni.navigateTo({
-					url: '/pages/storemanage/storemanage?sendState=' + this.sendState
-				})
+				if(this.hasLogin){
+					uni.navigateTo({
+						url: '/pages/storemanage/storemanage?sendState=' + this.sendState
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
+				
 			},
 			//跳转到门店管理页携带参数收件标识参数
 			toReceStore(){
-				uni.navigateTo({
-					url: '/pages/storemanage/storemanage?receState=' + this.receState
-				})
+				if(this.hasLogin){
+					uni.navigateTo({
+						url: '/pages/storemanage/storemanage?receState=' + this.receState
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
+				
 			},
 			
 			//根据起点和终点绘制路线,计算其路线公里数，再根据公里数计算订单价格
@@ -295,9 +325,9 @@
 						mileage:this.distance,
 					}
 				}).then(res => {
-					if(res.status){
+					if(res.code==200){
 						console.log('获取运费成功',res)
-						this.price = res.data.freight
+						this.price = res.data.freight.toFixed(1)
 						
 					}else{
 						console.log('获取运费失败',res)
@@ -408,6 +438,9 @@
 									title:'取消支付',
 									icon:'none'
 								})
+								uni.navigateTo({
+									url:'/pages/order/orderlist/orderlist'
+								})
 								console.log('fail:' + JSON.stringify(err));
 							}
 						});
@@ -444,6 +477,9 @@
 				}).then(res=>{
 					if(res.status){
 						console.log('修改订单状态成功',res)
+						uni.navigateTo({
+							url:'/pages/order/orderlist/orderlist'
+						})
 					}else{
 						console.log('修改订单状态失败',res)	
 					}	
@@ -608,24 +644,30 @@
 		border-top-left-radius: 20rpx;
 		border-top-right-radius: 20rpx;
 		.t_item{
-			width: 90%;
-			height: 100rpx;
+			width: 94%;
+			height: 115rpx;
 			display: flex;
-			background-color: #efefef;
+			background-color: #f1f1f1;
 			border: 1rpx solid #efefef;
 			border-radius: 30rpx;
 			align-content:center;
 			justify-content: space-between;
 			align-items:center;
 			margin-top:15rpx;
-			margin-left: 4.5%;
+			margin-left: 2.2%;
+			
 			.item_list{
+				width: 74%;
 				display: flex;
 				padding-left: 10rpx;
+				font-size: 32rpx;
 			}
 			.item_md{
-				font-size: 26rpx;
-				padding-right: 10rpx;
+				// color: #b0e0e6;
+				font-size: 32rpx;
+				padding-right: 8rpx;
+				font-weight: bold;
+				// background-color: #ffffff;
 			}
 		}
 		.add_address{
@@ -720,14 +762,16 @@
 			margin-left: 3%;
 			font-size: 26rpx;
 			.info_item{
-				height: 65rpx;
+				height: 70rpx;
 				display: flex;
 				align-items: center;
 				margin-top: 10rpx;
 				border-bottom: 2rpx solid #efefef;
+				padding-left: 15rpx;
+				font-size: 32rpx;
 			}
 			.info_item input{
-				font-size:26rpx;
+				font-size:32rpx;
 			}
 		}
 		

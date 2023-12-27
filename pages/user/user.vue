@@ -5,7 +5,7 @@
 			<view class="user_login" v-if="hasLogin==true">
 				<u-avatar size="50" :src="userInfo.avatar"></u-avatar>
 				<text >{{userInfo.name}}</text>
-				<view v-show="identify!='driver'">
+				<view v-show="identify!='driver'" class="auth">
 					<text @click="toAuth">前往认证</text>
 				</view>
 				
@@ -15,7 +15,7 @@
 				<u--text text="立即登录/认证"></u--text>
 			</view>
 			<view class="user_setting">
-				<navigator url="/pages/setting/setting"  class="setting_n">
+				<navigator url="/pages/setting/setting" class="setting_n">
 					<u-icon name="setting" size="25"></u-icon>
 					<text>设置</text>
 				</navigator>
@@ -30,25 +30,25 @@
 			</view>
 			<view class="services_list" v-else>
 				<navigator class="services_item" url="/pages/yearbill/yearbill">
-					<u-icon name="red-packet" size="30"></u-icon>
+					<u-icon name="red-packet" color="#FA7473" size="30"></u-icon>
 					<text>年度账单</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator class="services_item" url="">
-					<u-icon name="gift" size="30"></u-icon>
+					<u-icon name="gift" color="#87CEEB"  size="30"></u-icon>
 					<text>我的积分</text>
 				</navigator>
 			</view>
 			<view class="services_list">
 				<navigator class="services_item" url="/pages/orderinvoice/orderinvoice">
-					<u-icon name="rmb-circle" size="30"></u-icon>
+					<u-icon name="rmb-circle" color="#F9CE5D"  size="30"></u-icon>
 					<text>发票报销</text>
 				</navigator>
 			</view>
 			<view class="services_list" v-show="identify!='driver'">
 				<navigator class="services_item" url="/pages/storemanage/storemanage">
-					<u-icon name="order" size="30"></u-icon>
+					<u-icon name="order" color="#ADD8E6"  size="30"></u-icon>
 					<text>门店管理</text>
 				</navigator>
 			</view>
@@ -149,7 +149,8 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background-color: #f0ffff;
+		// background-color: #f0ffff;
+		background-color:#E9FEFF;
 	}
 	.user_header{
 		height: 60px;
@@ -165,6 +166,9 @@
 			// display: flex;
 			// justify-content: space-between;
 		}
+	}
+	.auth{
+		margin-top: 5%;
 	}
 	.user_login text{
 		padding-top: 30rpx;

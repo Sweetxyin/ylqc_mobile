@@ -130,19 +130,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   } : {
     n: common_vendor.p({
       name: "red-packet",
+      color: "#FA7473",
       size: "30"
     })
   }, {
     o: common_vendor.p({
       name: "gift",
+      color: "#87CEEB",
       size: "30"
     }),
     p: common_vendor.p({
       name: "rmb-circle",
+      color: "#F9CE5D",
       size: "30"
     }),
     q: common_vendor.p({
       name: "order",
+      color: "#ADD8E6",
       size: "30"
     }),
     r: $data.identify != "driver",

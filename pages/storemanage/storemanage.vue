@@ -224,7 +224,7 @@
 	.container{
 		// position: absolute;
 		width: 100%;
-		height: 100vh;
+		height: 100%;
 		// background-color: #f6f6f6;
 		// z-index: -1;
 		background-color: #f0ffff;

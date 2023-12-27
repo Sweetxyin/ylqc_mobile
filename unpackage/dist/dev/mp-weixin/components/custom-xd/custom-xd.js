@@ -9,6 +9,8 @@ const _sfc_main = {
   name: "custom-xd",
   data() {
     return {
+      hasLogin: this.$store.state.hasLogin,
+      //登录状态
       userid: this.$store.state.userid,
       //用户ID
       sendLocation: [{
@@ -73,7 +75,7 @@ const _sfc_main = {
       receState: 2,
       sourceStr: "",
       //订单号 
-      distance: 0.1
+      distance: 0
       //距离
     };
   },
@@ -125,27 +127,51 @@ const _sfc_main = {
     },
     //跳转至发货地址选择
     toSendAddress() {
-      common_vendor.index.navigateTo({
-        url: "/pages/storemanage/addstore/addstore?sendState=" + this.sendState
-      });
+      if (this.hasLogin) {
+        common_vendor.index.navigateTo({
+          url: "/pages/storemanage/addstore/addstore?sendState=" + this.sendState
+        });
+      } else {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
     },
     //跳转至收货地址选择
     toAddress() {
-      common_vendor.index.navigateTo({
-        url: "/pages/storemanage/addstore/addstore?receState=" + this.receState
-      });
+      if (this.hasLogin) {
+        common_vendor.index.navigateTo({
+          url: "/pages/storemanage/addstore/addstore?receState=" + this.receState
+        });
+      } else {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
     },
     //跳转到门店管理页携带参数发件标识参数
     toSelectStore() {
-      common_vendor.index.navigateTo({
-        url: "/pages/storemanage/storemanage?sendState=" + this.sendState
-      });
+      if (this.hasLogin) {
+        common_vendor.index.navigateTo({
+          url: "/pages/storemanage/storemanage?sendState=" + this.sendState
+        });
+      } else {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
     },
     //跳转到门店管理页携带参数收件标识参数
     toReceStore() {
-      common_vendor.index.navigateTo({
-        url: "/pages/storemanage/storemanage?receState=" + this.receState
-      });
+      if (this.hasLogin) {
+        common_vendor.index.navigateTo({
+          url: "/pages/storemanage/storemanage?receState=" + this.receState
+        });
+      } else {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
     },
     //根据起点和终点绘制路线,计算其路线公里数，再根据公里数计算订单价格
     initMap() {
@@ -185,9 +211,9 @@ const _sfc_main = {
           mileage: this.distance
         }
       }).then((res) => {
-        if (res.status) {
+        if (res.code == 200) {
           console.log("获取运费成功", res);
-          this.price = res.data.freight;
+          this.price = res.data.freight.toFixed(1);
         } else {
           console.log("获取运费失败", res);
         }
@@ -293,6 +319,9 @@ const _sfc_main = {
                 title: "取消支付",
                 icon: "none"
               });
+              common_vendor.index.navigateTo({
+                url: "/pages/order/orderlist/orderlist"
+              });
               console.log("fail:" + JSON.stringify(err));
             }
           });
@@ -327,6 +356,9 @@ const _sfc_main = {
       }).then((res) => {
         if (res.status) {
           console.log("修改订单状态成功", res);
+          common_vendor.index.navigateTo({
+            url: "/pages/order/orderlist/orderlist"
+          });
         } else {
           console.log("修改订单状态失败", res);
         }
@@ -450,20 +482,18 @@ const _sfc_main = {
   }
 };
 if (!Array) {
-  const _easycom_u_radio2 = common_vendor.resolveComponent("u-radio");
-  const _easycom_u_radio_group2 = common_vendor.resolveComponent("u-radio-group");
+  const _easycom_u_gap2 = common_vendor.resolveComponent("u-gap");
   const _easycom_u__input2 = common_vendor.resolveComponent("u--input");
   const _easycom_u_datetime_picker2 = common_vendor.resolveComponent("u-datetime-picker");
   const _easycom_u_button2 = common_vendor.resolveComponent("u-button");
-  (_easycom_u_radio2 + _easycom_u_radio_group2 + _easycom_u__input2 + _easycom_u_datetime_picker2 + _easycom_u_button2)();
+  (_easycom_u_gap2 + _easycom_u__input2 + _easycom_u_datetime_picker2 + _easycom_u_button2)();
 }
-const _easycom_u_radio = () => "../../uni_modules/uview-plus/components/u-radio/u-radio.js";
-const _easycom_u_radio_group = () => "../../uni_modules/uview-plus/components/u-radio-group/u-radio-group.js";
+const _easycom_u_gap = () => "../../uni_modules/uview-plus/components/u-gap/u-gap.js";
 const _easycom_u__input = () => "../../uni_modules/uview-plus/components/u--input/u--input.js";
 const _easycom_u_datetime_picker = () => "../../uni_modules/uview-plus/components/u-datetime-picker/u-datetime-picker.js";
 const _easycom_u_button = () => "../../uni_modules/uview-plus/components/u-button/u-button.js";
 if (!Math) {
-  (_easycom_u_radio + _easycom_u_radio_group + _easycom_u__input + _easycom_u_datetime_picker + _easycom_u_button)();
+  (_easycom_u_gap + _easycom_u__input + _easycom_u_datetime_picker + _easycom_u_button)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -476,80 +506,60 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   } : {}, {
     f: common_vendor.o(($event) => $options.toReceStore()),
     g: common_vendor.o((...args) => $options.toAddress && $options.toAddress(...args)),
-    h: common_vendor.t($data.distance),
-    i: common_vendor.f($data.radiolist1, (item, index, i0) => {
-      return {
-        a: index,
-        b: common_vendor.o($options.radioChange, index),
-        c: "8a31d45c-1-" + i0 + ",8a31d45c-0",
-        d: common_vendor.p({
-          size: "16",
-          labelSize: "13",
-          customStyle: {
-            marginLeft: "0rpx"
-          },
-          label: item.name,
-          name: item.name
-        })
-      };
+    h: common_vendor.p({
+      height: "10",
+      bgColor: "#ffffff"
     }),
-    j: common_vendor.o($options.groupChange),
-    k: common_vendor.o(($event) => _ctx.radiovalue1 = $event),
-    l: common_vendor.p({
-      size: "16",
-      placement: "row",
-      modelValue: _ctx.radiovalue1
-    }),
-    m: common_vendor.o(($event) => $data.itemName = $event),
-    n: common_vendor.p({
+    i: common_vendor.o(($event) => $data.itemName = $event),
+    j: common_vendor.p({
       placeholder: "请输入物品名称",
       border: "none",
       inputAlign: "right",
-      fontSize: "26rpx",
+      fontSize: "30rpx",
       disabled: $data.inputStatus,
       modelValue: $data.itemName
     }),
-    o: common_vendor.o(($event) => $data.itemWeight = $event),
-    p: common_vendor.p({
+    k: common_vendor.o(($event) => $data.itemWeight = $event),
+    l: common_vendor.p({
       placeholder: "请输入总重量",
       border: "none",
       inputAlign: "right",
-      fontSize: "26rpx",
+      fontSize: "30rpx",
       disabled: $data.inputStatus,
       modelValue: $data.itemWeight
     }),
-    q: common_vendor.o(($event) => $data.itemVolume = $event),
-    r: common_vendor.p({
+    m: common_vendor.o(($event) => $data.itemVolume = $event),
+    n: common_vendor.p({
       placeholder: "请输入总体积",
       border: "none",
       inputAlign: "right",
-      fontSize: "26rpx",
+      fontSize: "30rpx",
       modelValue: $data.itemVolume
     }),
-    s: common_vendor.o(($event) => $data.itemNum = $event),
-    t: common_vendor.p({
+    o: common_vendor.o(($event) => $data.itemNum = $event),
+    p: common_vendor.p({
       placeholder: "请输入数量",
       border: "none",
       inputAlign: "right",
-      fontSize: "26rpx",
+      fontSize: "30rpx",
       modelValue: $data.itemNum
     }),
-    v: common_vendor.o($options.confirm),
-    w: common_vendor.o($options.close),
-    x: common_vendor.o(($event) => $data.value1 = $event),
-    y: common_vendor.p({
+    q: common_vendor.o($options.confirm),
+    r: common_vendor.o($options.close),
+    s: common_vendor.o(($event) => $data.value1 = $event),
+    t: common_vendor.p({
       show: $data.show,
       mode: "datetime",
       modelValue: $data.value1
     }),
-    z: common_vendor.t($data.timeValue),
-    A: common_vendor.o(($event) => $data.show = true),
-    B: common_vendor.o((...args) => _ctx.formSubmit && _ctx.formSubmit(...args)),
-    C: $data.sendLocation.sendAddress != "" && $data.receAddress != ""
+    v: common_vendor.t($data.timeValue),
+    w: common_vendor.o(($event) => $data.show = true),
+    x: common_vendor.o((...args) => _ctx.formSubmit && _ctx.formSubmit(...args)),
+    y: $data.sendLocation.sendAddress != "" && $data.receAddress != ""
   }, $data.sendLocation.sendAddress != "" && $data.receAddress != "" ? {
-    D: common_vendor.t($data.price),
-    E: common_vendor.o($options.addOrder),
-    F: common_vendor.p({
+    z: common_vendor.t($data.price),
+    A: common_vendor.o($options.addOrder),
+    B: common_vendor.p({
       type: "primary",
       text: "支付并叫车"
     })

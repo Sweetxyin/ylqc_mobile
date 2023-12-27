@@ -116,7 +116,10 @@
 								icon:'none'
 							})
 							console.log('提交成功',res)
-							_this.logout()
+							// _this.logout()
+							uni.navigateTo({
+								url:'/pages/seizeorders/seizeorders'
+							})
 						}else{
 							uni.showToast({
 								title:'提交认证失败！',

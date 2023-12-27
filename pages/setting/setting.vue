@@ -146,6 +146,8 @@
 									console.log('注销登录成功!')
 									uni.removeStorageSync('token')
 									uni.removeStorageSync('identify')
+									uni.setStorageSync('isLogout',true)
+									console.log('检查是否登出',uni.getStorageSync('isLogout'))
 									console.log('检查token是否移除',uni.getStorageSync('token'))
 									console.log('检查identify是否移除',uni.getStorageSync('identify'))
 									
@@ -179,7 +181,7 @@
 							let val = res.data.idCrad
 							let reg = /^(.{3}).*(.{2})$/
 							_this.userInfo.idCrad=val.replace(reg, '$1*************$2')
-						console.log('sfzh',val)
+							console.log('sfzh',val)
 						}
 						console.log('获取用户信息成功',res)
 						}else{

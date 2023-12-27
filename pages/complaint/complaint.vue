@@ -7,7 +7,7 @@
 				 <!-- <u--input border="none" inputAlign="right"
 				    v-model="consult_phone" fontSize="26rpx" :disabled="inputStatus" style="padding-right: 25rpx;"
 				  ></u--input> -->
-				  <text style="padding-right: 25rpx;">123456</text>
+				  <text style="padding-right: 25rpx;">0772-2082181</text>
 			</view>
 		
 			<u-cell-group :border="false" style="font_zt">

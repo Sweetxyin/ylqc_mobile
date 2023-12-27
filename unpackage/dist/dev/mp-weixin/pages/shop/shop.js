@@ -3,121 +3,99 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      list: [
-        {
-          name: "photo",
-          title: "图片"
-        },
-        {
-          name: "lock",
-          title: "锁头"
-        },
-        {
-          name: "star",
-          title: "星星"
-        },
-        {
-          name: "hourglass",
-          title: "沙漏"
-        },
-        {
-          name: "home",
-          title: "首页"
-        },
-        {
-          name: "star",
-          title: "音量"
-        }
-      ],
-      info: [
-        {
-          name: "photo",
-          title: ""
-        },
-        {
-          name: "photo",
-          title: ""
-        },
-        {
-          name: "photo",
-          title: ""
-        },
-        {
-          name: "photo",
-          title: ""
-        },
-        {
-          name: "photo",
-          title: ""
-        },
-        {
-          name: "photo",
-          title: ""
-        }
-      ]
+      shopList: [],
+      list1: [{}],
+      sortId: ""
     };
   },
-  methods: {}
+  onShow() {
+    this.getCategory();
+    this.getShopList();
+  },
+  methods: {
+    //跳转到订单详情页
+    toCarDetail(item) {
+      common_vendor.index.navigateTo({
+        url: "/pages/shop/shop_detail/shop_detail?id=" + item.id
+      });
+    },
+    click(item) {
+      console.log("输出item", item);
+      this.sortId = item.id;
+      this.getShopList();
+    },
+    //获取商品类别
+    getCategory() {
+      this.$api.reqPost("api/yl_goods/GetAllCategories").then((res) => {
+        if (res.status) {
+          this.list1 = res.data;
+          console.log("获取商品类别成功！", res);
+        } else {
+          console.log("获取商品类别失败！", res);
+        }
+      });
+    },
+    //获取商品
+    getShopList() {
+      var str1 = "catId:";
+      var str2 = this.sortId;
+      var str3 = str1 + str2;
+      this.$api.reqPost("api/yl_goods/GetYLGoodList", {
+        data: {
+          "page": 1,
+          "limit": 10,
+          "where": str3
+        }
+      }).then((res) => {
+        if (res.status) {
+          this.shopList = res.data;
+          console.log("获取商品成功！", res);
+        } else {
+          console.log("获取商品失败！", res);
+        }
+      });
+    }
+  }
 };
 if (!Array) {
-  const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
-  const _easycom_u_grid_item2 = common_vendor.resolveComponent("u-grid-item");
-  const _easycom_u_grid2 = common_vendor.resolveComponent("u-grid");
-  const _easycom_u_toast2 = common_vendor.resolveComponent("u-toast");
+  const _easycom_u_tabs2 = common_vendor.resolveComponent("u-tabs");
+  const _easycom_u_gap2 = common_vendor.resolveComponent("u-gap");
   const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
-  (_easycom_u_icon2 + _easycom_u_grid_item2 + _easycom_u_grid2 + _easycom_u_toast2 + _easycom_tabbar2)();
+  (_easycom_u_tabs2 + _easycom_u_gap2 + _easycom_tabbar2)();
 }
-const _easycom_u_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
-const _easycom_u_grid_item = () => "../../uni_modules/uview-plus/components/u-grid-item/u-grid-item.js";
-const _easycom_u_grid = () => "../../uni_modules/uview-plus/components/u-grid/u-grid.js";
-const _easycom_u_toast = () => "../../uni_modules/uview-plus/components/u-toast/u-toast.js";
+const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
+const _easycom_u_gap = () => "../../uni_modules/uview-plus/components/u-gap/u-gap.js";
 const _easycom_tabbar = () => "../../components/tabbar/tabbar.js";
 if (!Math) {
-  (_easycom_u_icon + _easycom_u_grid_item + _easycom_u_grid + _easycom_u_toast + _easycom_tabbar)();
+  (_easycom_u_tabs + _easycom_u_gap + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.f($data.list, (listItem, listIndex, i0) => {
-      return {
-        a: "2a6aaf81-2-" + i0 + "," + ("2a6aaf81-1-" + i0),
-        b: common_vendor.p({
-          customStyle: {
-            paddingTop: "20rpx"
-          },
-          name: listItem.name,
-          size: 22
-        }),
-        c: common_vendor.t(listItem.title),
-        d: listIndex,
-        e: "2a6aaf81-1-" + i0 + ",2a6aaf81-0"
-      };
-    }),
+    a: common_vendor.o($options.click),
     b: common_vendor.p({
-      border: false,
-      col: "5"
+      lineWidth: "28",
+      activeStyle: {
+        color: "#303133",
+        fontWeight: "bold",
+        transform: "scale(1.05)"
+      },
+      list: $data.list1
     }),
-    c: common_vendor.sr("uToast", "2a6aaf81-3"),
-    d: common_vendor.f($data.info, (infoItem, infoIndex, i0) => {
+    c: common_vendor.f($data.shopList, (item, index, i0) => {
       return {
-        a: "2a6aaf81-6-" + i0 + "," + ("2a6aaf81-5-" + i0),
-        b: common_vendor.p({
-          customStyle: {
-            paddingTop: "20rpx"
-          },
-          name: infoItem.name,
-          size: 99
-        }),
-        c: common_vendor.t(infoItem.title),
-        d: infoIndex,
-        e: "2a6aaf81-5-" + i0 + ",2a6aaf81-4"
+        a: item.goodimage_first,
+        b: common_vendor.t(item.goodname),
+        c: "2a6aaf81-1-" + i0,
+        d: common_vendor.t(item.goodprice),
+        e: common_vendor.o(($event) => $options.toCarDetail(item), index),
+        f: index
       };
+    }),
+    d: common_vendor.p({
+      height: "6",
+      bgColor: "#ffffff"
     }),
     e: common_vendor.p({
-      border: false,
-      col: "2"
-    }),
-    f: common_vendor.sr("uToast", "2a6aaf81-7"),
-    g: common_vendor.p({
       selectedIndex: "3"
     })
   };

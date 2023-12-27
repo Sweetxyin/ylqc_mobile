@@ -78,9 +78,10 @@
 			},
 			//获取商品
 			getShopList(){
-				var str1 = "catId:";
+				var str1 = "{catId:\"";
 				var str2 = this.sortId;
-				var str3 = str1+str2;
+				var str4= "\"}"
+				var str3 = str1+str2+str4;
 				this.$api.reqPost('api/yl_goods/GetYLGoodList',{
 					data:{
 						"page":1,

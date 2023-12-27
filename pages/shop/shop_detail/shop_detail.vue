@@ -49,7 +49,7 @@
 		<view class="xq">
 			<view class="amount">
 				<view class="">
-					<text>数量</text>
+					<text>数量1</text>
 				</view>
 				
 				<view class="">

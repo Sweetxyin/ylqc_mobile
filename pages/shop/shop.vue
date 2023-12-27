@@ -75,7 +75,7 @@
 						console.log('获取商品类别失败！',res)
 					}
 				})
-			},
+			},  
 			//获取商品
 			getShopList(){
 				var str1 = "{catId:\"";

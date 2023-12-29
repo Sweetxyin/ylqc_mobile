@@ -40,6 +40,7 @@
 }
 .car_list.data-v-4af9e785 {
   width: 100%;
+  text-align: center;
 }
 .detail_image.data-v-4af9e785 {
   width: 100%;

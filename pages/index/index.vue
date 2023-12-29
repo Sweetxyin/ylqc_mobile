@@ -7,7 +7,7 @@
 			
 			<swiper class="swiper" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 				<swiper-item>
-					<view class="swiper-item">
+					<view class="swiper-item" @click="wlsj">
 						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/2.jpg" mode=""></image> -->
 						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg4.png"  ></image>
 					</view>
@@ -19,13 +19,13 @@
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item">
+					<view class="swiper-item" @click="shop">
 						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg2.png"  ></image>
 						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/4.jpg" mode=""></image> -->
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item">
+					<view class="swiper-item" @click="shop">
 						<image src="https://www.baexnyqc.cn/images/indexhtml/images/bg3.png"  ></image>
 						<!-- <image src="https://www.baexnyqc.cn/images/swiper_bg/4.jpg" mode=""></image> -->
 					</view>
@@ -203,6 +203,16 @@
 			zcar(){
 				uni.navigateTo({
 					url:'/pages/other_services/car_rental/car_rental'
+				})
+			},
+			wlsj(){
+				uni.navigateTo({
+					url:'/pages/other_services/recruit/recruit'
+				})
+			},
+			shop(){
+				uni.navigateTo({
+					url:'/pages/shop/shop'
 				})
 			},
 

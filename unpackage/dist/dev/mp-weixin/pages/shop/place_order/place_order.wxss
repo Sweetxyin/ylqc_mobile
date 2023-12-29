@@ -56,9 +56,72 @@
 }
 .order_info.data-v-bed3463d {
   width: 90%;
-  height: 500rpx;
+  height: 700rpx;
   background-color: #ffffff;
   margin-top: 20rpx;
   margin-left: 5%;
   border-radius: 6.5%;
+}
+.order_info .store_name.data-v-bed3463d {
+  padding-top: 20rpx;
+  padding-left: 25rpx;
+}
+.shop_item.data-v-bed3463d {
+  width: 100%;
+  height: 240rpx;
+  display: flex;
+  flex-direction: row;
+  padding-left: 2.5%;
+}
+.shop_image image.data-v-bed3463d {
+  width: 250rpx;
+  height: 210rpx;
+  padding-top: 9%;
+}
+.shop_name.data-v-bed3463d {
+  width: 180rpx;
+  padding-left: 25rpx;
+  padding-top: 15%;
+  font-size: 30rpx;
+}
+.shop_price.data-v-bed3463d {
+  width: 170rpx;
+  padding-left: 4%;
+  padding-top: 15%;
+  font-size: 30rpx;
+}
+.amount.data-v-bed3463d {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 25rpx;
+  padding-right: 25rpx;
+}
+.item_content.data-v-bed3463d {
+  height: 200rpx;
+  margin-top: 15rpx;
+}
+.item_content .content.data-v-bed3463d {
+  width: 95%;
+  padding: 20rpx;
+}
+.details_btm.data-v-bed3463d {
+  width: 100%;
+  height: 98rpx;
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+.an.data-v-bed3463d {
+  margin-top: 2.8%;
+  padding-left: 15%;
+}
+.submit_button.data-v-bed3463d {
+  padding-left: 60rpx;
+  margin-top: 1.7%;
+}
+.details_btm text.data-v-bed3463d {
+  padding-top: 100rpx;
 }

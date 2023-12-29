@@ -8,11 +8,11 @@
 			<view class="car_item" @click="toCarDetail(item)">
 				<view class="car_image">
 					<!-- <image src="../../../static/images/tab_icon/qc1.jpg" mode=""></image> -->
-					<image :src="item.image" mode=""></image>
+					<image :src="item.goodimage_first" mode=""></image>
 				</view>
 				<view class="car_font">
-					 <text style="font-weight: bold;">名称：{{item.name}}</text>
-					 <view> <text>品牌：{{item.brand}}</text> </view>
+					 <text style="font-weight: bold;">名称：{{item.goodname}}</text>
+					 <view> <text>品牌：延龙汽车</text> </view>
 					 <view> <text>箱体容积：{{item.volume}}</text> </view>
 					 <view> <text style="color: red;">租金：{{item.rent}}</text> </view>
 				</view>
@@ -28,40 +28,38 @@
 	export default {
 		data() {
 			return {
-				carList: [{
-					id:'1',
-				   image:'https://www.baexnyqc.cn//upload/20231219/20231219163755_3943.jpg',
-				   name:'纯电动高压清洗车',
-				   brand:'延龙汽车',
-				   volume:'6.4/6.7m',
-				   rent:'3000-3500/月'
-				},
-				{
-					id:'2',
-				   image:'https://www.baexnyqc.cn//upload/20231219/20231219163755_3943.jpg',
-				   name:'纯电动高压清洗车',
-				   brand:'延龙汽车',
-				   volume:'6.4/6.7m',
-				   rent:'3000-3500/月'
-				},
-				{
-					id:'3',
-				   image:'https://www.baexnyqc.cn//upload/20231219/20231219163755_3943.jpg',
-				   name:'纯电动高压清洗车',
-				   brand:'延龙汽车',
-				   volume:'6.4/6.7m',
-				   rent:'3000-3500/月'
-				},	
-				],
+				carList: [],
 				
 			}
 			
+		},
+		onShow() {
+			
+			this.getCarList()
 		},
 		methods: {
 			//跳转到订单详情页
 			toCarDetail(item){
 				uni.navigateTo({
 					url: '/pages/other_services/car_rental/car_detail/car_detail?id=' + item.id
+				})
+			},
+			//获取商品
+			getCarList(){
+				this.$api.reqPost('api/yl_goods/GetYLGoodList',{
+					data:{
+						"page":1,
+						"limit": 10,
+						"where":"{catId:\"5\"}"
+					}
+				}).then(res =>{
+					if(res.status){
+						this.carList = res.data
+						
+						console.log('获取租车信息成功！',res)
+					}else{
+						console.log('获取租车信息失败！',res)
+					}
 				})
 			},
 		}

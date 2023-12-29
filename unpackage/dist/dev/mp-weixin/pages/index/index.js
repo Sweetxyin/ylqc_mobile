@@ -71,6 +71,16 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: "/pages/other_services/car_rental/car_rental"
       });
+    },
+    wlsj() {
+      common_vendor.index.navigateTo({
+        url: "/pages/other_services/recruit/recruit"
+      });
+    },
+    shop() {
+      common_vendor.index.navigateTo({
+        url: "/pages/shop/shop"
+      });
     }
   }
 };
@@ -96,9 +106,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       height: "40",
       bgColor: "#f0ffff"
     }),
-    b: common_vendor.o((...args) => $options.zcar && $options.zcar(...args)),
-    c: common_vendor.o($options.sectionChange),
-    d: common_vendor.p({
+    b: common_vendor.o((...args) => $options.wlsj && $options.wlsj(...args)),
+    c: common_vendor.o((...args) => $options.zcar && $options.zcar(...args)),
+    d: common_vendor.o((...args) => $options.shop && $options.shop(...args)),
+    e: common_vendor.o((...args) => $options.shop && $options.shop(...args)),
+    f: common_vendor.o($options.sectionChange),
+    g: common_vendor.p({
       list: $data.list,
       mode: "button",
       inactiveColor: "#000000",
@@ -106,34 +119,34 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       fontSize: "16",
       current: $data.subIndex
     }),
-    e: $data.subIndex === 1
+    h: $data.subIndex === 1
   }, $data.subIndex === 1 ? {} : {}, {
-    f: common_vendor.p({
+    i: common_vendor.p({
       name: "kefu-ermai",
       color: "#FA7473",
       size: "32",
       bold: "true"
     }),
-    g: common_vendor.o((...args) => $options.zxts && $options.zxts(...args)),
-    h: common_vendor.p({
+    j: common_vendor.o((...args) => $options.zxts && $options.zxts(...args)),
+    k: common_vendor.p({
       name: "car",
       color: "#87CEEB",
       size: "32",
       bold: "true"
     }),
-    i: common_vendor.o((...args) => $options.driverJion && $options.driverJion(...args)),
-    j: common_vendor.p({
+    l: common_vendor.o((...args) => $options.driverJion && $options.driverJion(...args)),
+    m: common_vendor.p({
       name: "plus-people-fill",
       color: "#F9CE5D",
       size: "32"
     }),
-    k: common_vendor.p({
+    n: common_vendor.p({
       name: "integral",
       color: "#87CEEB",
       size: "32"
     }),
-    l: common_vendor.o((...args) => $options.community && $options.community(...args)),
-    m: common_vendor.p({
+    o: common_vendor.o((...args) => $options.community && $options.community(...args)),
+    p: common_vendor.p({
       selectedIndex: "0"
     })
   });

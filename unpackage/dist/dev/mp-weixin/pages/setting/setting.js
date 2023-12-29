@@ -37,6 +37,21 @@ const _sfc_main = {
     //选择头像
     chooseAvatar() {
     },
+    //重设角色
+    Reroles() {
+      console.log("点击重设角色", this.$store.state.userInfo.roles + ";" + common_vendor.index.getStorageSync("identify"));
+      if (common_vendor.index.getStorageSync("identify") == "driver") {
+        common_vendor.index.setStorageSync("identify", "user");
+        common_vendor.index.reLaunch({
+          url: "/pages/index/index"
+        });
+      } else if (this.$store.state.userInfo.roles == "driver" && common_vendor.index.getStorageSync("identify") == "user") {
+        common_vendor.index.setStorageSync("identify", "driver");
+        common_vendor.index.reLaunch({
+          url: "/pages/seizeorders/seizeorders"
+        });
+      }
+    },
     //退出登录
     logout() {
       var _this = this;
@@ -55,7 +70,9 @@ const _sfc_main = {
                 console.log("检查identify是否移除", common_vendor.index.getStorageSync("identify"));
                 _this.userLogout();
                 console.log("检查是否成功将数据移除vuex", _this.$store.state);
-                common_vendor.index.reLaunch({ url: "/pages/index/index" });
+                common_vendor.index.reLaunch({
+                  url: "/pages/index/index"
+                });
               } else {
                 console.log("注销登录失败!");
               }
@@ -77,12 +94,6 @@ const _sfc_main = {
         }).then((res) => {
           if (res.status) {
             _this.userInfo = res.data;
-            if (res.data.idCrad != "") {
-              let val = res.data.idCrad;
-              let reg = /^(.{3}).*(.{2})$/;
-              _this.userInfo.idCrad = val.replace(reg, "$1*************$2");
-              console.log("sfzh", val);
-            }
             console.log("获取用户信息成功", res);
           } else {
             console.log("获取用户信息失败", res);
@@ -92,11 +103,6 @@ const _sfc_main = {
         _this.$api.reqPost("api/yl_user/GetUserInfo").then((res) => {
           if (res.status) {
             _this.userInfo = res.data;
-            if (res.data.idCrad != "") {
-              let val = res.data.idCrad;
-              let reg = /^(.{3}).*(.{2})$/;
-              _this.userInfo.idCrad = val.replace(reg, "$1*************$2");
-            }
             console.log("获取用户信息成功", res);
           } else {
             console.log("获取用户信息失败", res);
@@ -222,8 +228,16 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     z: common_vendor.p({
       border: false
     }),
-    A: common_vendor.o($options.logout),
+    A: common_vendor.o($options.Reroles),
     B: common_vendor.p({
+      title: "角色切换",
+      isLink: true
+    }),
+    C: common_vendor.p({
+      border: false
+    }),
+    D: common_vendor.o($options.logout),
+    E: common_vendor.p({
       type: "error",
       plain: true,
       text: "退出登录"

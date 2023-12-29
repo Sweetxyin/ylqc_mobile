@@ -27,7 +27,8 @@ const store = createStore({
 			// avatar: ''//头像
 		},
 		openid:'',
-		userid:''
+		userid:'',
+		phone:''
 	},
 	getters: {
 		
@@ -62,7 +63,8 @@ const store = createStore({
 			state.userInfo = userInfo
 			state.openid = userInfo.openid
 			state.userid = userInfo.id
-			if(userInfo.roles == 'driver' && !uni.getStorageSync('isLogout')){
+			state.phone = userInfo.phone
+			if(userInfo.roles == 'driver' && uni.getStorageSync('identify') == 'driver'){
 			uni.reLaunch({
 				url: "/pages/seizeorders/seizeorders"
 			})

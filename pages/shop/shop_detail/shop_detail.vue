@@ -49,7 +49,7 @@
 		<view class="xq">
 			<view class="amount">
 				<view class="">
-					<text>数量1</text>
+					<text>数量</text>
 				</view>
 				
 				<view class="">
@@ -131,7 +131,7 @@
 			},
 			placeOrder(){
 				uni.navigateTo({
-					url: '/pages/shop/place_order/place_order'
+					url: '/pages/shop/place_order/place_order?id=' + this.id
 				})
 			}
 		}
@@ -175,7 +175,7 @@
 	.details_btm{
 		
 		width:100%;
-		height: 78rpx;
+		height: 98rpx;
 		position:fixed;
 		bottom:0;
 		// margin-left: 30%;
@@ -187,7 +187,7 @@
 	
 	}
 	.an{
-		margin-top: 1.8%;
+		margin-top: 2.8%;
 	}
 	.details_btm text{
 		padding-top: 100rpx;

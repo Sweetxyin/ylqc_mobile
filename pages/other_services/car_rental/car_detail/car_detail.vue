@@ -3,18 +3,18 @@
 		
 		<view class="car_header">
 			<u-gap height="10" bgColor="#ffffff"></u-gap>
-			<text style="padding-left: 25%;">{{carDetailList.name}}</text>
+			<text style="padding-left: 42.5%;">{{carDetailList.goodname}}</text>
 			<u-gap height="5" bgColor="#ffffff"></u-gap>
-			<image :src="carDetailList.image" mode=""></image>
+			<image :src="carDetailList.goodimage_first" mode=""></image>
 			 
 		</view>
 		<view class="car_list"> 
-			<text style="padding-left: 25%;">租金：</text>
+			<text >租金：</text>
 			 <text style="color: red; ">{{carDetailList.rent}}</text>
 		</view>
 		<u-gap height="5" bgColor="#ffffff"></u-gap>
-		<view class="detail_image">
-			<image :src="carDetailList.deimage" mode=""></image>
+		<view class="detail_image"  v-for="(item,index) in goodDescImages" :key="index">
+			<image :src="item" mode=""></image>
 		</view>
 		<u-gap height="58" bgColor="#ffffff"></u-gap>
 		<view class="details_btm">
@@ -36,14 +36,9 @@
 	export default {
 		data() {
 			return {
-				carDetailList: {
-						id:'2',
-					   image:'https://www.baexnyqc.cn//upload/20231219/20231219163755_3943.jpg',
-					   name:'纯电动高压清洗车',
-					  deimage:'../../../../static/images/tab_icon/xq1.png',
-					   rent:'3000-3500/月'
-					},
+				carDetailList: {},
 				id:'',
+				goodDescImages:{},
 			}
 			
 		},
@@ -56,14 +51,16 @@
 			this.getDetail()
 		},
 		methods: {
-			//获取订单详情
+			//获取商品详情
 			getDetail(){
-				this.$api.reqPost('api/yl_orders/QueryForDetail',
+				this.$api.reqPost('api/yl_goods/GetYLGoodInfo',
 				{
 					params:{id:this.id}
 				}).then(res =>{
 					if(res.status){
 						this.carDetailList = res.data
+						this.goodDescImages = res.data.gooddescimages_list
+				
 						console.log('获取租车详情信息成功！',res)
 					}else{
 						console.log('获取租车详情信息失败！',res)
@@ -95,6 +92,7 @@
 		// height: 300rpx;
 		width: 100%;
 		// background-color: #efefef;
+		text-align: center;
 	}
 	.detail_image{
 		width: 100%;

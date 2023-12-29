@@ -46,7 +46,7 @@ const _sfc_main = {
     },
     placeOrder() {
       common_vendor.index.navigateTo({
-        url: "/pages/shop/place_order/place_order"
+        url: "/pages/shop/place_order/place_order?id=" + this.id
       });
     }
   }

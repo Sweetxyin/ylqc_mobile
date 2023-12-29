@@ -3,14 +3,9 @@ const common_vendor = require("../../../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      carDetailList: {
-        id: "2",
-        image: "https://www.baexnyqc.cn//upload/20231219/20231219163755_3943.jpg",
-        name: "纯电动高压清洗车",
-        deimage: "../../../../static/images/tab_icon/xq1.png",
-        rent: "3000-3500/月"
-      },
-      id: ""
+      carDetailList: {},
+      id: "",
+      goodDescImages: {}
     };
   },
   onLoad(option) {
@@ -21,16 +16,17 @@ const _sfc_main = {
     this.getDetail();
   },
   methods: {
-    //获取订单详情
+    //获取商品详情
     getDetail() {
       this.$api.reqPost(
-        "api/yl_orders/QueryForDetail",
+        "api/yl_goods/GetYLGoodInfo",
         {
           params: { id: this.id }
         }
       ).then((res) => {
         if (res.status) {
           this.carDetailList = res.data;
+          this.goodDescImages = res.data.gooddescimages_list;
           console.log("获取租车详情信息成功！", res);
         } else {
           console.log("获取租车详情信息失败！", res);
@@ -55,18 +51,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       height: "10",
       bgColor: "#ffffff"
     }),
-    b: common_vendor.t($data.carDetailList.name),
+    b: common_vendor.t($data.carDetailList.goodname),
     c: common_vendor.p({
       height: "5",
       bgColor: "#ffffff"
     }),
-    d: $data.carDetailList.image,
+    d: $data.carDetailList.goodimage_first,
     e: common_vendor.t($data.carDetailList.rent),
     f: common_vendor.p({
       height: "5",
       bgColor: "#ffffff"
     }),
-    g: $data.carDetailList.deimage,
+    g: common_vendor.f($data.goodDescImages, (item, index, i0) => {
+      return {
+        a: item,
+        b: index
+      };
+    }),
     h: common_vendor.p({
       height: "58",
       bgColor: "#ffffff"

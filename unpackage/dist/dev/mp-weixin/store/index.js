@@ -15,7 +15,8 @@ const store = common_vendor.createStore({
       // avatar: ''//头像
     },
     openid: "",
-    userid: ""
+    userid: "",
+    phone: ""
   },
   getters: {},
   mutations: {
@@ -38,7 +39,8 @@ const store = common_vendor.createStore({
       state.userInfo = userInfo;
       state.openid = userInfo.openid;
       state.userid = userInfo.id;
-      if (userInfo.roles == "driver" && !common_vendor.index.getStorageSync("isLogout")) {
+      state.phone = userInfo.phone;
+      if (userInfo.roles == "driver" && common_vendor.index.getStorageSync("identify") == "driver") {
         common_vendor.index.reLaunch({
           url: "/pages/seizeorders/seizeorders"
         });

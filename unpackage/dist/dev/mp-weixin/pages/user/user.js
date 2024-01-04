@@ -80,16 +80,20 @@ if (!Array) {
   const _easycom_u_avatar2 = common_vendor.resolveComponent("u-avatar");
   const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
   const _easycom_u__text2 = common_vendor.resolveComponent("u--text");
+  const _easycom_u_cell2 = common_vendor.resolveComponent("u-cell");
+  const _easycom_u_cell_group2 = common_vendor.resolveComponent("u-cell-group");
   const _easycom_tabbar2 = common_vendor.resolveComponent("tabbar");
-  (_easycom_u_gap2 + _easycom_u_avatar2 + _easycom_u_icon2 + _easycom_u__text2 + _easycom_tabbar2)();
+  (_easycom_u_gap2 + _easycom_u_avatar2 + _easycom_u_icon2 + _easycom_u__text2 + _easycom_u_cell2 + _easycom_u_cell_group2 + _easycom_tabbar2)();
 }
 const _easycom_u_gap = () => "../../uni_modules/uview-plus/components/u-gap/u-gap.js";
 const _easycom_u_avatar = () => "../../uni_modules/uview-plus/components/u-avatar/u-avatar.js";
 const _easycom_u_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_u__text = () => "../../uni_modules/uview-plus/components/u--text/u--text.js";
+const _easycom_u_cell = () => "../../uni_modules/uview-plus/components/u-cell/u-cell.js";
+const _easycom_u_cell_group = () => "../../uni_modules/uview-plus/components/u-cell-group/u-cell-group.js";
 const _easycom_tabbar = () => "../../components/tabbar/tabbar.js";
 if (!Math) {
-  (_easycom_u_gap + _easycom_u_avatar + _easycom_u_icon + _easycom_u__text + _easycom_tabbar)();
+  (_easycom_u_gap + _easycom_u_avatar + _easycom_u_icon + _easycom_u__text + _easycom_u_cell + _easycom_u_cell_group + _easycom_tabbar)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -151,6 +155,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     r: $data.identify != "driver",
     s: common_vendor.p({
+      url: "/pages/shop/shop_order/shop_order",
+      title: "商城订单",
+      isLink: true
+    }),
+    t: common_vendor.p({
+      border: false
+    }),
+    v: common_vendor.p({
       selectedIndex: "4"
     })
   });

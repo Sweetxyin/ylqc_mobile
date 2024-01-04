@@ -46,7 +46,7 @@
 		</view>
 		
 		<view class="order_info">
-			<view class="store_name"><text style="font-size: 33rpx;">柳州延龙汽车有限公司(和悦路)</text></view>
+			<view class="store_name"><text style="font-size: 33rpx;">{{shopperList.name}}</text></view>
 			
 			<view class="shop_item">
 				<view class="shop_image">
@@ -111,7 +111,8 @@
 				recePhone:this.$store.state.phone,//收货电话
 				id:'',//商品id
 				sourceStr:'',//订单号
-				sendAddress:'柳州延龙汽车有限公司'
+				sendAddress:'柳州延龙汽车有限公司',
+				shopperList:{},//商家信息
 			}
 			
 		},
@@ -151,6 +152,7 @@
 				}).then(res =>{
 					if(res.status){
 						this.shopList = res.data
+						this.shopperList = res.data.shopper_list[0]
 						this.totalPrice=this.value*this.shopList.advance
 						if( res.data.taketype=="1"){
 							this.subIndex = 1
@@ -167,15 +169,16 @@
 			
 			//下单
 			addOrder(){
-				
+				var goodid = parseInt(this.id) 
+
 				this.$api.reqPost('api/yl_goods/CreateYLGoodsOrder',{
 					data:{
 						userid:this.userid,
 						orderType:1,
-						selfid:0,
-						sendAddress:this.sendAddress,
+						selfid:this.shopperList.id,
+						sendAddress:this.shopperList.address,
 						recePhone:this.recePhone,
-						goodsid:this.id,
+						goodsid:goodid,
 						price:this.shopList.advance,
 						amount:this.totalPrice,
 						remark:this.remark,
@@ -193,7 +196,7 @@
 						
 						console.log('提交成功',res)
 						//订单号赋值
-						this.sourceStr = res.data.Ids
+						this.sourceStr = res.data.ids
 						//提交订单后，执行支付功能
 						this.toPay()
 					}else{
@@ -241,7 +244,9 @@
 									title:'取消支付',
 									icon:'none'
 								})
-								
+								uni.navigateTo({
+									url:'/pages/shop/shop_order/shop_order'
+								})
 								console.log('fail:' + JSON.stringify(err));
 							}
 						});

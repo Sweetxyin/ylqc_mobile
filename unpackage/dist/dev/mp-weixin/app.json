@@ -41,7 +41,8 @@
     "pages/other_services/car_rental/car_rental",
     "pages/other_services/car_rental/car_detail/car_detail",
     "pages/shop/shop_detail/shop_detail",
-    "pages/shop/place_order/place_order"
+    "pages/shop/place_order/place_order",
+    "pages/shop/shop_order/shop_order"
   ],
   "window": {
     "navigationBarTextStyle": "black",

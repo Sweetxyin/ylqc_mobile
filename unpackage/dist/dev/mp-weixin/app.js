@@ -165,6 +165,7 @@ if (!Math) {
   "./pages/other_services/car_rental/car_detail/car_detail.js";
   "./pages/shop/shop_detail/shop_detail.js";
   "./pages/shop/place_order/place_order.js";
+  "./pages/shop/shop_order/shop_order.js";
 }
 const _sfc_main = {
   data() {

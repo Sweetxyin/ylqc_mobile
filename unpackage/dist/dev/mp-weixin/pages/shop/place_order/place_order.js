@@ -24,7 +24,9 @@ const _sfc_main = {
       //商品id
       sourceStr: "",
       //订单号
-      sendAddress: "柳州延龙汽车有限公司"
+      sendAddress: "柳州延龙汽车有限公司",
+      shopperList: {}
+      //商家信息
     };
   },
   onLoad(option) {
@@ -62,6 +64,7 @@ const _sfc_main = {
       ).then((res) => {
         if (res.status) {
           this.shopList = res.data;
+          this.shopperList = res.data.shopper_list[0];
           this.totalPrice = this.value * this.shopList.advance;
           if (res.data.taketype == "1") {
             this.subIndex = 1;
@@ -76,14 +79,15 @@ const _sfc_main = {
     },
     //下单
     addOrder() {
+      var goodid = parseInt(this.id);
       this.$api.reqPost("api/yl_goods/CreateYLGoodsOrder", {
         data: {
           userid: this.userid,
           orderType: 1,
-          selfid: 0,
-          sendAddress: this.sendAddress,
+          selfid: this.shopperList.id,
+          sendAddress: this.shopperList.address,
           recePhone: this.recePhone,
-          goodsid: this.id,
+          goodsid: goodid,
           price: this.shopList.advance,
           amount: this.totalPrice,
           remark: this.remark,
@@ -99,7 +103,7 @@ const _sfc_main = {
             icon: "none"
           });
           console.log("提交成功", res);
-          this.sourceStr = res.data.Ids;
+          this.sourceStr = res.data.ids;
           this.toPay();
         } else {
           common_vendor.index.showToast({
@@ -144,6 +148,9 @@ const _sfc_main = {
               common_vendor.index.showToast({
                 title: "取消支付",
                 icon: "none"
+              });
+              common_vendor.index.navigateTo({
+                url: "/pages/shop/shop_order/shop_order"
               });
               console.log("fail:" + JSON.stringify(err));
             }
@@ -214,34 +221,35 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     h: common_vendor.t($data.recePhone),
     i: $data.subIndex == 1,
-    j: $data.shopList.goodimage_first,
-    k: common_vendor.t($data.shopList.goodname),
-    l: common_vendor.t($data.shopList.advance),
-    m: common_vendor.t($data.value),
-    n: common_vendor.o($options.valChange),
-    o: common_vendor.o(($event) => $data.value = $event),
-    p: common_vendor.p({
+    j: common_vendor.t($data.shopperList.name),
+    k: $data.shopList.goodimage_first,
+    l: common_vendor.t($data.shopList.goodname),
+    m: common_vendor.t($data.shopList.advance),
+    n: common_vendor.t($data.value),
+    o: common_vendor.o($options.valChange),
+    p: common_vendor.o(($event) => $data.value = $event),
+    q: common_vendor.p({
       buttonSize: "25",
       modelValue: $data.value
     }),
-    q: common_vendor.o(($event) => $data.remark = $event),
-    r: common_vendor.p({
+    r: common_vendor.o(($event) => $data.remark = $event),
+    s: common_vendor.p({
       placeholder: "请输入备注",
       count: true,
       height: "80",
       maxlength: "300",
       modelValue: $data.remark
     }),
-    s: common_vendor.t($data.value),
-    t: common_vendor.t($data.totalPrice),
-    v: common_vendor.o($options.addOrder),
-    w: common_vendor.p({
+    t: common_vendor.t($data.value),
+    v: common_vendor.t($data.totalPrice),
+    w: common_vendor.o($options.addOrder),
+    x: common_vendor.p({
       type: "primary",
       size: "small",
       disabled: $data.disabled,
       text: "提交订单"
     }),
-    x: common_vendor.o((...args) => _ctx.placeOrder && _ctx.placeOrder(...args))
+    y: common_vendor.o((...args) => _ctx.placeOrder && _ctx.placeOrder(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-bed3463d"], ["__file", "F:/daima/dm/ylqc_mobile/pages/shop/place_order/place_order.vue"]]);

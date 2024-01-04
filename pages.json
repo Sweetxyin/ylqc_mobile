@@ -378,6 +378,14 @@
         		"navigationBarTitleText" : "提交订单",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/shop/shop_order/shop_order",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "商城订单",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"tabBar": {

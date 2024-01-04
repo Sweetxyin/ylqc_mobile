@@ -55,7 +55,9 @@
 		</view>
 		
 		<view class="user_zw">
-			
+			<u-cell-group class="setting-list" :border="false" >
+				<u-cell class="setting-item" url="/pages/shop/shop_order/shop_order" title="商城订单" isLink></u-cell>
+			</u-cell-group>
 		</view>
 	
 	</view>
